@@ -46,6 +46,7 @@ html,body{background:var(--paper);color:var(--ink);overflow-x:hidden;
   width:clamp(70px,12vw,140px);height:clamp(70px,12vw,140px);
   background:var(--vermillion);opacity:.08;
   clip-path:polygon(50% 0,100% 38%,82% 100%,18% 100%,0 38%)}
+.hero-deco{position:absolute;bottom:0;right:0;width:60%;max-width:680px;height:auto;opacity:.32;pointer-events:none;z-index:0}
 .hero-grid{max-width:1100px;margin:0 auto;display:grid;gap:24px;position:relative;z-index:1}
 .hero-tag{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:clamp(13px,1.8vw,18px);
   color:var(--vermillion);letter-spacing:2px;border-left:3px solid var(--vermillion);padding-left:12px}
@@ -80,6 +81,8 @@ html,body{background:var(--paper);color:var(--ink);overflow-x:hidden;
   box-shadow:5px 5px 0 var(--ink);background:var(--paper);overflow:hidden}
 
 .day-section{margin:36px 0;padding-top:36px;border-top:1px solid var(--rule)}
+.day-art{margin:0 0 22px;border:1px solid var(--ink);box-shadow:4px 4px 0 var(--ink);overflow:hidden;background:#e8dec7}
+.day-art svg{display:block;width:100%;height:auto;max-height:200px}
 .day-header{display:grid;grid-template-columns:auto 1fr;gap:clamp(16px,4vw,40px);align-items:start;margin-bottom:20px}
 .day-no-block{text-align:center;padding-right:clamp(14px,3vw,28px);border-right:1px solid var(--rule)}
 .day-no-cn{font-family:"Noto Serif SC",serif;font-weight:900;
@@ -266,6 +269,47 @@ tr:last-child td{border-bottom:none}
 <!-- ===== Tab 1: 行程 ===== -->
 <div class="tab-pane active" id="pane-0">
   <section class="hero">
+    <svg class="hero-deco" viewBox="0 0 800 280" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMaxYMax meet">
+      <!-- 远山 -->
+      <path d="M0,200 L80,140 L180,180 L280,120 L380,160 L480,110 L580,150 L680,100 L800,150 L800,280 L0,280 Z" fill="#a8893a" opacity=".35"/>
+      <path d="M0,230 L100,180 L220,210 L340,170 L460,200 L580,165 L700,205 L800,180 L800,280 L0,280 Z" fill="#7a2110" opacity=".4"/>
+      <!-- 应县木塔风格塔（左） -->
+      <g transform="translate(120,80)">
+        <rect x="20" y="0" width="40" height="120" fill="#1a1612"/>
+        <path d="M5,0 L75,0 L65,-12 L15,-12 Z" fill="#1a1612"/>
+        <rect x="10" y="30" width="60" height="6" fill="#a8321a"/>
+        <rect x="10" y="60" width="60" height="6" fill="#a8321a"/>
+        <rect x="10" y="90" width="60" height="6" fill="#a8321a"/>
+        <path d="M0,30 L80,30 L70,20 L10,20 Z" fill="#3d352a"/>
+        <path d="M0,60 L80,60 L70,50 L10,50 Z" fill="#3d352a"/>
+        <path d="M0,90 L80,90 L70,80 L10,80 Z" fill="#3d352a"/>
+        <line x1="40" y1="-12" x2="40" y2="-30" stroke="#1a1612" stroke-width="2"/>
+        <circle cx="40" cy="-32" r="4" fill="#a8321a"/>
+      </g>
+      <!-- 大殿（中） -->
+      <g transform="translate(330,140)">
+        <path d="M-40,40 L20,0 L160,0 L220,40 L200,40 L160,30 L60,30 L20,30 L-20,40 Z" fill="#1a1612"/>
+        <rect x="0" y="40" width="180" height="40" fill="#7a2110"/>
+        <rect x="20" y="50" width="6" height="30" fill="#1a1612"/>
+        <rect x="55" y="50" width="6" height="30" fill="#1a1612"/>
+        <rect x="120" y="50" width="6" height="30" fill="#1a1612"/>
+        <rect x="155" y="50" width="6" height="30" fill="#1a1612"/>
+        <rect x="80" y="55" width="20" height="25" fill="#a8321a"/>
+        <rect x="-15" y="80" width="210" height="8" fill="#3d352a"/>
+      </g>
+      <!-- 山门（右） -->
+      <g transform="translate(580,170)">
+        <path d="M-30,30 L0,0 L80,0 L110,30 L95,30 L75,18 L5,18 L-15,30 Z" fill="#1a1612"/>
+        <rect x="-5" y="30" width="90" height="50" fill="#7a2110"/>
+        <rect x="30" y="40" width="20" height="40" fill="#1a1612"/>
+      </g>
+      <!-- 飞鸟 -->
+      <g fill="none" stroke="#1a1612" stroke-width="1.5" opacity=".5">
+        <path d="M450,50 Q455,46 460,50 Q465,46 470,50"/>
+        <path d="M520,70 Q525,66 530,70 Q535,66 540,70"/>
+        <path d="M380,40 Q385,36 390,40 Q395,36 400,40"/>
+      </g>
+    </svg>
     <div class="hero-grid">
       <div class="hero-tag">A NORTHWARD JOURNEY · MMXXVI</div>
       <h1 class="hero-title">晋豫古建<br><span class="v">五日纪行</span></h1>
@@ -366,6 +410,37 @@ tr:last-child td{border-bottom:none}
 
     <h2 class="section-title">每 日 行 程<span class="en">Day by Day</span></h2>
 <article class="day-section">
+<div class="day-art"><svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+<defs><pattern id="p1" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="0.6" fill="rgba(168,50,26,.15)"/></pattern></defs>
+<rect width="800" height="200" fill="#e8dec7"/><rect width="800" height="200" fill="url(#p1)"/>
+<!-- 远山 -->
+<path d="M0,140 L80,110 L160,130 L240,100 L320,120 L400,95 L480,115 L560,105 L640,125 L720,110 L800,130 L800,200 L0,200 Z" fill="#a8893a" opacity=".25"/>
+<!-- 春秋楼建筑（庑殿顶+柱廊+台基） -->
+<g transform="translate(280,40)">
+  <!-- 屋顶（双层庑殿） -->
+  <path d="M-50,80 L20,30 L220,30 L290,80 L260,80 L240,72 L200,68 L170,64 L140,62 L110,60 L80,58 L50,60 L20,62 L-10,68 L-30,72 Z" fill="#1a1612"/>
+  <path d="M0,55 L240,55 L240,80 L0,80 Z" fill="#a8321a"/>
+  <!-- 二层 -->
+  <path d="M30,80 L210,80 L210,100 L30,100 Z" fill="#7a2110"/>
+  <!-- 柱廊 -->
+  <rect x="40" y="100" width="6" height="40" fill="#1a1612"/>
+  <rect x="80" y="100" width="6" height="40" fill="#1a1612"/>
+  <rect x="120" y="100" width="6" height="40" fill="#1a1612"/>
+  <rect x="160" y="100" width="6" height="40" fill="#1a1612"/>
+  <rect x="200" y="100" width="6" height="40" fill="#1a1612"/>
+  <!-- 台基 -->
+  <rect x="20" y="140" width="220" height="14" fill="#3d352a"/>
+  <rect x="0" y="154" width="260" height="6" fill="#1a1612"/>
+</g>
+<!-- 青龙偃月刀剪影 -->
+<g transform="translate(620,50)" opacity=".7">
+  <line x1="0" y1="0" x2="20" y2="120" stroke="#1a1612" stroke-width="3"/>
+  <path d="M-15,-5 Q-30,-30 -10,-40 Q15,-35 25,-10 Q15,5 0,0 Z" fill="#a8321a" stroke="#1a1612" stroke-width="2"/>
+</g>
+<!-- 文字 -->
+<text x="40" y="40" font-family="Noto Serif SC,serif" font-size="22" font-weight="900" fill="#a8321a" letter-spacing="6" opacity=".85">解 州 关 帝</text>
+<text x="40" y="58" font-family="Cormorant Garamond,serif" font-style="italic" font-size="11" fill="#3d352a" letter-spacing="2">JIE ZHOU GUAN DI TEMPLE</text>
+</svg></div>
 <header class="day-header">
 <div class="day-no-block">
 <div class="day-no-cn">壹</div>
@@ -442,6 +517,44 @@ tr:last-child td{border-bottom:none}
 </div>
 </article>
 <article class="day-section">
+<div class="day-art"><svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+<defs><pattern id="p2" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="0.6" fill="rgba(168,50,26,.15)"/></pattern></defs>
+<rect width="800" height="200" fill="#e8dec7"/><rect width="800" height="200" fill="url(#p2)"/>
+<!-- 城墙 -->
+<g transform="translate(0,90)">
+  <rect x="0" y="20" width="800" height="90" fill="#7a2110" opacity=".85"/>
+  <!-- 雉堞 -->
+  <g fill="#1a1612">
+    <rect x="20" y="0" width="20" height="22"/><rect x="60" y="0" width="20" height="22"/>
+    <rect x="100" y="0" width="20" height="22"/><rect x="140" y="0" width="20" height="22"/>
+    <rect x="180" y="0" width="20" height="22"/><rect x="220" y="0" width="20" height="22"/>
+    <rect x="260" y="0" width="20" height="22"/><rect x="300" y="0" width="20" height="22"/>
+    <rect x="500" y="0" width="20" height="22"/><rect x="540" y="0" width="20" height="22"/>
+    <rect x="580" y="0" width="20" height="22"/><rect x="620" y="0" width="20" height="22"/>
+    <rect x="660" y="0" width="20" height="22"/><rect x="700" y="0" width="20" height="22"/>
+    <rect x="740" y="0" width="20" height="22"/><rect x="780" y="0" width="20" height="22"/>
+  </g>
+  <!-- 城门楼 -->
+  <g transform="translate(340,-50)">
+    <path d="M0,40 L60,0 L120,40 L100,40 L100,55 L120,55 L120,75 L0,75 L0,55 L20,55 L20,40 Z" fill="#1a1612"/>
+    <rect x="50" y="55" width="20" height="25" fill="#a8321a"/>
+  </g>
+</g>
+<!-- 红灯笼 -->
+<g>
+  <line x1="100" y1="0" x2="100" y2="40" stroke="#1a1612" stroke-width="1.5"/>
+  <ellipse cx="100" cy="55" rx="14" ry="18" fill="#a8321a" stroke="#1a1612" stroke-width="2"/>
+  <line x1="100" y1="73" x2="100" y2="85" stroke="#1a1612" stroke-width="1.5"/>
+  <line x1="240" y1="0" x2="240" y2="50" stroke="#1a1612" stroke-width="1.5"/>
+  <ellipse cx="240" cy="65" rx="14" ry="18" fill="#a8321a" stroke="#1a1612" stroke-width="2"/>
+  <line x1="600" y1="0" x2="600" y2="35" stroke="#1a1612" stroke-width="1.5"/>
+  <ellipse cx="600" cy="50" rx="14" ry="18" fill="#a8321a" stroke="#1a1612" stroke-width="2"/>
+  <line x1="730" y1="0" x2="730" y2="55" stroke="#1a1612" stroke-width="1.5"/>
+  <ellipse cx="730" cy="70" rx="14" ry="18" fill="#a8321a" stroke="#1a1612" stroke-width="2"/>
+</g>
+<text x="40" y="40" font-family="Noto Serif SC,serif" font-size="22" font-weight="900" fill="#a8321a" letter-spacing="6" opacity=".85">平 遥 古 城</text>
+<text x="40" y="58" font-family="Cormorant Garamond,serif" font-style="italic" font-size="11" fill="#3d352a" letter-spacing="2">PINGYAO ANCIENT CITY</text>
+</svg></div>
 <header class="day-header">
 <div class="day-no-block">
 <div class="day-no-cn">贰</div>
@@ -510,6 +623,49 @@ tr:last-child td{border-bottom:none}
 </div>
 </article>
 <article class="day-section">
+<div class="day-art"><svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+<defs><pattern id="p3" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="0.6" fill="rgba(168,50,26,.15)"/></pattern></defs>
+<rect width="800" height="200" fill="#e8dec7"/><rect width="800" height="200" fill="url(#p3)"/>
+<!-- 远山 -->
+<path d="M0,150 L100,100 L200,130 L300,90 L400,120 L500,85 L600,115 L700,95 L800,125 L800,200 L0,200 Z" fill="#a8893a" opacity=".22"/>
+<!-- 唐代大殿 -->
+<g transform="translate(220,30)">
+  <!-- 巨大单檐歇山顶 -->
+  <path d="M-80,90 L-20,30 L380,30 L440,90 L420,90 L380,80 L320,72 L240,66 L180,64 L120,66 L60,72 L0,80 L-40,90 Z" fill="#1a1612"/>
+  <!-- 屋顶曲线 -->
+  <path d="M-60,90 Q-40,85 0,82 L360,82 Q400,85 420,90 L420,98 L-60,98 Z" fill="#3d352a"/>
+  <!-- 斗拱 -->
+  <g fill="#a8321a">
+    <rect x="-20" y="98" width="60" height="14"/>
+    <rect x="80" y="98" width="60" height="14"/>
+    <rect x="180" y="98" width="60" height="14"/>
+    <rect x="280" y="98" width="60" height="14"/>
+  </g>
+  <g fill="#7a2110">
+    <rect x="-10" y="112" width="40" height="6"/>
+    <rect x="90" y="112" width="40" height="6"/>
+    <rect x="190" y="112" width="40" height="6"/>
+    <rect x="290" y="112" width="40" height="6"/>
+  </g>
+  <!-- 巨大柱子（唐风粗壮） -->
+  <rect x="-10" y="118" width="14" height="40" fill="#1a1612"/>
+  <rect x="90" y="118" width="14" height="40" fill="#1a1612"/>
+  <rect x="190" y="118" width="14" height="40" fill="#1a1612"/>
+  <rect x="290" y="118" width="14" height="40" fill="#1a1612"/>
+  <rect x="390" y="118" width="14" height="40" fill="#1a1612"/>
+  <!-- 台基 -->
+  <rect x="-30" y="158" width="450" height="10" fill="#3d352a"/>
+</g>
+<!-- 鸱吻装饰 -->
+<g transform="translate(195,30) scale(0.6)">
+  <path d="M0,0 Q-15,-15 0,-25 Q15,-15 10,5 Z" fill="#a8321a" stroke="#1a1612" stroke-width="2"/>
+</g>
+<g transform="translate(680,30) scale(0.6) scale(-1,1)">
+  <path d="M0,0 Q-15,-15 0,-25 Q15,-15 10,5 Z" fill="#a8321a" stroke="#1a1612" stroke-width="2"/>
+</g>
+<text x="40" y="40" font-family="Noto Serif SC,serif" font-size="22" font-weight="900" fill="#a8321a" letter-spacing="6" opacity=".85">佛 光 唐 构</text>
+<text x="40" y="58" font-family="Cormorant Garamond,serif" font-style="italic" font-size="11" fill="#3d352a" letter-spacing="2">FOGUANG TANG DYNASTY TIMBER</text>
+</svg></div>
 <header class="day-header">
 <div class="day-no-block">
 <div class="day-no-cn">叁</div>
@@ -586,6 +742,46 @@ tr:last-child td{border-bottom:none}
 </div>
 </article>
 <article class="day-section">
+<div class="day-art"><svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+<defs><pattern id="p4" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="0.6" fill="rgba(168,50,26,.15)"/></pattern></defs>
+<rect width="800" height="200" fill="#e8dec7"/><rect width="800" height="200" fill="url(#p4)"/>
+<!-- 远山层叠 -->
+<path d="M0,160 L120,80 L240,140 L360,60 L480,130 L600,70 L720,140 L800,90 L800,200 L0,200 Z" fill="#a8893a" opacity=".25"/>
+<path d="M0,180 L100,120 L220,170 L340,110 L460,165 L580,115 L700,170 L800,140 L800,200 L0,200 Z" fill="#7a2110" opacity=".4"/>
+<!-- 主峰 + 挂壁 -->
+<g>
+  <!-- 山体 -->
+  <path d="M180,200 L260,40 L340,75 L420,30 L520,70 L580,200 Z" fill="#1a1612"/>
+  <!-- 山顶纹理 -->
+  <path d="M280,80 L320,100 L300,110 Z M380,80 L420,100 L400,115 Z" fill="#3d352a"/>
+  <!-- 挂壁公路（凿穿山体的线） -->
+  <path d="M180,160 L260,150 L340,150 L420,148 L520,150 L580,160" fill="none" stroke="#a8321a" stroke-width="4"/>
+  <!-- 挂壁窗洞 -->
+  <g fill="#e8dec7">
+    <rect x="220" y="146" width="14" height="12" rx="2"/>
+    <rect x="280" y="146" width="14" height="12" rx="2"/>
+    <rect x="340" y="146" width="14" height="12" rx="2"/>
+    <rect x="400" y="146" width="14" height="12" rx="2"/>
+    <rect x="460" y="146" width="14" height="12" rx="2"/>
+    <rect x="520" y="146" width="14" height="12" rx="2"/>
+  </g>
+</g>
+<!-- 小车 -->
+<g transform="translate(380,135)">
+  <rect x="-12" y="0" width="24" height="10" rx="2" fill="#a8321a" stroke="#1a1612" stroke-width="1.5"/>
+  <path d="M-10,0 L-6,-7 L8,-7 L12,0 Z" fill="#a8321a" stroke="#1a1612" stroke-width="1.5"/>
+  <circle cx="-7" cy="11" r="3" fill="#1a1612"/>
+  <circle cx="7" cy="11" r="3" fill="#1a1612"/>
+</g>
+<!-- 云 -->
+<g fill="#efe7d6" opacity=".7">
+  <ellipse cx="650" cy="60" rx="38" ry="10"/>
+  <ellipse cx="680" cy="55" rx="22" ry="7"/>
+  <ellipse cx="120" cy="50" rx="36" ry="9"/>
+</g>
+<text x="40" y="40" font-family="Noto Serif SC,serif" font-size="22" font-weight="900" fill="#a8321a" letter-spacing="6" opacity=".85">南 太 行</text>
+<text x="40" y="58" font-family="Cormorant Garamond,serif" font-style="italic" font-size="11" fill="#3d352a" letter-spacing="2">SOUTHERN TAIHANG · CLIFF ROAD</text>
+</svg></div>
 <header class="day-header">
 <div class="day-no-block">
 <div class="day-no-cn">肆</div>
@@ -646,6 +842,50 @@ tr:last-child td{border-bottom:none}
 </div>
 </article>
 <article class="day-section">
+<div class="day-art"><svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+<defs><pattern id="p5" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="0.6" fill="rgba(168,50,26,.15)"/></pattern></defs>
+<rect width="800" height="200" fill="#e8dec7"/><rect width="800" height="200" fill="url(#p5)"/>
+<!-- 老胡同（左侧）：透视小巷 -->
+<g transform="translate(20,90)">
+  <!-- 地面透视 -->
+  <path d="M0,80 L240,80 L180,30 L60,30 Z" fill="#a8893a" opacity=".25"/>
+  <!-- 左墙 -->
+  <path d="M0,0 L0,80 L60,30 L60,0 Z" fill="#7a2110" opacity=".7"/>
+  <!-- 右墙 -->
+  <path d="M240,0 L240,80 L180,30 L180,0 Z" fill="#7a2110" opacity=".7"/>
+  <!-- 屋顶剪影 -->
+  <path d="M-10,0 L0,-15 L60,-15 L70,0 Z" fill="#1a1612"/>
+  <path d="M170,0 L180,-15 L240,-15 L250,0 Z" fill="#1a1612"/>
+  <!-- 远端门 -->
+  <rect x="105" y="40" width="30" height="40" fill="#1a1612"/>
+  <circle cx="120" cy="62" r="3" fill="#a8321a"/>
+</g>
+<!-- 皇城相府（右侧）：古堡剪影 -->
+<g transform="translate(440,40)">
+  <!-- 河山楼（古堡塔楼） -->
+  <rect x="40" y="20" width="50" height="120" fill="#1a1612"/>
+  <rect x="35" y="14" width="60" height="10" fill="#3d352a"/>
+  <!-- 窗洞 -->
+  <g fill="#a8321a">
+    <rect x="55" y="40" width="10" height="14"/>
+    <rect x="55" y="64" width="10" height="14"/>
+    <rect x="55" y="88" width="10" height="14"/>
+    <rect x="55" y="112" width="10" height="14"/>
+  </g>
+  <!-- 配楼 -->
+  <rect x="100" y="60" width="60" height="80" fill="#7a2110"/>
+  <path d="M95,60 L100,50 L160,50 L165,60 Z" fill="#1a1612"/>
+  <rect x="120" y="80" width="20" height="30" fill="#1a1612"/>
+  <!-- 城墙 -->
+  <rect x="0" y="130" width="220" height="12" fill="#3d352a"/>
+  <rect x="170" y="80" width="60" height="60" fill="#7a2110" opacity=".8"/>
+  <path d="M165,80 L170,70 L230,70 L235,80 Z" fill="#1a1612"/>
+</g>
+<!-- 远山 -->
+<path d="M0,180 L100,150 L200,170 L300,145 L400,165 L500,140 L600,160 L700,135 L800,155 L800,200 L0,200 Z" fill="#a8893a" opacity=".3"/>
+<text x="40" y="40" font-family="Noto Serif SC,serif" font-size="22" font-weight="900" fill="#a8321a" letter-spacing="6" opacity=".85">高 平 · 皇 城</text>
+<text x="40" y="58" font-family="Cormorant Garamond,serif" font-style="italic" font-size="11" fill="#3d352a" letter-spacing="2">GAOPING · IMPERIAL FORTRESS</text>
+</svg></div>
 <header class="day-header">
 <div class="day-no-block">
 <div class="day-no-cn">伍</div>
