@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>五一晋豫古建+南太行 5日反向自驾攻略</title>
+<title>五一晋豫古建+南太行 6日自驾(5/1早出发)</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
@@ -17,7 +17,7 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
 .container{max-width:980px;margin:0 auto;padding:clamp(14px,3vw,28px)}
 .overview{background:#fff;border-radius:14px;padding:clamp(16px,3vw,28px);margin:20px 0;box-shadow:0 2px 12px rgba(139,58,31,.08);border-left:4px solid #c95d2e}
 .overview h2{color:#8b3a1f;font-size:clamp(17px,2.6vw,22px);margin-bottom:12px}
-.overview p{font-size:clamp(13px,2vw,15px);color:#5a4a3a}
+.overview p{font-size:clamp(13px,2vw,15px);color:#5a4a3a;margin-bottom:8px}
 #map{height:clamp(280px,55vw,460px);width:100%;border-radius:14px;margin:20px 0;box-shadow:0 4px 16px rgba(0,0,0,.12)}
 .day-card{background:#fff;border-radius:14px;margin:22px 0;overflow:hidden;box-shadow:0 3px 16px rgba(139,58,31,.08);transition:transform .2s}
 .day-card:hover{transform:translateY(-2px)}
@@ -50,46 +50,52 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
 </head>
 <body>
 <div class="hero">
-<h1>晋豫古建 · 南太行 · 反向五日</h1>
-<div class="sub">远→近 · 西安出发 · 电车 400km 续航友好</div>
+<h1>晋豫古建 · 南太行 · 6日自驾</h1>
+<div class="sub">5/1 早出发 · 西安启程 · 电车 400km 续航友好</div>
 <div class="meta">
-<span>🗓 5/1 - 5/6</span><span>🚗 ~2,330 km</span><span>🏯 唐宋元明古建</span><span>🏔 南太行小众</span><span>🛒 胖东来朝圣</span>
+<span>🗓 5/1 - 5/6 共 6 天</span><span>🚗 ~2,250 km</span><span>🏯 唐宋元明古建</span><span>🏔 南太行小众</span><span>🛒 胖东来朝圣</span>
 </div>
 </div>
 <div class="container">
 <div class="overview">
-<h2>📍 路线总览</h2>
-<p>反向规划：第一天直接干到太原，把最远的山西先玩；中段穿太行接河南胖东来；后段晋城古建群慢慢往西走，最后一天顺路收长平，傍晚到家。<strong>避开了郭亮村人潮</strong>，南太行走小众的关山+回龙天界山。</p>
+<h2>📍 路线总览（最新版）</h2>
+<p><b>D1</b> 西安 → 解州关帝庙 → 平遥古城（住平遥古城内）</p>
+<p><b>D2</b> 平遥 → 佛光寺 → 南禅寺 → 五台县城</p>
+<p><b>D3</b> 五台 → 新乡胖东来 → 辉县</p>
+<p><b>D4</b> 关山 + 回龙挂壁 → 晋城</p>
+<p><b>D5</b> 皇城相府 + 郭峪 + 铁佛寺 → 高平</p>
+<p><b>D6</b> 长平之战遗址 → 西安</p>
+<p style="margin-top:10px;color:#8b3a1f"><b>⚠️ 第一天最关键：6:30 准时出发</b>，不然平遥夜景就来不及了。</p>
 </div>
 <div id="map"></div>
 
 <div class="day-card">
 <div class="day-head">
-<div><span class="dno">D0</span><span class="date">5/1 (周五)</span></div>
-<h3>西安 → 太原（高速冲刺日）</h3>
-<div class="km">📏 约 620 km · 7h 纯开车</div>
+<div><span class="dno">D1</span><span class="date">5/1 (周五)</span></div>
+<h3>西安 → 解州关帝庙 → 平遥古城</h3>
+<div class="km">📏 约 630 km · 7h 纯开车 + 2 个景点</div>
 </div>
 <div class="day-body">
-<div class="hl-line">✨ 破冰前进，把最远的距离一次性解决</div>
-<div class="route-line">🛣 西安 → 太原</div>
-<div class="stops"><div class="stop"><div class="icon">🚗</div><div class="info"><div class="name">西安出发</div><div class="tip">早 7:00 出发，中午高速服务区简餐</div></div></div><div class="stop"><div class="icon">⚡</div><div class="info"><div class="name">运城服务区充电</div><div class="tip">电车补能点，约 380km 处</div></div></div><div class="stop"><div class="icon">🏨</div><div class="info"><div class="name">太原入住</div><div class="tip">建议住食品街/钟楼街附近，晚饭：郝刚刚羊杂割 + 认一力饺子</div></div></div></div>
+<div class="hl-line">✨ 早起冲！关公祖庙 + 平遥夜景一天双杀</div>
+<div class="route-line">🛣 西安 → 解州关帝庙 → 平遥古城 (住)</div>
+<div class="stops"><div class="stop"><div class="icon">🚗</div><div class="info"><div class="name">西安出发</div><div class="tip">⏰ 早 6:30 出发，G5/G55 高速直奔运城</div></div></div><div class="stop"><div class="icon">⚔️</div><div class="info"><div class="name">解州关帝庙</div><div class="tip">11:00 抵达，关公祖庙，全国规模最大；游玩 1.5-2h；附近吃运城羊肉泡 + 北相羊肉胡卜</div></div></div><div class="stop"><div class="icon">🏯</div><div class="info"><div class="name">平遥古城</div><div class="tip">14:30 抵达入住古城内民宿，停车在城外停车场（古城内禁机动车）；下午刷古城墙+县衙+日升昌票号</div></div></div><div class="stop"><div class="icon">🏮</div><div class="info"><div class="name">平遥夜游</div><div class="tip">🌙 晚饭后明清街红灯笼亮起，必拍；推荐又见平遥/夜游古城</div></div></div></div>
 <div class="foot-line">
-<div><span class="lbl">🍜 美食</span>晚餐：郝刚刚羊杂割（晋祠路总店）/ 认一力蒸饺</div>
-<div><span class="lbl">🏨 住宿</span>太原 · 食品街/钟楼街片区</div>
+<div><span class="lbl">🍜 美食</span>午餐：运城北相羊肉胡卜 / 解州羊肉泡；晚餐：平遥牛肉 + 栲栳栳 + 碗托（云锦成/天元奎）</div>
+<div><span class="lbl">🏨 住宿</span>平遥古城内民宿（推荐：洪善驿/云锦成）</div>
 </div>
 </div>
 </div>
 
 <div class="day-card">
 <div class="day-head">
-<div><span class="dno">D1</span><span class="date">5/2 (周六)</span></div>
-<h3>五台山双寺日：南禅寺 + 佛光寺</h3>
-<div class="km">📏 太原 → 南禅 → 佛光 → 五台县 约 280 km</div>
+<div><span class="dno">D2</span><span class="date">5/2 (周六)</span></div>
+<h3>平遥 → 五台山双寺日：南禅寺 + 佛光寺</h3>
+<div class="km">📏 平遥 → 五台县 约 290 km</div>
 </div>
 <div class="day-body">
 <div class="hl-line">✨ 中国现存最古老两座唐代木构，硬核古建党的圣地</div>
-<div class="route-line">🛣 太原 → 五台县豆村 → 佛光寺 → 阳白乡 → 南禅寺 → 五台县城</div>
-<div class="stops"><div class="stop"><div class="icon">🛕</div><div class="info"><div class="name">南禅寺</div><div class="tip">建于 782 年，中国现存最早木构建筑，单檐歇山，必看</div></div></div><div class="stop"><div class="icon">🛕</div><div class="info"><div class="name">佛光寺东大殿</div><div class="tip">梁思成 1937 年发现，'中国第一国宝'，唐代彩塑壁画俱全</div></div></div><div class="stop"><div class="icon">🪔</div><div class="info"><div class="name">五爷庙(顺路)</div><div class="tip">如时间允许傍晚顺访，香火最旺</div></div></div></div>
+<div class="route-line">🛣 平遥 → 太长高速 → 豆村 → 佛光寺 → 阳白乡 → 南禅寺 → 五台县城</div>
+<div class="stops"><div class="stop"><div class="icon">🛕</div><div class="info"><div class="name">佛光寺东大殿</div><div class="tip">梁思成 1937 年发现，'中国第一国宝'，唐代彩塑壁画俱全；建议先到佛光寺（光线好）</div></div></div><div class="stop"><div class="icon">🛕</div><div class="info"><div class="name">南禅寺</div><div class="tip">建于 782 年，中国现存最早木构建筑，单檐歇山，规模小但意义大</div></div></div><div class="stop"><div class="icon">🪔</div><div class="info"><div class="name">五爷庙(顺路)</div><div class="tip">如时间允许傍晚顺访台怀镇，香火最旺</div></div></div></div>
 <div class="foot-line">
 <div><span class="lbl">🍜 美食</span>午餐：豆村农家饸饹面；晚餐：五台县城莜面栲栳栳 + 台蘑炖鸡</div>
 <div><span class="lbl">🏨 住宿</span>五台县城（避开台怀镇高价住宿）</div>
@@ -99,16 +105,16 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
 
 <div class="day-card">
 <div class="day-head">
-<div><span class="dno">D2</span><span class="date">5/3 (周日)</span></div>
+<div><span class="dno">D3</span><span class="date">5/3 (周日)</span></div>
 <h3>穿越太行 → 新乡胖东来 → 入山辉县</h3>
 <div class="km">📏 五台 → 新乡 约 530 km</div>
 </div>
 <div class="day-body">
 <div class="hl-line">✨ 服务业天花板朝圣 + 中原胡辣汤补给</div>
 <div class="route-line">🛣 五台 → 太长高速 → 长治 → 新乡（胖东来）→ 辉县</div>
-<div class="stops"><div class="stop"><div class="icon">🛒</div><div class="info"><div class="name">新乡胖东来生活广场</div><div class="tip">下午抵达，逛 2-3h，零售业天花板，水果/烘焙/超市必体验</div></div></div><div class="stop"><div class="icon">⛩️</div><div class="info"><div class="name">比干庙(可选)</div><div class="tip">卫辉市，林氏祖庭，时间紧可跳过</div></div></div><div class="stop"><div class="icon">🏨</div><div class="info"><div class="name">入住辉县</div><div class="tip">为明天南太行做准备，缩短早晨车程</div></div></div></div>
+<div class="stops"><div class="stop"><div class="icon">🍜</div><div class="info"><div class="name">早餐补给</div><div class="tip">出发前吃个台蘑面，加满电出发</div></div></div><div class="stop"><div class="icon">🛒</div><div class="info"><div class="name">新乡胖东来生活广场</div><div class="tip">下午抵达，逛 2-3h，零售业天花板，水果/烘焙/超市必体验；可买点烘焙带去酒店当宵夜</div></div></div><div class="stop"><div class="icon">⛩️</div><div class="info"><div class="name">比干庙(可选)</div><div class="tip">卫辉市，林氏祖庭，时间紧可跳过</div></div></div><div class="stop"><div class="icon">🏨</div><div class="info"><div class="name">入住辉县</div><div class="tip">为明天南太行做准备，缩短早晨车程</div></div></div></div>
 <div class="foot-line">
-<div><span class="lbl">🍜 美食</span>早餐：方中山/老开元胡辣汤 + 水煎包；晚餐：新乡红焖羊肉（五一路老白家）</div>
+<div><span class="lbl">🍜 美食</span>晚餐：新乡红焖羊肉（五一路老白家）/ 道口烧鸡；夜宵：胖东来烘焙</div>
 <div><span class="lbl">🏨 住宿</span>辉县市区 · 商务酒店</div>
 </div>
 </div>
@@ -116,31 +122,31 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
 
 <div class="day-card">
 <div class="day-head">
-<div><span class="dno">D3</span><span class="date">5/4 (周一)</span></div>
+<div><span class="dno">D4</span><span class="date">5/4 (周一)</span></div>
 <h3>南太行小众线：关山 + 回龙天界山</h3>
 <div class="km">📏 辉县环线 约 180 km</div>
 </div>
 <div class="day-body">
 <div class="hl-line">✨ 避开郭亮人潮，走南太行真正车少的两座顶配景区</div>
-<div class="route-line">🛣 辉县 → 上八里镇 → 关山地质公园 → 回龙天界山(挂壁) → 辉县</div>
-<div class="stops"><div class="stop"><div class="icon">🏔️</div><div class="info"><div class="name">关山国家地质公园</div><div class="tip">亿年红岩绝壁，盘山到山顶停车场，老人友好；比郭亮人少 70%</div></div></div><div class="stop"><div class="icon">🛣️</div><div class="info"><div class="name">回龙挂壁公路</div><div class="tip">南太行第二条挂壁，开车穿越，老爷顶可俯瞰中原</div></div></div><div class="stop"><div class="icon">💦</div><div class="info"><div class="name">宝泉(机动)</div><div class="tip">如还有体力，傍晚可加宝泉 5A 看翡翠瀑布；累了直接回酒店</div></div></div></div>
+<div class="route-line">🛣 辉县 → 上八里镇 → 关山地质公园 → 回龙天界山(挂壁) → 晋城</div>
+<div class="stops"><div class="stop"><div class="icon">🍲</div><div class="info"><div class="name">胡辣汤早餐</div><div class="tip">🍲 辉县街边方中山/老开元胡辣汤 + 水煎包，河南早餐顶配</div></div></div><div class="stop"><div class="icon">🏔️</div><div class="info"><div class="name">关山国家地质公园</div><div class="tip">亿年红岩绝壁，盘山到山顶停车场，老人友好；比郭亮人少 70%</div></div></div><div class="stop"><div class="icon">🛣️</div><div class="info"><div class="name">回龙挂壁公路</div><div class="tip">南太行第二条挂壁，开车穿越，老爷顶可俯瞰中原</div></div></div><div class="stop"><div class="icon">🚗</div><div class="info"><div class="name">驱车赴晋城</div><div class="tip">傍晚翻山到晋城，缩短明日车程；约 130km</div></div></div></div>
 <div class="foot-line">
-<div><span class="lbl">🍜 美食</span>午餐：山顶农家乐山韭菜炒鸡蛋 + 太行小米粥；晚餐：辉县烧鸡 + 凉粉</div>
-<div><span class="lbl">🏨 住宿</span>辉县或晋城（推荐晋城，缩短明日车程）</div>
+<div><span class="lbl">🍜 美食</span>早餐：胡辣汤+水煎包；午餐：山顶农家乐山韭菜炒鸡蛋；晚餐：晋城过油肉 + 烧大葱</div>
+<div><span class="lbl">🏨 住宿</span>晋城市区</div>
 </div>
 </div>
 </div>
 
 <div class="day-card">
 <div class="day-head">
-<div><span class="dno">D4</span><span class="date">5/5 (周二)</span></div>
-<h3>晋城古建大满贯：皇城相府 + 郭峪 + 铁佛寺</h3>
-<div class="km">📏 辉县 → 晋城 → 高平 约 200 km</div>
+<div><span class="dno">D5</span><span class="date">5/5 (周二)</span></div>
+<h3>晋城古建大满贯：皇城相府 + 郭峪 + 铁佛寺 → 高平</h3>
+<div class="km">📏 晋城 → 高平 约 100 km</div>
 </div>
 <div class="day-body">
 <div class="hl-line">✨ 明清古堡 + 元代彩塑双重暴击</div>
 <div class="route-line">🛣 晋城 → 阳城皇城相府 → 郭峪古城 → 高平铁佛寺 → 高平</div>
-<div class="stops"><div class="stop"><div class="icon">🏯</div><div class="info"><div class="name">皇城相府</div><div class="tip">陈廷敬故居 5A，明清官宅古堡，午前抵达避开正午暴晒</div></div></div><div class="stop"><div class="icon">🏰</div><div class="info"><div class="name">郭峪古城</div><div class="tip">皇城对面，门票便宜人少，明代蜂窝城堡 + 汤帝庙</div></div></div><div class="stop"><div class="icon">🗿</div><div class="info"><div class="name">高平铁佛寺</div><div class="tip">元代二十四诸天彩塑，'东方造像艺术宝库'，需预约</div></div></div><div class="stop"><div class="icon">🎨</div><div class="info"><div class="name">开化寺(机动)</div><div class="tip">宋代壁画，舍利塔，时间允许必看</div></div></div></div>
+<div class="stops"><div class="stop"><div class="icon">🏯</div><div class="info"><div class="name">皇城相府</div><div class="tip">陈廷敬故居 5A，明清官宅古堡，午前抵达避开正午暴晒</div></div></div><div class="stop"><div class="icon">🏰</div><div class="info"><div class="name">郭峪古城</div><div class="tip">皇城对面，门票便宜人少，明代蜂窝城堡 + 汤帝庙</div></div></div><div class="stop"><div class="icon">🗿</div><div class="info"><div class="name">高平铁佛寺</div><div class="tip">⚠️ 元代二十四诸天彩塑，'东方造像艺术宝库'，必须提前 1-3 天预约</div></div></div><div class="stop"><div class="icon">🎨</div><div class="info"><div class="name">开化寺(机动)</div><div class="tip">宋代壁画，舍利塔，时间允许必看</div></div></div></div>
 <div class="foot-line">
 <div><span class="lbl">🍜 美食</span>午餐：阳城烧肝 + 杂格；晚餐：高平十大碗 / 烧豆腐</div>
 <div><span class="lbl">🏨 住宿</span>高平市区</div>
@@ -150,7 +156,7 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
 
 <div class="day-card">
 <div class="day-head">
-<div><span class="dno">D5</span><span class="date">5/6 (周三)</span></div>
+<div><span class="dno">D6</span><span class="date">5/6 (周三)</span></div>
 <h3>长平古战场 → 返程西安</h3>
 <div class="km">📏 高平 → 西安 约 520 km · 6.5h</div>
 </div>
@@ -168,16 +174,17 @@ body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;backgr
 <div class="tips">
 <h2>🎯 关键 Tips</h2>
 <ul>
-<li><b>电车补能</b>：D0 运城/侯马服务区；D2 长治服务区；D5 运城/三门峡服务区，全段国家电网+特来电覆盖</li>
-<li><b>南禅寺/佛光寺</b>：山西博物院公众号可查开放，无需门票（佛光寺 15 元），上午光线最好拍东大殿</li>
-<li><b>南太行避坑</b>：避开郭亮村（万仙山主景区，人多），选关山+回龙；宝泉只作机动备选</li>
-<li><b>胖东来</b>：周日下午是峰值，建议工作日去；可买烘焙带回酒店当宵夜</li>
+<li><b>D1 时间死线</b>：6:30 出发 → 11:00 解州关帝庙 → 14:30 平遥入住 → 下午刷古城+晚上夜游。晚出发 1h 平遥夜景就废</li>
+<li><b>平遥住宿</b>：必须订古城内民宿（推荐 洪善驿客栈/云锦成/天元奎），停车在城外北门停车场（30元/晚）</li>
+<li><b>电车补能</b>：D1 渭南/侯马服务区；D3 长治服务区；D6 运城/三门峡服务区</li>
+<li><b>南禅/佛光</b>：建议先佛光（早上光线好拍东大殿），再南禅；佛光门票 15 元，南禅 15 元</li>
+<li><b>南太行避坑</b>：放弃郭亮村（人多车堵），选关山+回龙；宝泉只作机动备选</li>
+<li><b>胖东来</b>：周日下午是峰值，挤；可买烘焙带去辉县当宵夜</li>
 <li><b>铁佛寺</b>：必须提前 1-3 天预约（高平文旅公众号），元代二十四诸天彩塑限流</li>
-<li><b>返程节奏</b>：D5 早 8 点出发，途中只停 1 次充电+午餐，19 点前到西安</li>
-<li><b>不去清单</b>：郭亮村❌ 茶卡盐湖❌ 大同云冈（绕远）❌ 平遥（D0/D5 都可顺，但同质化）</li>
+<li><b>D6 返程</b>：早 8 点出发，途中 1 次充电+午餐，19 点前到西安</li>
 </ul>
 </div>
-<div class="foot">五一快乐 🌸 · 古建党 + 南太行车少线 · v1</div>
+<div class="foot">五一快乐 🌸 · 晋豫古建+南太行+胖东来 · v2 (5/1早出发版)</div>
 </div>
 
 <script>
@@ -185,8 +192,8 @@ var map = L.map('map').setView([36.5, 112.5], 7);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© OSM', maxZoom: 18
 }).addTo(map);
-var pts = [[34.341, 108.94], [37.87, 112.548], [38.957, 113.286], [38.728, 112.708], [35.303, 113.926], [35.462, 113.806], [35.47, 113.53], [35.58, 113.7], [35.491, 112.851], [35.797, 112.923], [34.341, 108.94]];
-var labels = ["西安出发", "D0 太原住", "D1 五台·南禅佛光", "五台县城", "D2 新乡胖东来", "D2 入住辉县", "D3 关山地质", "D3 回龙挂壁", "D4 皇城相府", "D4 高平铁佛寺", "D5 返西安"];
+var pts = [[34.341, 108.94], [34.984, 110.687], [37.201, 112.176], [38.866, 113.397], [38.911, 113.156], [38.728, 112.708], [35.303, 113.926], [35.462, 113.806], [35.47, 113.53], [35.58, 113.7], [35.49, 112.851], [35.491, 112.45], [35.797, 112.923], [34.341, 108.94]];
+var labels = ["D1 西安出发", "D1 解州关帝庙", "D1 平遥古城(住)", "D2 佛光寺", "D2 南禅寺", "D2 五台县城", "D3 新乡胖东来", "D3 辉县(住)", "D4 关山", "D4 回龙挂壁", "D4-5 晋城", "D5 皇城相府", "D5 高平铁佛寺", "D6 返西安"];
 L.polyline(pts, {color:'#c95d2e', weight:4, opacity:.85, dashArray:'8,6'}).addTo(map);
 pts.forEach(function(p,i){
   L.marker(p).addTo(map).bindPopup('<b>'+labels[i]+'</b>');
