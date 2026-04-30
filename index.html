@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <title>晋豫古建五日 · 庚寅纪行</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -11,10 +11,10 @@
 :root{
   --paper:#efe7d6; --paper-2:#e8dec7; --ink:#1a1612; --ink-soft:#3d352a;
   --vermillion:#a8321a; --vermillion-dark:#7a2110; --gold:#a8893a;
-  --rule:#8a7560; --shadow:rgba(26,22,18,.12);
+  --rule:#8a7560; --green:#5a7d3a;
 }
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{background:var(--paper);color:var(--ink);
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--paper);color:var(--ink);overflow-x:hidden;
   font-family:"Noto Sans SC",-apple-system,sans-serif;line-height:1.75;
   background-image:
     radial-gradient(circle at 20% 10%,rgba(168,50,26,.04) 0,transparent 40%),
@@ -22,169 +22,230 @@ html,body{background:var(--paper);color:var(--ink);
     repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(26,22,18,.012) 2px,rgba(26,22,18,.012) 4px);
 }
 
-/* ========== 顶栏 ========== */
 .topbar{position:sticky;top:0;z-index:100;background:rgba(239,231,214,.96);
   backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);
-  padding:14px clamp(16px,4vw,40px);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:12px}
-.seal{width:38px;height:38px;background:var(--vermillion);color:var(--paper);
+  padding:12px clamp(14px,4vw,40px);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.seal{width:36px;height:36px;background:var(--vermillion);color:var(--paper);
   display:flex;align-items:center;justify-content:center;font-family:"Noto Serif SC",serif;
-  font-weight:900;font-size:18px;border-radius:3px;box-shadow:1px 1px 0 var(--ink);letter-spacing:1px}
-.brand-text{font-family:"Noto Serif SC",serif;font-weight:600;font-size:clamp(14px,2vw,16px);letter-spacing:2px}
-.brand-text small{display:block;font-size:11px;color:var(--ink-soft);letter-spacing:4px;font-weight:400}
+  font-weight:900;font-size:17px;border-radius:3px;box-shadow:1px 1px 0 var(--ink);letter-spacing:1px;flex-shrink:0}
+.brand-text{font-family:"Noto Serif SC",serif;font-weight:600;font-size:clamp(13px,2vw,15px);letter-spacing:2px}
+.brand-text small{display:block;font-size:10px;color:var(--ink-soft);letter-spacing:3px;font-weight:400}
 
-.tab-bar{display:flex;gap:0;border:1px solid var(--ink);border-radius:0;background:var(--paper);overflow:hidden}
-.tab-btn{padding:8px 22px;background:transparent;border:none;cursor:pointer;
-  font-family:"Noto Serif SC",serif;font-size:14px;font-weight:600;letter-spacing:3px;color:var(--ink-soft);
-  border-right:1px solid var(--ink);transition:all .25s}
+.tab-bar{display:flex;gap:0;border:1px solid var(--ink);background:var(--paper);overflow:hidden;flex-shrink:0}
+.tab-btn{padding:7px clamp(10px,2.5vw,18px);background:transparent;border:none;cursor:pointer;
+  font-family:"Noto Serif SC",serif;font-size:clamp(11px,1.6vw,13px);font-weight:600;letter-spacing:2px;color:var(--ink-soft);
+  border-right:1px solid var(--ink);transition:all .25s;white-space:nowrap}
 .tab-btn:last-child{border-right:none}
 .tab-btn.active{background:var(--ink);color:var(--paper)}
 .tab-btn:hover:not(.active){background:rgba(26,22,18,.06)}
 
-/* ========== Hero ========== */
-.hero{padding:clamp(60px,10vw,120px) clamp(20px,5vw,60px) clamp(40px,7vw,80px);
+.hero{padding:clamp(50px,9vw,110px) clamp(20px,5vw,60px) clamp(36px,6vw,72px);
   border-bottom:2px solid var(--ink);position:relative;overflow:hidden}
 .hero::before{content:"";position:absolute;top:30px;right:30px;
-  width:clamp(80px,12vw,140px);height:clamp(80px,12vw,140px);
+  width:clamp(70px,12vw,140px);height:clamp(70px,12vw,140px);
   background:var(--vermillion);opacity:.08;
   clip-path:polygon(50% 0,100% 38%,82% 100%,18% 100%,0 38%)}
-.hero-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:30px;position:relative;z-index:1}
-.hero-tag{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:clamp(14px,1.8vw,18px);
+.hero-grid{max-width:1100px;margin:0 auto;display:grid;gap:24px;position:relative;z-index:1}
+.hero-tag{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:clamp(13px,1.8vw,18px);
   color:var(--vermillion);letter-spacing:2px;border-left:3px solid var(--vermillion);padding-left:12px}
 .hero-title{font-family:"Noto Serif SC",serif;font-weight:900;
-  font-size:clamp(38px,8vw,84px);line-height:1.05;letter-spacing:-1px;color:var(--ink)}
+  font-size:clamp(34px,8vw,84px);line-height:1.05;letter-spacing:-1px}
 .hero-title .v{color:var(--vermillion)}
-.hero-sub{font-family:"Noto Serif SC",serif;font-weight:400;
-  font-size:clamp(16px,2.4vw,22px);color:var(--ink-soft);letter-spacing:6px}
-.hero-meta{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px}
-.hero-meta span{padding:6px 14px;border:1px solid var(--ink);
-  font-size:12px;letter-spacing:2px;font-weight:500;background:rgba(255,255,255,.4)}
-.hero-rule{height:1px;background:var(--ink);margin:8px 0;width:80px}
+.hero-sub{font-family:"Noto Serif SC",serif;font-size:clamp(15px,2.4vw,22px);color:var(--ink-soft);letter-spacing:5px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.hero-meta span{padding:5px 12px;border:1px solid var(--ink);
+  font-size:11px;letter-spacing:2px;font-weight:500;background:rgba(255,255,255,.4)}
+.hero-rule{height:1px;background:var(--ink);margin:6px 0;width:80px}
 
-/* ========== 主区 ========== */
 .tab-pane{display:none;animation:fadeIn .4s}
 .tab-pane.active{display:block}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.container{max-width:1100px;margin:0 auto;padding:clamp(24px,4vw,48px) clamp(20px,4vw,48px)}
+.container{max-width:1100px;margin:0 auto;padding:clamp(20px,4vw,48px) clamp(16px,4vw,48px)}
 
-/* ========== 行程 Tab ========== */
 .section-title{font-family:"Noto Serif SC",serif;font-weight:900;
-  font-size:clamp(20px,3vw,28px);letter-spacing:6px;margin:40px 0 24px;
-  display:flex;align-items:center;gap:18px;color:var(--ink)}
-.section-title::before{content:"";width:6px;height:28px;background:var(--vermillion)}
+  font-size:clamp(18px,3vw,28px);letter-spacing:5px;margin:36px 0 22px;
+  display:flex;align-items:center;gap:14px}
+.section-title::before{content:"";width:5px;height:24px;background:var(--vermillion);flex-shrink:0}
 .section-title .en{font-family:"Cormorant Garamond",serif;font-weight:400;font-style:italic;
-  font-size:14px;letter-spacing:2px;color:var(--ink-soft);margin-left:auto}
+  font-size:13px;letter-spacing:2px;color:var(--ink-soft);margin-left:auto;text-align:right}
 
-#map{height:clamp(320px,55vw,500px);width:100%;
-  border:1px solid var(--ink);box-shadow:6px 6px 0 var(--ink);margin-bottom:50px;background:#fff}
+#map{height:clamp(280px,52vw,460px);width:100%;background:#e8dec7;
+  border:1px solid var(--ink);box-shadow:5px 5px 0 var(--ink);margin-bottom:14px}
+.map-loading{display:flex;align-items:center;justify-content:center;height:100%;color:var(--ink-soft);font-size:13px}
+.map-cap{text-align:center;font-family:"Cormorant Garamond",serif;font-style:italic;
+  font-size:12px;color:var(--ink-soft);margin-bottom:30px;letter-spacing:1px}
 
-.day-section{margin:40px 0;padding-top:40px;border-top:1px solid var(--rule);position:relative}
-.day-header{display:grid;grid-template-columns:auto 1fr;gap:clamp(20px,4vw,40px);align-items:start;margin-bottom:24px}
-.day-no-block{text-align:center;padding-right:clamp(20px,3vw,30px);border-right:1px solid var(--rule)}
+.abstract-map{margin:30px 0 50px;border:1px solid var(--ink);
+  box-shadow:5px 5px 0 var(--ink);background:var(--paper);overflow:hidden}
+
+.day-section{margin:36px 0;padding-top:36px;border-top:1px solid var(--rule)}
+.day-header{display:grid;grid-template-columns:auto 1fr;gap:clamp(16px,4vw,40px);align-items:start;margin-bottom:20px}
+.day-no-block{text-align:center;padding-right:clamp(14px,3vw,28px);border-right:1px solid var(--rule)}
 .day-no-cn{font-family:"Noto Serif SC",serif;font-weight:900;
-  font-size:clamp(48px,8vw,88px);line-height:1;color:var(--vermillion)}
-.day-no-en{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:13px;
-  letter-spacing:3px;color:var(--ink-soft);margin-top:6px}
-.day-title-block{padding-top:8px}
-.day-date{font-size:12px;letter-spacing:3px;color:var(--ink-soft);text-transform:uppercase;margin-bottom:6px}
+  font-size:clamp(44px,8vw,88px);line-height:1;color:var(--vermillion)}
+.day-no-en{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:12px;
+  letter-spacing:3px;color:var(--ink-soft);margin-top:4px}
+.day-title-block{padding-top:6px;min-width:0}
+.day-date{font-size:11px;letter-spacing:3px;color:var(--ink-soft);text-transform:uppercase;margin-bottom:5px}
 .day-title{font-family:"Noto Serif SC",serif;font-weight:900;
-  font-size:clamp(22px,3.5vw,34px);letter-spacing:4px;line-height:1.2;color:var(--ink)}
-.day-subtitle{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:clamp(14px,2vw,17px);
-  color:var(--vermillion);margin-top:4px;letter-spacing:1px}
-.day-meta{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
-.km-badge{font-size:11px;padding:4px 12px;background:var(--ink);color:var(--paper);
-  font-weight:500;letter-spacing:2px}
-.day-quote{font-family:"Noto Serif SC",serif;font-style:normal;
-  font-size:clamp(14px,2vw,17px);color:var(--ink-soft);font-weight:400;
-  padding:18px clamp(16px,3vw,28px);background:rgba(168,50,26,.05);
-  border-left:3px solid var(--vermillion);margin-bottom:24px;letter-spacing:1px;line-height:1.9}
+  font-size:clamp(20px,3.5vw,34px);letter-spacing:3px;line-height:1.2}
+.day-subtitle{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:clamp(13px,2vw,17px);
+  color:var(--vermillion);margin-top:3px;letter-spacing:1px}
+.day-meta{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.km-badge{font-size:11px;padding:4px 10px;background:var(--ink);color:var(--paper);font-weight:500;letter-spacing:2px}
+.day-quote{font-size:clamp(13px,2vw,16px);color:var(--ink-soft);
+  padding:14px clamp(14px,3vw,24px);background:rgba(168,50,26,.05);
+  border-left:3px solid var(--vermillion);margin-bottom:20px;letter-spacing:1px;line-height:1.85}
 
-.stops-grid{display:flex;flex-direction:column;gap:0;margin-left:clamp(0px,3vw,24px)}
-.stop-row{display:grid;grid-template-columns:60px 24px 1fr;gap:0;padding:14px 0;position:relative;align-items:start}
-.time-cell{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:18px;
+.stops-grid{display:flex;flex-direction:column;margin-left:clamp(0px,3vw,20px)}
+.stop-row{display:grid;grid-template-columns:54px 22px 1fr;gap:0;padding:12px 0;align-items:start}
+.time-cell{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:16px;
   color:var(--vermillion);padding-top:2px}
 .stop-line{position:relative;display:flex;justify-content:center}
-.stop-line::before{content:"";position:absolute;top:0;bottom:-28px;left:50%;
+.stop-line::before{content:"";position:absolute;top:0;bottom:-24px;left:50%;
   width:1px;background:var(--rule);transform:translateX(-50%)}
-.stop-line::after{content:"";width:11px;height:11px;background:var(--paper);
+.stop-line::after{content:"";width:10px;height:10px;background:var(--paper);
   border:2px solid var(--vermillion);border-radius:50%;margin-top:6px;position:relative;z-index:1}
 .stop-row:last-child .stop-line::before{display:none}
-.stop-content{padding-left:14px}
-.stop-name{font-family:"Noto Serif SC",serif;font-weight:600;font-size:clamp(14px,2.1vw,17px);
-  letter-spacing:1px;color:var(--ink);margin-bottom:4px}
-.stop-tip{font-size:clamp(12px,1.8vw,14px);color:var(--ink-soft);line-height:1.7}
+.stop-content{padding-left:12px;min-width:0}
+.stop-name{font-family:"Noto Serif SC",serif;font-weight:600;font-size:clamp(13px,2.1vw,16px);
+  letter-spacing:1px;margin-bottom:4px;word-wrap:break-word}
+.stop-tip{font-size:clamp(12px,1.8vw,13.5px);color:var(--ink-soft);line-height:1.7;word-wrap:break-word}
 
-/* ========== 指挥部 Tab ========== */
-.cmd-intro{padding:24px;background:var(--ink);color:var(--paper);
+/* ===== 南太行 Tab ===== */
+.taihang-intro{padding:22px;background:var(--ink);color:var(--paper);
+  font-family:"Noto Serif SC",serif;letter-spacing:2px;margin-bottom:30px;
+  border-left:6px solid var(--gold);position:relative}
+.taihang-intro::before{content:"南太行";position:absolute;top:-12px;left:18px;
+  background:var(--gold);color:var(--ink);padding:3px 12px;font-size:11px;letter-spacing:3px;font-weight:600}
+.taihang-intro h3{font-size:17px;margin-bottom:8px;letter-spacing:4px}
+.taihang-intro p{font-size:13px;color:rgba(239,231,214,.85);font-weight:300;letter-spacing:1px;line-height:1.85}
+
+.route-card{background:rgba(255,255,255,.5);border:1px solid var(--ink);
+  margin-bottom:24px;box-shadow:4px 4px 0 var(--ink)}
+.route-head{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;
+  padding:16px clamp(14px,3vw,22px);border-bottom:1px solid var(--rule);background:var(--paper-2)}
+.route-code{width:48px;height:48px;background:var(--vermillion);color:var(--paper);
+  font-family:"Cormorant Garamond",serif;font-weight:700;font-size:30px;
+  display:flex;align-items:center;justify-content:center;box-shadow:2px 2px 0 var(--ink);flex-shrink:0}
+.route-titlebox{min-width:0}
+.route-name{font-family:"Noto Serif SC",serif;font-weight:900;font-size:clamp(15px,2.4vw,20px);
+  letter-spacing:2px;line-height:1.3}
+.route-path{font-size:clamp(11px,1.7vw,12.5px);color:var(--ink-soft);margin-top:3px;line-height:1.5;word-break:break-all}
+.route-rec{padding:5px 12px;font-family:"Noto Serif SC",serif;font-weight:600;font-size:12px;
+  letter-spacing:2px;flex-shrink:0;align-self:flex-start;white-space:nowrap}
+.rec-strong{background:var(--vermillion);color:var(--paper)}
+.rec-normal{background:var(--gold);color:var(--ink)}
+.rec-mute{background:var(--paper);color:var(--ink-soft);border:1px solid var(--rule)}
+
+.route-meta{display:flex;flex-wrap:wrap;gap:10px;padding:12px clamp(14px,3vw,22px);
+  font-size:12px;color:var(--ink-soft);background:rgba(168,50,26,.04);border-bottom:1px solid var(--rule)}
+.route-meta span{padding:4px 10px;background:var(--paper);border:1px solid var(--rule)}
+.route-meta b{color:var(--vermillion);font-family:"Cormorant Garamond",serif;font-size:14px;margin-right:3px}
+.route-ticket{flex:1;min-width:160px}
+
+.route-body{display:grid;grid-template-columns:1fr;gap:0;padding:0}
+@media(min-width:720px){.route-body{grid-template-columns:1fr 1fr}}
+.route-col{padding:18px clamp(14px,3vw,22px)}
+.route-col + .route-col{border-top:1px dashed var(--rule)}
+@media(min-width:720px){
+  .route-col + .route-col{border-top:none;border-left:1px dashed var(--rule)}
+}
+.route-col h4{font-family:"Noto Serif SC",serif;font-weight:600;font-size:13px;
+  letter-spacing:3px;color:var(--ink);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.route-col h4::before{content:"";width:14px;height:1px;background:var(--vermillion)}
+.dot-ul{list-style:none;padding:0;margin:0}
+.dot-ul li{padding:5px 0 5px 14px;position:relative;font-size:13px;color:var(--ink-soft);line-height:1.7}
+.dot-ul li::before{content:"";width:5px;height:5px;background:var(--vermillion);
+  border-radius:50%;position:absolute;left:0;top:13px}
+.plain-ul{list-style:none;padding:0;margin:0}
+.plain-ul li{padding:4px 0;font-size:12.5px;line-height:1.7}
+.plain-ul li.pro{color:var(--green)}
+.plain-ul li.con{color:var(--vermillion)}
+.plain-ul li.risk{color:var(--gold);font-weight:500}
+
+.score-grid{display:flex;flex-direction:column;gap:6px}
+.score-row{display:grid;grid-template-columns:48px 1fr 36px;gap:10px;align-items:center;font-size:12px}
+.score-label{color:var(--ink-soft);letter-spacing:1px}
+.score-bar{height:8px;background:rgba(26,22,18,.08);position:relative;overflow:hidden}
+.score-fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--vermillion),var(--gold))}
+.score-num{font-family:"Cormorant Garamond",serif;font-weight:600;color:var(--vermillion);text-align:right}
+
+/* ===== 指挥部 ===== */
+.cmd-intro{padding:22px;background:var(--ink);color:var(--paper);
   font-family:"Noto Serif SC",serif;letter-spacing:2px;margin-bottom:30px;
   border-left:6px solid var(--vermillion);position:relative}
-.cmd-intro::before{content:"指挥部";position:absolute;top:-12px;left:20px;
-  background:var(--vermillion);color:var(--paper);padding:3px 14px;font-size:11px;letter-spacing:4px}
-.cmd-intro h3{font-size:18px;margin-bottom:10px;letter-spacing:4px}
-.cmd-intro p{font-size:13px;color:rgba(239,231,214,.8);font-weight:300;letter-spacing:1px;line-height:1.8}
+.cmd-intro::before{content:"指挥部";position:absolute;top:-12px;left:18px;
+  background:var(--vermillion);color:var(--paper);padding:3px 12px;font-size:11px;letter-spacing:3px}
+.cmd-intro h3{font-size:17px;margin-bottom:8px;letter-spacing:4px}
+.cmd-intro p{font-size:13px;color:rgba(239,231,214,.85);font-weight:300;letter-spacing:1px;line-height:1.85}
 
-.cmd-block{margin:36px 0;background:rgba(255,255,255,.4);
-  border:1px solid var(--rule);padding:clamp(18px,3vw,28px)}
+.cmd-block{margin:32px 0;background:rgba(255,255,255,.45);
+  border:1px solid var(--rule);padding:clamp(16px,3vw,26px)}
 .cmd-block h3{font-family:"Noto Serif SC",serif;font-weight:900;
-  font-size:clamp(17px,2.4vw,21px);letter-spacing:4px;color:var(--ink);
-  margin-bottom:18px;padding-bottom:10px;border-bottom:2px solid var(--ink);
+  font-size:clamp(16px,2.4vw,20px);letter-spacing:3px;
+  margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--ink);
   display:flex;align-items:center;gap:10px}
-.cmd-block h3::before{content:"";width:8px;height:8px;background:var(--vermillion);transform:rotate(45deg)}
-.cmd-block h3 .en{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:13px;
-  font-weight:400;color:var(--ink-soft);letter-spacing:2px;margin-left:auto}
+.cmd-block h3::before{content:"";width:8px;height:8px;background:var(--vermillion);transform:rotate(45deg);flex-shrink:0}
+.cmd-block h3 .en{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:12px;
+  font-weight:400;color:var(--ink-soft);letter-spacing:2px;margin-left:auto;text-align:right}
 
-table{width:100%;border-collapse:collapse;font-size:clamp(12px,1.7vw,13.5px)}
-th{background:var(--ink);color:var(--paper);padding:10px 12px;text-align:left;
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:clamp(12px,1.7vw,13.5px);min-width:520px}
+th{background:var(--ink);color:var(--paper);padding:9px 11px;text-align:left;
   font-family:"Noto Serif SC",serif;font-weight:600;letter-spacing:2px;font-size:12px}
-td{padding:12px;border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.7}
+td{padding:11px;border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.7}
 tr:last-child td{border-bottom:none}
-.td-day{font-family:"Cormorant Garamond",serif;font-weight:700;color:var(--vermillion);font-size:18px;width:50px}
-.td-city{width:160px}
+.td-day{font-family:"Cormorant Garamond",serif;font-weight:700;color:var(--vermillion);font-size:17px;width:50px}
+.td-city{width:140px}
 .muted{color:var(--ink-soft);font-size:12px}
 .price-tag{display:inline-block;background:var(--vermillion);color:var(--paper);
-  padding:2px 8px;font-size:11px;letter-spacing:1px;font-weight:600}
+  padding:2px 7px;font-size:11px;letter-spacing:1px;font-weight:600}
 
-/* 矩阵 */
-.matrix-wrap{overflow-x:auto;margin:10px 0}
 .matrix{font-size:11px;min-width:780px}
-.matrix th,.matrix td{padding:7px 8px;text-align:center;border:1px solid var(--rule)}
+.matrix th,.matrix td{padding:6px 7px;text-align:center;border:1px solid var(--rule)}
 .matrix th{background:var(--ink-soft);color:var(--paper);font-size:11px;letter-spacing:1px}
-.matrix .matrix-row-h{background:var(--paper-2);font-weight:600;color:var(--ink);font-family:"Noto Serif SC",serif}
+.matrix .matrix-row-h{background:var(--paper-2);font-weight:600;font-family:"Noto Serif SC",serif}
 .matrix .matrix-cell{font-family:"Cormorant Garamond",serif;font-weight:600;color:var(--vermillion)}
 .matrix .matrix-empty{color:#bbb}
 
-/* todo */
-.todo-grid{display:grid;grid-template-columns:1fr;gap:18px}
+.todo-grid{display:grid;grid-template-columns:1fr;gap:14px}
 @media(min-width:680px){.todo-grid{grid-template-columns:1fr 1fr}}
-.todo-block{background:rgba(255,255,255,.5);padding:18px;border-left:3px solid var(--vermillion)}
+.todo-block{background:rgba(255,255,255,.55);padding:16px;border-left:3px solid var(--vermillion)}
 .todo-block h4{font-family:"Noto Serif SC",serif;font-weight:600;letter-spacing:3px;
-  color:var(--vermillion);font-size:14px;margin-bottom:10px}
+  color:var(--vermillion);font-size:13px;margin-bottom:8px}
 .todo-block ul{list-style:none;padding:0}
-.todo-block li{padding:6px 0 6px 22px;font-size:13px;color:var(--ink-soft);position:relative;line-height:1.7}
+.todo-block li{padding:5px 0 5px 22px;font-size:12.5px;color:var(--ink-soft);position:relative;line-height:1.7}
 .todo-block li::before{content:"□";position:absolute;left:0;color:var(--vermillion);font-weight:bold}
 
-/* 驾驶 */
-.drive-row{display:grid;grid-template-columns:50px 90px 1fr;gap:14px;padding:12px 0;
+.drive-row{display:grid;grid-template-columns:46px 84px 1fr;gap:12px;padding:11px 0;
   border-bottom:1px solid var(--rule);align-items:center;font-size:13px}
 .drive-row:last-child{border:none}
-.drive-day{font-family:"Cormorant Garamond",serif;font-weight:700;color:var(--vermillion);font-size:18px}
-.drive-level{color:var(--gold);letter-spacing:1px;font-size:14px}
-.drive-note{color:var(--ink-soft);line-height:1.7}
+.drive-day{font-family:"Cormorant Garamond",serif;font-weight:700;color:var(--vermillion);font-size:17px}
+.drive-level{color:var(--gold);letter-spacing:1px;font-size:13px}
+.drive-note{color:var(--ink-soft);line-height:1.7;font-size:12.5px}
 
-/* footer */
-.foot{margin-top:60px;padding:30px 20px;text-align:center;border-top:2px solid var(--ink);
+.foot{margin-top:50px;padding:28px 16px;text-align:center;border-top:2px solid var(--ink);
   font-family:"Cormorant Garamond",serif;font-style:italic;font-size:14px;color:var(--ink-soft);
   letter-spacing:2px}
-.foot-seal{display:inline-block;width:50px;height:50px;background:var(--vermillion);color:var(--paper);
-  font-family:"Noto Serif SC",serif;font-weight:900;font-size:24px;line-height:50px;margin-bottom:14px;
+.foot-seal{display:inline-block;width:48px;height:48px;background:var(--vermillion);color:var(--paper);
+  font-family:"Noto Serif SC",serif;font-weight:900;font-size:22px;line-height:48px;margin-bottom:12px;
   box-shadow:2px 2px 0 var(--ink)}
 
-@media(max-width:640px){
-  .topbar{padding:10px 14px}
+@media(max-width:560px){
+  .topbar{padding:8px 12px}
   .brand-text small{display:none}
-  .tab-btn{padding:6px 14px;font-size:12px;letter-spacing:1px}
-  .day-no-block{padding-right:14px}
-  .stop-row{grid-template-columns:48px 20px 1fr}
+  .seal{width:32px;height:32px;font-size:15px}
+  .tab-btn{padding:6px 10px;font-size:11px;letter-spacing:1px}
+  .day-no-block{padding-right:12px}
+  .day-no-cn{font-size:42px}
+  .stop-row{grid-template-columns:46px 18px 1fr}
+  .time-cell{font-size:13px}
+  .route-head{grid-template-columns:auto 1fr;gap:12px}
+  .route-rec{grid-column:1/-1;justify-self:start;margin-top:4px}
+  .route-code{width:42px;height:42px;font-size:24px}
+  .hero-meta span{font-size:10px;padding:4px 9px;letter-spacing:1px}
 }
 </style>
 </head>
@@ -193,11 +254,12 @@ tr:last-child td{border-bottom:none}
 <div class="topbar">
   <div class="brand">
     <div class="seal">晋</div>
-    <div class="brand-text">庚寅纪行<small>JIN YU FIVE DAYS · 五日</small></div>
+    <div class="brand-text">庚寅纪行<small>FIVE DAYS · 五日</small></div>
   </div>
   <div class="tab-bar">
-    <button class="tab-btn active" onclick="switchTab(0)">行 程</button>
-    <button class="tab-btn" onclick="switchTab(1)">指 挥 部</button>
+    <button class="tab-btn active" data-tab="0" onclick="switchTab(0)">行 程</button>
+    <button class="tab-btn" data-tab="1" onclick="switchTab(1)">南 太 行</button>
+    <button class="tab-btn" data-tab="2" onclick="switchTab(2)">指 挥 部</button>
   </div>
 </div>
 
@@ -210,17 +272,97 @@ tr:last-child td{border-bottom:none}
       <div class="hero-rule"></div>
       <div class="hero-sub">关 帝 · 平 遥 · 唐 构 · 太 行</div>
       <div class="hero-meta">
-        <span>5/1 — 5/5</span>
-        <span>2,360 km</span>
-        <span>电车 400km 续航</span>
-        <span>西安 启程 / 西安 归</span>
+        <span>5/1 — 5/5</span><span>2,300 km</span><span>电车 400km</span><span>西安 启 / 西安 归</span>
       </div>
     </div>
   </section>
 
   <div class="container">
-    <h2 class="section-title">路 线 全 览<span class="en">The Route</span></h2>
-    <div id="map"></div>
+    <h2 class="section-title">真 实 路 线<span class="en">Real Map</span></h2>
+    <div id="map"><div class="map-loading">地图加载中…</div></div>
+    <div class="map-cap">— OpenStreetMap · 实际地理位置 —</div>
+
+    <h2 class="section-title">抽 象 路 线<span class="en">Schematic</span></h2>
+    <div class="abstract-map"><svg viewBox="0 0 900 620" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+<defs>
+  <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+    <path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(26,22,18,.06)" stroke-width="1"/>
+  </pattern>
+  <pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse">
+    <circle cx="10" cy="10" r="0.8" fill="rgba(26,22,18,.15)"/>
+  </pattern>
+</defs>
+<rect width="900" height="620" fill="#efe7d6"/>
+<rect width="900" height="620" fill="url(#grid)"/>
+<rect width="900" height="620" fill="url(#dots)"/>
+
+<!-- 装饰指北针 -->
+<g transform="translate(820,90)">
+  <circle cx="0" cy="0" r="32" fill="none" stroke="#1a1612" stroke-width="2"/>
+  <polygon points="0,-26 6,0 0,6 -6,0" fill="#a8321a"/>
+  <polygon points="0,26 6,0 0,-6 -6,0" fill="#1a1612" opacity=".3"/>
+  <text x="0" y="-38" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="14" font-weight="700" fill="#1a1612">N</text>
+</g>
+
+<!-- 装饰文字 -->
+<text x="50" y="50" font-family="Noto Serif SC,serif" font-size="22" font-weight="900" fill="#1a1612" letter-spacing="6">晋 豫 五 日 路 线 抽 象 图</text>
+<text x="50" y="72" font-family="Cormorant Garamond,serif" font-style="italic" font-size="13" fill="#a8321a" letter-spacing="3">Schematic Map · Northward Journey</text>
+<line x1="50" y1="82" x2="380" y2="82" stroke="#1a1612" stroke-width="1"/>
+
+<!-- 主路线 -->
+<polyline points="90,480 230,430 330,220 430,130 580,80 660,100 740,280 800,380 750,480 670,540 90,480" fill="none" stroke="#a8321a" stroke-width="3.5" stroke-dasharray="8 6" stroke-linecap="round" stroke-linejoin="round"/>
+
+<!-- 节点 -->
+<rect x="78" y="468" width="24" height="24" fill="#1a1612" stroke="#a8321a" stroke-width="3"/>
+<text x="90" y="458" text-anchor="middle" font-family="Noto Serif SC,serif" font-size="14" font-weight="600" fill="#1a1612">西安</text>
+<circle cx="230" cy="430" r="9" fill="#efe7d6" stroke="#1a1612" stroke-width="2"/>
+<text x="230" y="434" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="11" font-weight="700" fill="#1a1612">1</text>
+<text x="230" y="408" text-anchor="middle" font-family="Noto Serif SC,serif" font-size="14" font-weight="600" fill="#1a1612">解州</text>
+<circle cx="330" cy="220" r="13" fill="#a8321a" stroke="#1a1612" stroke-width="2"/>
+<text x="330" y="224" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="11" font-weight="700" fill="#efe7d6">2</text>
+<text x="330" y="252" text-anchor="middle" font-family="Noto Serif SC,serif" font-size="14" font-weight="600" fill="#1a1612">平遥</text>
+<circle cx="430" cy="130" r="13" fill="#a8321a" stroke="#1a1612" stroke-width="2"/>
+<text x="430" y="134" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="11" font-weight="700" fill="#efe7d6">3</text>
+<text x="430" y="162" text-anchor="middle" font-family="Noto Serif SC,serif" font-size="14" font-weight="600" fill="#1a1612">忻州</text>
+<polygon points="580,67 593,80 580,93 567,80" fill="#efe7d6" stroke="#a8321a" stroke-width="3"/>
+<text x="580" y="84" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="11" font-weight="700" fill="#1a1612">4</text>
+<text x="580" y="112" text-anchor="middle" font-family="Noto Serif SC,serif" font-size="14" font-weight="600" fill="#1a1612">佛光</text>
+<polygon points="660,87 673,100 660,113 647,100" fill="#efe7d6" stroke="#a8321a" stroke-width="3"/>
+<text x="660" y="104" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="11" font-weight="700" fill="#1a1612">5</text>
+<text x="660" y="132" text-anchor="middle" font-family="Noto Serif SC,serif" font-size="14" font-weight="600" fill="#1a1612">南禅</text>
+<circle cx="740" cy="280" r="13" fill="#a8321a" stroke="#1a1612" stroke-width="2"/>
+<text x="740" y="284" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="11" font-weight="700" fill="#efe7d6">6</text>
+<text x="740" y="312" text-anchor="middle" font-family="Noto Serif SC,serif" font-size="14" font-weight="600" fill="#1a1612">长治</text>
+<polygon points="786,390 814,390 800,366" fill="#a8893a" stroke="#1a1612" stroke-width="2"/>
+<text x="800" y="384" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="11" font-weight="700" fill="#efe7d6">7</text>
+<text x="800" y="358" text-anchor="middle" font-family="Noto Serif SC,serif" font-size="14" font-weight="600" fill="#1a1612">南太行</text>
+<circle cx="750" cy="480" r="13" fill="#a8321a" stroke="#1a1612" stroke-width="2"/>
+<text x="750" y="484" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="11" font-weight="700" fill="#efe7d6">8</text>
+<text x="750" y="458" text-anchor="middle" font-family="Noto Serif SC,serif" font-size="14" font-weight="600" fill="#1a1612">高平</text>
+<polygon points="670,527 683,540 670,553 657,540" fill="#efe7d6" stroke="#a8321a" stroke-width="3"/>
+<text x="670" y="544" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="11" font-weight="700" fill="#1a1612">9</text>
+<text x="670" y="518" text-anchor="middle" font-family="Noto Serif SC,serif" font-size="14" font-weight="600" fill="#1a1612">皇城</text>
+
+<!-- 图例 -->
+<g transform="translate(50,540)">
+  <text x="0" y="0" font-family="Noto Serif SC,serif" font-size="12" font-weight="600" fill="#1a1612" letter-spacing="2">图 例</text>
+  <rect x="60" y="-10" width="14" height="14" fill="#1a1612" stroke="#a8321a" stroke-width="2"/>
+  <text x="82" y="2" font-size="11" fill="#3d352a">起 / 终点</text>
+  <circle cx="170" cy="-3" r="9" fill="#a8321a"/>
+  <text x="186" y="2" font-size="11" fill="#3d352a">住宿城市</text>
+  <polygon points="265,-12 274,-3 265,6 256,-3" fill="#efe7d6" stroke="#a8321a" stroke-width="2"/>
+  <text x="282" y="2" font-size="11" fill="#3d352a">核心景点</text>
+  <polygon points="370,7 384,7 377,-9" fill="#a8893a" stroke="#1a1612" stroke-width="2"/>
+  <text x="395" y="2" font-size="11" fill="#3d352a">南太行山区</text>
+</g>
+
+<!-- 角落印章 -->
+<g transform="translate(820,540)">
+  <rect x="-30" y="-30" width="60" height="60" fill="#a8321a" stroke="#1a1612" stroke-width="2"/>
+  <text x="0" y="-2" text-anchor="middle" font-family="Noto Serif SC,serif" font-size="22" font-weight="900" fill="#efe7d6">晋</text>
+  <text x="0" y="18" text-anchor="middle" font-family="Noto Serif SC,serif" font-size="11" fill="#efe7d6" letter-spacing="2">五 日</text>
+</g>
+</svg></div>
 
     <h2 class="section-title">每 日 行 程<span class="en">Day by Day</span></h2>
 <article class="day-section">
@@ -235,7 +377,7 @@ tr:last-child td{border-bottom:none}
 <div class="day-subtitle">关公祖庙 + 古城慢刷</div>
 <div class="day-meta">
 <span class="km-badge">640 km</span>
-<span class="km-badge">7.5 小时车程</span>
+<span class="km-badge">7.5 小时</span>
 </div>
 </div>
 </header>
@@ -311,7 +453,7 @@ tr:last-child td{border-bottom:none}
 <div class="day-subtitle">晨景补拍 + 北上佛光寺前夜</div>
 <div class="day-meta">
 <span class="km-badge">280 km</span>
-<span class="km-badge">3.5 小时车程</span>
+<span class="km-badge">3.5 小时</span>
 </div>
 </div>
 </header>
@@ -379,7 +521,7 @@ tr:last-child td{border-bottom:none}
 <div class="day-subtitle">两座唐构 + 南下太行</div>
 <div class="day-meta">
 <span class="km-badge">470 km</span>
-<span class="km-badge">6 小时车程</span>
+<span class="km-badge">6 小时</span>
 </div>
 </div>
 </header>
@@ -451,46 +593,38 @@ tr:last-child td{border-bottom:none}
 </div>
 <div class="day-title-block">
 <div class="day-date">5月4日 · 周一</div>
-<h2 class="day-title">南太行 · 关山 · 回龙挂壁</h2>
-<div class="day-subtitle">避开郭亮，走真正车少的路</div>
+<h2 class="day-title">南太行 · 自驾穿越</h2>
+<div class="day-subtitle">具体路线见 [南太行] Tab</div>
 <div class="day-meta">
-<span class="km-badge">380 km</span>
-<span class="km-badge">5 小时车程</span>
+<span class="km-badge">320 km</span>
+<span class="km-badge">5 小时</span>
 </div>
 </div>
 </header>
-<div class="day-quote">「 亿年红岩绝壁 + 凿穿绝壁的挂壁公路。开车穿洞，云在车窗外漂。 」</div>
+<div class="day-quote">「 推荐走王莽岭+锡崖沟（详见南太行 Tab 路线 B），全程在山西不绕道。 」</div>
 <div class="stops-grid">
 <div class="stop-row">
 <div class="time-cell">08:00</div>
 <div class="stop-line"></div>
 <div class="stop-content">
 <div class="stop-name">长治出发</div>
-<div class="stop-tip">南下辉县约 180km / 2.5h</div>
+<div class="stop-tip">走 S3501 / G55 南下，约 1.5h 到陵川</div>
 </div>
 </div>
 <div class="stop-row">
 <div class="time-cell">10:30</div>
 <div class="stop-line"></div>
 <div class="stop-content">
-<div class="stop-name">关山地质公园</div>
-<div class="stop-tip">亿年红岩，盘山到山顶停车场，徒步段短，老人友好。游玩 2.5h</div>
+<div class="stop-name">南太行核心区</div>
+<div class="stop-tip">按 [南太行] Tab 选定的路线游玩 4-6h</div>
 </div>
 </div>
 <div class="stop-row">
 <div class="time-cell">13:00</div>
 <div class="stop-line"></div>
 <div class="stop-content">
-<div class="stop-name">山下午饭</div>
-<div class="stop-tip">上八里镇农家乐，山韭菜炒鸡蛋 + 太行小米粥</div>
-</div>
-</div>
-<div class="stop-row">
-<div class="time-cell">14:30</div>
-<div class="stop-line"></div>
-<div class="stop-content">
-<div class="stop-name">回龙挂壁公路</div>
-<div class="stop-tip">南太行第二条挂壁，自驾穿越；老爷顶可俯瞰中原。2h</div>
+<div class="stop-name">山中午饭</div>
+<div class="stop-tip">村农家乐：山韭菜炒鸡蛋 + 太行小米粥</div>
 </div>
 </div>
 <div class="stop-row">
@@ -498,7 +632,7 @@ tr:last-child td{border-bottom:none}
 <div class="stop-line"></div>
 <div class="stop-content">
 <div class="stop-name">翻山赴高平</div>
-<div class="stop-tip">约 150km / 2.5h，山路慢点</div>
+<div class="stop-tip">约 130km / 2.5h 山路慢</div>
 </div>
 </div>
 <div class="stop-row">
@@ -506,7 +640,7 @@ tr:last-child td{border-bottom:none}
 <div class="stop-line"></div>
 <div class="stop-content">
 <div class="stop-name">抵达高平</div>
-<div class="stop-tip">入住高平市区，晚饭十大碗 / 烧豆腐</div>
+<div class="stop-tip">入住，晚饭高平十大碗 / 烧豆腐</div>
 </div>
 </div>
 </div>
@@ -523,7 +657,7 @@ tr:last-child td{border-bottom:none}
 <div class="day-subtitle">找老家 + 古堡 + 回家</div>
 <div class="day-meta">
 <span class="km-badge">590 km</span>
-<span class="km-badge">7.5 小时车程</span>
+<span class="km-badge">7.5 小时</span>
 </div>
 </div>
 </header>
@@ -582,70 +716,189 @@ tr:last-child td{border-bottom:none}
   </div>
 </div>
 
-<!-- ===== Tab 2: 指挥部 ===== -->
+<!-- ===== Tab 2: 南太行 ===== -->
 <div class="tab-pane" id="pane-1">
+  <div class="container">
+    <div class="taihang-intro">
+      <h3>南 太 行 自 驾 路 线 抉 择</h3>
+      <p>D4 长治出发回到高平，南太行有四条路线可选。各路线在「景观、小众度、挂壁体验、驾驶难度、时间」五个维度差异较大。下面给出对比和详细风险，最终推荐 <b style="color:#a8893a">B 路线（王莽岭+锡崖沟）</b>。</p>
+    </div>
+<div class="route-card">
+<div class="route-head">
+<div class="route-code">A</div>
+<div class="route-titlebox">
+<h3 class="route-name">关山 + 回龙挂壁</h3>
+<div class="route-path">长治 → 辉县(豫) → 关山 → 回龙挂壁 → 翻山 → 高平</div>
+</div>
+<div class="route-rec rec-normal">推荐</div>
+</div>
+<div class="route-meta">
+<span><b>380</b> km</span><span><b>5</b> 小时</span><span class="route-ticket">关山 60+30 / 回龙 60</span>
+</div>
+<div class="route-body">
+<div class="route-col">
+<h4>看 点</h4><ul class="dot-ul"><li>关山地质公园（亿年红岩绝壁）</li><li>回龙挂壁公路（自驾穿越）</li><li>老爷顶眺望中原</li></ul>
+<h4 style="margin-top:14px">评 分</h4>
+<div class="score-grid"><div class="score-row"><span class="score-label">小众</span><span class="score-bar"><span class="score-fill" style="width:60%"></span></span><span class="score-num">3/5</span></div><div class="score-row"><span class="score-label">景观</span><span class="score-bar"><span class="score-fill" style="width:80%"></span></span><span class="score-num">4/5</span></div><div class="score-row"><span class="score-label">挂壁</span><span class="score-bar"><span class="score-fill" style="width:80%"></span></span><span class="score-num">4/5</span></div><div class="score-row"><span class="score-label">驾驶</span><span class="score-bar"><span class="score-fill" style="width:60%"></span></span><span class="score-num">3/5</span></div><div class="score-row"><span class="score-label">时间</span><span class="score-bar"><span class="score-fill" style="width:60%"></span></span><span class="score-num">3/5</span></div></div>
+</div>
+<div class="route-col">
+<h4>优 势</h4><ul class="plain-ul"><li class="pro">✓ 景区配套成熟</li><li class="pro">✓ 停车有保障</li><li class="pro">✓ 挂壁公路体验完整</li></ul>
+<h4 style="margin-top:14px">劣 势</h4><ul class="plain-ul"><li class="con">✗ 要绕到河南再回山西，多 100km</li><li class="con">✗ 关山摆渡费 30 元额外</li><li class="con">✗ 回龙夏季游客增多</li></ul>
+<h4 style="margin-top:14px">风 险</h4><ul class="plain-ul"><li class="risk">⚠ 挂壁单向通行严格按指示</li><li class="risk">⚠ 山路落石（雨后慎行）</li><li class="risk">⚠ 电车山顶充电不便，下山记得动能回收</li></ul>
+</div>
+</div>
+</div>
+<div class="route-card">
+<div class="route-head">
+<div class="route-code">B</div>
+<div class="route-titlebox">
+<h3 class="route-name">王莽岭 + 锡崖沟挂壁</h3>
+<div class="route-path">长治 → 陵川 → 王莽岭 → 锡崖沟挂壁 → 高平</div>
+</div>
+<div class="route-rec rec-strong">强推 ⭐</div>
+</div>
+<div class="route-meta">
+<span><b>260</b> km</span><span><b>4.5</b> 小时</span><span class="route-ticket">王莽岭 110 / 锡崖沟 含联票或单 60</span>
+</div>
+<div class="route-body">
+<div class="route-col">
+<h4>看 点</h4><ul class="dot-ul"><li>王莽岭（南太行最高峰，云海日出）</li><li>锡崖沟挂壁（中国第一条挂壁，1962 年凿成）</li><li>棋子山道教遗迹</li></ul>
+<h4 style="margin-top:14px">评 分</h4>
+<div class="score-grid"><div class="score-row"><span class="score-label">小众</span><span class="score-bar"><span class="score-fill" style="width:80%"></span></span><span class="score-num">4/5</span></div><div class="score-row"><span class="score-label">景观</span><span class="score-bar"><span class="score-fill" style="width:100%"></span></span><span class="score-num">5/5</span></div><div class="score-row"><span class="score-label">挂壁</span><span class="score-bar"><span class="score-fill" style="width:100%"></span></span><span class="score-num">5/5</span></div><div class="score-row"><span class="score-label">驾驶</span><span class="score-bar"><span class="score-fill" style="width:80%"></span></span><span class="score-num">4/5</span></div><div class="score-row"><span class="score-label">时间</span><span class="score-bar"><span class="score-fill" style="width:100%"></span></span><span class="score-num">5/5</span></div></div>
+</div>
+<div class="route-col">
+<h4>优 势</h4><ul class="plain-ul"><li class="pro">✓ 全程在山西，不绕道</li><li class="pro">✓ 挂壁公路鼻祖，文化景观双绝</li><li class="pro">✓ 里程最短</li></ul>
+<h4 style="margin-top:14px">劣 势</h4><ul class="plain-ul"><li class="con">✗ 王莽岭门票 110 偏贵</li><li class="con">✗ 景区化程度高于路线 D</li><li class="con">✗ 云海需运气</li></ul>
+<h4 style="margin-top:14px">风 险</h4><ul class="plain-ul"><li class="risk">⚠ 陵川山路海拔变化大，电车续航打折</li><li class="risk">⚠ 锡崖沟村内道路窄，错车需让</li><li class="risk">⚠ 山顶天气多变，备外套</li></ul>
+</div>
+</div>
+</div>
+<div class="route-card">
+<div class="route-head">
+<div class="route-code">C</div>
+<div class="route-titlebox">
+<h3 class="route-name">八泉峡 大峡谷</h3>
+<div class="route-path">长治 → 壶关 → 八泉峡 → 红豆峡 → 高平</div>
+</div>
+<div class="route-rec rec-mute">网红向</div>
+</div>
+<div class="route-meta">
+<span><b>220</b> km</span><span><b>4</b> 小时</span><span class="route-ticket">八泉峡 125 / 红豆峡 50（联票更划算）</span>
+</div>
+<div class="route-body">
+<div class="route-col">
+<h4>看 点</h4><ul class="dot-ul"><li>八泉峡（5A，飞天玻璃栈道）</li><li>乘船穿峡谷</li><li>红豆峡情人谷</li></ul>
+<h4 style="margin-top:14px">评 分</h4>
+<div class="score-grid"><div class="score-row"><span class="score-label">小众</span><span class="score-bar"><span class="score-fill" style="width:20%"></span></span><span class="score-num">1/5</span></div><div class="score-row"><span class="score-label">景观</span><span class="score-bar"><span class="score-fill" style="width:80%"></span></span><span class="score-num">4/5</span></div><div class="score-row"><span class="score-label">挂壁</span><span class="score-bar"><span class="score-fill" style="width:20%"></span></span><span class="score-num">1/5</span></div><div class="score-row"><span class="score-label">驾驶</span><span class="score-bar"><span class="score-fill" style="width:40%"></span></span><span class="score-num">2/5</span></div><div class="score-row"><span class="score-label">时间</span><span class="score-bar"><span class="score-fill" style="width:100%"></span></span><span class="score-num">5/5</span></div></div>
+</div>
+<div class="route-col">
+<h4>优 势</h4><ul class="plain-ul"><li class="pro">✓ 唯一 5A 南太行景区</li><li class="pro">✓ 里程最短</li><li class="pro">✓ 景点强度最低（适合带老人）</li></ul>
+<h4 style="margin-top:14px">劣 势</h4><ul class="plain-ul"><li class="con">✗ 景区化最重，五一必挤</li><li class="con">✗ 不是自驾穿越是景区步行</li><li class="con">✗ 门票 + 索道 + 船费贵</li></ul>
+<h4 style="margin-top:14px">风 险</h4><ul class="plain-ul"><li class="risk">⚠ 五一可能限流/排队 1h+</li><li class="risk">⚠ 玻璃栈道有恐高慎行</li><li class="risk">⚠ 停车场满早</li></ul>
+</div>
+</div>
+</div>
+<div class="route-card">
+<div class="route-head">
+<div class="route-code">D</div>
+<div class="route-titlebox">
+<h3 class="route-name">通天峡 + 虹梯关挂壁</h3>
+<div class="route-path">长治 → 平顺 → 通天峡 → 虹梯关挂壁 → 高平</div>
+</div>
+<div class="route-rec rec-mute">极小众</div>
+</div>
+<div class="route-meta">
+<span><b>320</b> km</span><span><b>5.5</b> 小时</span><span class="route-ticket">通天峡 80 / 虹梯关 免费</span>
+</div>
+<div class="route-body">
+<div class="route-col">
+<h4>看 点</h4><ul class="dot-ul"><li>通天峡（700m 深谷）</li><li>虹梯关挂壁（鲜为人知，比郭亮还早）</li><li>井底村古村落</li></ul>
+<h4 style="margin-top:14px">评 分</h4>
+<div class="score-grid"><div class="score-row"><span class="score-label">小众</span><span class="score-bar"><span class="score-fill" style="width:100%"></span></span><span class="score-num">5/5</span></div><div class="score-row"><span class="score-label">景观</span><span class="score-bar"><span class="score-fill" style="width:100%"></span></span><span class="score-num">5/5</span></div><div class="score-row"><span class="score-label">挂壁</span><span class="score-bar"><span class="score-fill" style="width:80%"></span></span><span class="score-num">4/5</span></div><div class="score-row"><span class="score-label">驾驶</span><span class="score-bar"><span class="score-fill" style="width:100%"></span></span><span class="score-num">5/5</span></div><div class="score-row"><span class="score-label">时间</span><span class="score-bar"><span class="score-fill" style="width:40%"></span></span><span class="score-num">2/5</span></div></div>
+</div>
+<div class="route-col">
+<h4>优 势</h4><ul class="plain-ul"><li class="pro">✓ 车少到夸张，纯野生</li><li class="pro">✓ 虹梯关挂壁知道的人极少</li><li class="pro">✓ 适合摄影/Vlog 出片</li></ul>
+<h4 style="margin-top:14px">劣 势</h4><ul class="plain-ul"><li class="con">✗ 景区配套弱，吃饭难</li><li class="con">✗ 部分路段窄陡</li><li class="con">✗ 虹梯关挂壁部分维修期可能封路</li></ul>
+<h4 style="margin-top:14px">风 险</h4><ul class="plain-ul"><li class="risk">⚠ ⚠️ 出发前查路况公众号</li><li class="risk">⚠ 电车一定要满电出发，山中无桩</li><li class="risk">⚠ 山路无防护栏多处，控速</li></ul>
+</div>
+</div>
+</div>
+    <div class="cmd-block" style="margin-top:30px">
+      <h3>选 择 决 策 树<span class="en">Decision Tree</span></h3>
+      <div style="font-size:13.5px;line-height:2;color:var(--ink-soft)">
+        <p>· 想要<b style="color:var(--vermillion)">景观+文化双绝、不绕道</b> → <b>路线 B</b>（王莽岭+锡崖沟）</p>
+        <p>· 想要<b style="color:var(--vermillion)">最小众、车少、出片</b> → <b>路线 D</b>（通天峡+虹梯关）</p>
+        <p>· 想要<b style="color:var(--vermillion)">配套成熟、挂壁经典</b> → <b>路线 A</b>（关山+回龙）</p>
+        <p>· 带老人 / 不想累 / 喜欢 5A → <b>路线 C</b>（八泉峡，但五一会挤）</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Tab 3: 指挥部 ===== -->
+<div class="tab-pane" id="pane-2">
   <div class="container">
     <div class="cmd-intro">
       <h3>策 划 者 视 角</h3>
-      <p>这一页是给计划者看的：每天住哪、订什么酒店、各景点门票多少钱、城市间车程多少、出发前要办什么、哪天驾驶难度高。一表掌全局。</p>
+      <p>这一页给计划者看：每天住哪、订什么酒店、各景点门票多少钱、城市间车程、出发前要办什么、哪天驾驶难度高。一表掌全局。</p>
     </div>
 
     <div class="cmd-block">
       <h3>住 宿 决 策<span class="en">Where to Stay</span></h3>
-      <table>
-        <thead><tr><th>日</th><th>城市 / 片区</th><th>选这里的理由</th><th>推荐酒店 / 价位</th><th>停车 · 订房</th></tr></thead>
+      <div class="table-wrap"><table>
+        <thead><tr><th>日</th><th>城市/片区</th><th>选这里的理由</th><th>推荐酒店/价位</th><th>停车·订房</th></tr></thead>
         <tbody><tr>
 <td class="td-day">D1</td>
 <td class="td-city"><b>平遥</b><br><span class="muted">古城北门外（火车站片区）</span></td>
-<td>古城内五一已订满/超贵，外围连锁性价比高；步行/打车 5min 进城</td>
-<td>如家 / 全季 / 汉庭（搜'平遥火车站'）<br><span class="price-tag">¥200-400</span></td>
-<td class="muted">古城北门停车场 30元/晚 · 携程/飞猪现在就订</td>
+<td>古城内五一已订满/超贵，外围连锁性价比高</td>
+<td>如家 / 全季 / 汉庭<br><span class="price-tag">¥200-400</span></td>
+<td class="muted">北门停车场 30元/晚 · 今晚必订</td>
 </tr>
 <tr>
 <td class="td-day">D2</td>
 <td class="td-city"><b>忻州</b><br><span class="muted">忻州古城东 / 高铁站附近</span></td>
-<td>商务酒店密集，价格稳；离明早佛光寺方向顺路</td>
+<td>商务酒店密集，离明早佛光寺方向顺路</td>
 <td>亚朵 / 全季 / 桔子水晶<br><span class="price-tag">¥250-350</span></td>
-<td class="muted">酒店一般免费 · 提前 3 天订</td>
+<td class="muted">酒店免费 · 提前 3 天</td>
 </tr>
 <tr>
 <td class="td-day">D3</td>
-<td class="td-city"><b>长治</b><br><span class="muted">长治市区八一广场附近</span></td>
+<td class="td-city"><b>长治</b><br><span class="muted">市区八一广场附近</span></td>
 <td>市中心配套全，明早出发去南太行最近</td>
 <td>上党宾馆 / 维也纳国际<br><span class="price-tag">¥200-300</span></td>
-<td class="muted">酒店一般免费 · 可现订</td>
+<td class="muted">酒店免费 · 可现订</td>
 </tr>
 <tr>
 <td class="td-day">D4</td>
 <td class="td-city"><b>高平</b><br><span class="muted">高平市区（老城/七佛山片区）</span></td>
-<td>明早起床直接找老家，无需开车；离皇城相府仅 70km</td>
-<td>格林豪泰 / 当地小酒店均可<br><span class="price-tag">¥150-250</span></td>
+<td>明早起床直接找老家，无需开车</td>
+<td>格林豪泰 / 当地小酒店<br><span class="price-tag">¥150-250</span></td>
 <td class="muted">酒店或路边 · 可现订</td>
 </tr></tbody>
-      </table>
+      </table></div>
     </div>
 
     <div class="cmd-block">
-      <h3>门 票 与 预 约<span class="en">Tickets & Reservations</span></h3>
-      <table>
+      <h3>门 票 与 预 约<span class="en">Tickets</span></h3>
+      <div class="table-wrap"><table>
         <thead><tr><th>景点</th><th>票价</th><th>购票方式</th><th>备注</th></tr></thead>
         <tbody><tr>
 <td><b>解州关帝庙</b></td>
 <td class="price-tag">60元</td>
-<td>现场购票或景区公众号</td>
+<td>现场 / 公众号</td>
 <td class="muted">学生半价，60+ 免票</td>
 </tr>
 <tr>
-<td><b>平遥古城（联票）</b></td>
+<td><b>平遥古城联票</b></td>
 <td class="price-tag">125元/3日</td>
-<td>古城任一城门售票点</td>
-<td class="muted">含县衙+日升昌+城墙等 17 个点；不进景点可不买</td>
+<td>古城任一城门</td>
+<td class="muted">含县衙+日升昌+城墙等 17 点</td>
 </tr>
 <tr>
 <td><b>佛光寺</b></td>
 <td class="price-tag">15元</td>
 <td>现场</td>
-<td class="muted">8:00-18:00，便宜得过分</td>
+<td class="muted">8:00-18:00</td>
 </tr>
 <tr>
 <td><b>南禅寺</b></td>
@@ -657,52 +910,40 @@ tr:last-child td{border-bottom:none}
 <td><b>忻州古城</b></td>
 <td class="price-tag">免费</td>
 <td>—</td>
-<td class="muted">进城门免费，里面表演项目另收</td>
+<td class="muted">进城门免费</td>
 </tr>
 <tr>
-<td><b>关山地质公园</b></td>
-<td class="price-tag">60元 + 摆渡30元</td>
-<td>公众号'关山地质公园'</td>
-<td class="muted">山顶停车场可自驾上</td>
-</tr>
-<tr>
-<td><b>回龙天界山</b></td>
-<td class="price-tag">60元</td>
-<td>现场</td>
-<td class="muted">挂壁公路自驾穿越免费，景区进去要票</td>
+<td><b>南太行（按选定路线）</b></td>
+<td class="price-tag">60-235元</td>
+<td>见南太行 Tab</td>
+<td class="muted">推荐 B 路线 王莽岭+锡崖沟</td>
 </tr>
 <tr>
 <td><b>皇城相府</b></td>
 <td class="price-tag">120元</td>
 <td>公众号'皇城相府'</td>
-<td class="muted">联票含郭峪 138 元，建议联票</td>
-</tr>
-<tr>
-<td><b>郭峪古城</b></td>
-<td class="price-tag">30元（联票更划算）</td>
-<td>皇城联票</td>
-<td class="muted">—</td>
+<td class="muted">联票含郭峪 138 元</td>
 </tr></tbody>
-      </table>
+      </table></div>
     </div>
 
     <div class="cmd-block">
-      <h3>城 际 路 程 矩 阵<span class="en">Distance Matrix (km / hour)</span></h3>
-      <div class="matrix-wrap"><table class='matrix'><thead><tr><th></th><th>西安</th><th>运城/解州</th><th>平遥</th><th>忻州</th><th>佛光寺</th><th>南禅寺</th><th>长治</th><th>辉县</th><th>高平</th><th>皇城相府</th></tr></thead><tbody><tr><td class="matrix-row-h">西安</td><td class="matrix-empty">—</td><td class="matrix-cell">300/3h</td><td class="matrix-cell">640/7h</td><td class="matrix-cell">750/8h</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-cell">660/7h</td><td class="matrix-cell">850/9h</td><td class="matrix-cell">550/6h</td><td class="matrix-cell">620/6.5h</td></tr><tr><td class="matrix-row-h">运城/解州</td><td class="matrix-cell">300/3h</td><td class="matrix-empty">—</td><td class="matrix-cell">340/3.5h</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td></tr><tr><td class="matrix-row-h">平遥</td><td class="matrix-cell">640/7h</td><td class="matrix-cell">340/3.5h</td><td class="matrix-empty">—</td><td class="matrix-cell">180/2h</td><td class="matrix-cell">270/3h</td><td class="matrix-cell">260/3h</td><td class="matrix-cell">260/3h</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td></tr><tr><td class="matrix-row-h">忻州</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-cell">180/2h</td><td class="matrix-empty">—</td><td class="matrix-cell">110/1.5h</td><td class="matrix-cell">120/1.5h</td><td class="matrix-cell">350/4h</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td></tr><tr><td class="matrix-row-h">佛光寺</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-cell">270/3h</td><td class="matrix-cell">110/1.5h</td><td class="matrix-empty">—</td><td class="matrix-cell">55/1h</td><td class="matrix-cell">320/4h</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td></tr><tr><td class="matrix-row-h">南禅寺</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-cell">260/3h</td><td class="matrix-cell">120/1.5h</td><td class="matrix-cell">55/1h</td><td class="matrix-empty">—</td><td class="matrix-cell">320/4h</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td></tr><tr><td class="matrix-row-h">长治</td><td class="matrix-cell">660/7h</td><td class="matrix-empty">—</td><td class="matrix-cell">260/3h</td><td class="matrix-cell">350/4h</td><td class="matrix-cell">320/4h</td><td class="matrix-cell">320/4h</td><td class="matrix-empty">—</td><td class="matrix-cell">180/2.5h</td><td class="matrix-cell">120/2h</td><td class="matrix-cell">120/2h</td></tr><tr><td class="matrix-row-h">辉县</td><td class="matrix-cell">850/9h</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-cell">180/2.5h</td><td class="matrix-empty">—</td><td class="matrix-cell">150/2.5h</td><td class="matrix-cell">180/3h</td></tr><tr><td class="matrix-row-h">高平</td><td class="matrix-cell">550/6h</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-cell">120/2h</td><td class="matrix-cell">150/2.5h</td><td class="matrix-empty">—</td><td class="matrix-cell">70/1.5h</td></tr><tr><td class="matrix-row-h">皇城相府</td><td class="matrix-cell">620/6.5h</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-cell">120/2h</td><td class="matrix-cell">180/3h</td><td class="matrix-cell">70/1.5h</td><td class="matrix-empty">—</td></tr></tbody></table></div>
+      <h3>城 际 路 程 矩 阵<span class="en">Distance (km / hour)</span></h3>
+      <div class="table-wrap"><table class='matrix'><thead><tr><th></th><th>西安</th><th>运城</th><th>平遥</th><th>忻州</th><th>佛光寺</th><th>南禅寺</th><th>长治</th><th>辉县</th><th>高平</th><th>皇城相府</th></tr></thead><tbody><tr><td class="matrix-row-h">西安</td><td class="matrix-empty">—</td><td class="matrix-cell">300/3h</td><td class="matrix-cell">640/7h</td><td class="matrix-cell">750/8h</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-cell">660/7h</td><td class="matrix-cell">850/9h</td><td class="matrix-cell">550/6h</td><td class="matrix-cell">620/6.5h</td></tr><tr><td class="matrix-row-h">运城</td><td class="matrix-cell">300/3h</td><td class="matrix-empty">—</td><td class="matrix-cell">340/3.5h</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td></tr><tr><td class="matrix-row-h">平遥</td><td class="matrix-cell">640/7h</td><td class="matrix-cell">340/3.5h</td><td class="matrix-empty">—</td><td class="matrix-cell">180/2h</td><td class="matrix-cell">270/3h</td><td class="matrix-cell">260/3h</td><td class="matrix-cell">260/3h</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td></tr><tr><td class="matrix-row-h">忻州</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-cell">180/2h</td><td class="matrix-empty">—</td><td class="matrix-cell">110/1.5h</td><td class="matrix-cell">120/1.5h</td><td class="matrix-cell">350/4h</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td></tr><tr><td class="matrix-row-h">佛光寺</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-cell">270/3h</td><td class="matrix-cell">110/1.5h</td><td class="matrix-empty">—</td><td class="matrix-cell">55/1h</td><td class="matrix-cell">320/4h</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td></tr><tr><td class="matrix-row-h">南禅寺</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-cell">260/3h</td><td class="matrix-cell">120/1.5h</td><td class="matrix-cell">55/1h</td><td class="matrix-empty">—</td><td class="matrix-cell">320/4h</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td></tr><tr><td class="matrix-row-h">长治</td><td class="matrix-cell">660/7h</td><td class="matrix-empty">—</td><td class="matrix-cell">260/3h</td><td class="matrix-cell">350/4h</td><td class="matrix-cell">320/4h</td><td class="matrix-cell">320/4h</td><td class="matrix-empty">—</td><td class="matrix-cell">180/2.5h</td><td class="matrix-cell">120/2h</td><td class="matrix-cell">120/2h</td></tr><tr><td class="matrix-row-h">辉县</td><td class="matrix-cell">850/9h</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-cell">180/2.5h</td><td class="matrix-empty">—</td><td class="matrix-cell">150/2.5h</td><td class="matrix-cell">180/3h</td></tr><tr><td class="matrix-row-h">高平</td><td class="matrix-cell">550/6h</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-cell">120/2h</td><td class="matrix-cell">150/2.5h</td><td class="matrix-empty">—</td><td class="matrix-cell">70/1.5h</td></tr><tr><td class="matrix-row-h">皇城相府</td><td class="matrix-cell">620/6.5h</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-empty">—</td><td class="matrix-cell">120/2h</td><td class="matrix-cell">180/3h</td><td class="matrix-cell">70/1.5h</td><td class="matrix-empty">—</td></tr></tbody></table></div>
     </div>
 
     <div class="cmd-block">
       <h3>必 办 清 单<span class="en">Checklist</span></h3>
-      <div class="todo-grid"><div class="todo-block"><h4>出发前</h4><ul><li>订平遥古城外酒店（今晚必订，越晚越贵）</li><li>订忻州、长治、高平酒店（提前 3 天）</li><li>皇城相府公众号在线买联票（含郭峪 138 元）</li><li>充电桩 App 备好：国家电网 e 充电、特来电、星星充电</li><li>高德地图离线包：山西、河南</li><li>现金 500 元（部分小景点/农家乐不收码）</li></ul></div><div class="todo-block"><h4>D1 当天</h4><ul><li>6:30 准点出发，迟一小时夜游就废</li><li>渭南服务区充电（约 200km 处）</li><li>解州关帝庙不要恋战，2.5h 打住</li><li>13:30 必须重新上高速</li></ul></div><div class="todo-block"><h4>D3 当天</h4><ul><li>8 点准点从忻州出发</li><li>佛光寺/南禅寺务必赶在 18 点闭馆前</li><li>南下长治路上长治服务区充电</li></ul></div><div class="todo-block"><h4>D4 当天</h4><ul><li>关山山路注意路面落石，控速</li><li>回龙挂壁公路单向通行，注意指示牌</li><li>电车下山有动能回收，电量不必紧张</li></ul></div><div class="todo-block"><h4>D5 当天</h4><ul><li>找老家：备好家族信息（村名、长辈姓名）</li><li>皇城相府门口商业街吃饭贵且一般，建议在高平吃完再去</li><li>17 点必须启程，不然 0 点都到不了家</li></ul></div></div>
+      <div class="todo-grid"><div class="todo-block"><h4>出发前</h4><ul><li>订平遥古城外酒店（今晚必订）</li><li>订忻州、长治、高平酒店（提前 3 天）</li><li>皇城相府公众号在线买联票（138 元含郭峪）</li><li>充电桩 App：国家电网 e 充电、特来电</li><li>高德地图离线包：山西、河南</li><li>现金 500 元（小景点不收码）</li><li>南太行选定路线后查公众号路况</li></ul></div><div class="todo-block"><h4>D1 当天</h4><ul><li>6:30 准点出发</li><li>渭南服务区充电（约 200km 处）</li><li>解州关帝庙不要恋战，2.5h 打住</li><li>13:30 必须重新上高速</li></ul></div><div class="todo-block"><h4>D3 当天</h4><ul><li>8 点准点从忻州出发</li><li>佛光/南禅务必赶在 18 点闭馆前</li><li>南下长治长治服务区充电</li></ul></div><div class="todo-block"><h4>D4 当天</h4><ul><li>出发前满电，山中充电桩稀少</li><li>山路控速，注意落石</li><li>挂壁公路按指示单向通行</li><li>山顶气温低，备外套</li></ul></div><div class="todo-block"><h4>D5 当天</h4><ul><li>找老家：备好家族信息（村名、长辈姓名）</li><li>皇城相府门口商业街吃饭贵，建议高平吃完再去</li><li>17 点必须启程，0 点前到家</li></ul></div></div>
     </div>
 
     <div class="cmd-block">
-      <h3>每 日 驾 驶 难 度<span class="en">Driving Difficulty</span></h3>
-      <div class="drive-row"><div class="drive-day">D1</div><div class="drive-level">★★</div><div class="drive-note">全程高速，渭河平原-中条山隧道-临汾盆地，路况好；五一上午 G30 段偶有拥堵</div></div>
-<div class="drive-row"><div class="drive-day">D2</div><div class="drive-level">★</div><div class="drive-note">G5 京昆全程高速，平遥→忻州 180km，最轻松一天</div></div>
-<div class="drive-row"><div class="drive-day">D3</div><div class="drive-level">★★★</div><div class="drive-note">山区+高速混合；佛光寺→南禅寺 55km 山路，注意急弯；南下长治 320km 长途</div></div>
-<div class="drive-row"><div class="drive-day">D4</div><div class="drive-level">★★★★</div><div class="drive-note">南太行盘山，关山有连续发卡弯；回龙挂壁单向通行；翻山到高平 150km 山路慢</div></div>
-<div class="drive-row"><div class="drive-day">D5</div><div class="drive-level">★★★</div><div class="drive-note">返程 520km 长途；建议运城/三门峡服务区轮换休息；夜路注意货车</div></div>
+      <h3>每 日 驾 驶 难 度<span class="en">Driving</span></h3>
+      <div class="drive-row"><div class="drive-day">D1</div><div class="drive-level">★★</div><div class="drive-note">全程高速，渭河平原-中条山隧道-临汾盆地，路况好</div></div>
+<div class="drive-row"><div class="drive-day">D2</div><div class="drive-level">★</div><div class="drive-note">G5 京昆全程高速，最轻松一天</div></div>
+<div class="drive-row"><div class="drive-day">D3</div><div class="drive-level">★★★</div><div class="drive-note">山区+高速混合；佛光→南禅 55km 山路急弯；南下长治 320km 长途</div></div>
+<div class="drive-row"><div class="drive-day">D4</div><div class="drive-level">★★★★</div><div class="drive-note">南太行盘山，依路线难度有差；挂壁公路单向；翻山到高平慢</div></div>
+<div class="drive-row"><div class="drive-day">D5</div><div class="drive-level">★★★</div><div class="drive-note">返程 520km 长途，运城/三门峡服务区轮换休息</div></div>
     </div>
   </div>
 </div>
@@ -710,31 +951,59 @@ tr:last-child td{border-bottom:none}
 <div class="foot">
   <div class="foot-seal">晋</div>
   <div>—— 行万里路 · 见千年构 ——</div>
-  <div style="margin-top:6px;font-size:12px;font-style:normal;font-family:'Noto Sans SC';letter-spacing:3px">v4 · 双 Tab 终版</div>
+  <div style="margin-top:6px;font-size:12px;font-style:normal;font-family:'Noto Sans SC';letter-spacing:3px">v5 · 三 Tab 终版</div>
 </div>
 
 <script>
-function switchTab(i){
-  document.querySelectorAll('.tab-btn').forEach((b,j)=>b.classList.toggle('active',i===j));
-  document.querySelectorAll('.tab-pane').forEach((p,j)=>p.classList.toggle('active',i===j));
-  window.scrollTo({top:0,behavior:'smooth'});
+var mapInstance = null;
+
+function initMap(){
+  if(mapInstance){ mapInstance.invalidateSize(); return; }
+  var el = document.getElementById('map');
+  if(!el) return;
+  el.innerHTML = '';
+  try{
+    mapInstance = L.map('map',{zoomControl:true,scrollWheelZoom:false,attributionControl:false}).setView([36.5,112.5],7);
+    // 用国内可访问的高德瓦片，备用 OSM
+    var amap = L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}',{
+      subdomains:['1','2','3','4'], maxZoom:18, attribution:'© AMap'
+    });
+    var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18, attribution:'© OSM'});
+    amap.addTo(mapInstance);
+    amap.on('tileerror', function(){
+      // 高德失败时切 OSM
+      mapInstance.removeLayer(amap);
+      osm.addTo(mapInstance);
+    });
+
+    var pts = [[34.341, 108.94], [34.984, 110.687], [37.201, 112.176], [38.417, 112.733], [38.866, 113.397], [38.911, 113.156], [36.195, 113.116], [35.58, 113.5], [35.797, 112.923], [35.491, 112.45], [34.341, 108.94]];
+    var labels = ["西安", "解州关帝庙", "平遥", "忻州", "佛光寺", "南禅寺", "长治", "南太行", "高平", "皇城相府", "西安(返)"];
+    L.polyline(pts,{color:'#a8321a',weight:3.5,opacity:.9,dashArray:'10,8'}).addTo(mapInstance);
+    pts.forEach(function(p,i){
+      var icon = L.divIcon({
+        className:'',
+        html:'<div style="background:#a8321a;color:#efe7d6;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:Noto Serif SC,serif;font-weight:900;font-size:12px;border:2px solid #1a1612;box-shadow:1px 1px 0 #1a1612">'+(i+1)+'</div>',
+        iconSize:[26,26],iconAnchor:[13,13]
+      });
+      L.marker(p,{icon:icon}).addTo(mapInstance).bindPopup('<b style="font-family:Noto Serif SC,serif">'+labels[i]+'</b>');
+    });
+    mapInstance.fitBounds(pts,{padding:[30,30]});
+    setTimeout(function(){ mapInstance.invalidateSize(); }, 200);
+  }catch(e){
+    el.innerHTML = '<div class="map-loading">地图加载失败，请查看下方抽象路线图</div>';
+  }
 }
 
-setTimeout(function(){
-  var map = L.map('map',{zoomControl:true,scrollWheelZoom:false}).setView([36.5,112.5],7);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OSM',maxZoom:18}).addTo(map);
-  var pts = [[34.341, 108.94], [34.984, 110.687], [37.201, 112.176], [38.417, 112.733], [38.866, 113.397], [38.911, 113.156], [36.195, 113.116], [35.47, 113.53], [35.58, 113.7], [35.797, 112.923], [35.491, 112.45], [34.341, 108.94]];
-  var labels = ["西安", "解州关帝庙", "平遥", "忻州", "佛光寺", "南禅寺", "长治", "关山", "回龙挂壁", "高平", "皇城相府", "西安(返)"];
-  L.polyline(pts,{color:'#a8321a',weight:3.5,opacity:.9,dashArray:'10,8'}).addTo(map);
-  pts.forEach(function(p,i){
-    var icon = L.divIcon({
-      className:'',
-      html:'<div style="background:#a8321a;color:#efe7d6;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:Noto Serif SC,serif;font-weight:900;font-size:12px;border:2px solid #1a1612;box-shadow:1px 1px 0 #1a1612">'+(i+1)+'</div>',
-      iconSize:[26,26],iconAnchor:[13,13]
-    });
-    L.marker(p,{icon:icon}).addTo(map).bindPopup('<b style="font-family:Noto Serif SC,serif">'+labels[i]+'</b>');
-  });
-  map.fitBounds(pts,{padding:[40,40]});
-},100);
+function switchTab(i){
+  document.querySelectorAll('.tab-btn').forEach(function(b,j){b.classList.toggle('active',i===j)});
+  document.querySelectorAll('.tab-pane').forEach(function(p,j){p.classList.toggle('active',i===j)});
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(i===0){ setTimeout(initMap, 100); }
+}
+
+// 首次加载初始化地图
+window.addEventListener('load', function(){
+  setTimeout(initMap, 200);
+});
 </script>
 </body></html>
