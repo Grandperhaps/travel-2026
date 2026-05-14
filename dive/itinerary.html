@@ -61,10 +61,35 @@ a{color:inherit;text-decoration:none}
 
 /* plan section */
 .plan-section{max-width:1280px;margin:120px auto 0;padding:0 32px;scroll-margin-top:80px}
-.plan-header{margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--line)}
+.plan-header{margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--line);position:relative}
 .plan-id{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);letter-spacing:.15em;margin-bottom:12px}
-.plan-title{font-size:48px;font-weight:700;letter-spacing:-.03em;line-height:1.05;margin-bottom:16px}
+.plan-title{font-size:48px;font-weight:700;letter-spacing:-.03em;line-height:1.05;margin-bottom:16px;padding-right:160px}
 .plan-summary{color:var(--t2);font-size:17px;line-height:1.6;max-width:800px}
+
+/* save button */
+.save-btn{position:absolute;top:0;right:0;display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:linear-gradient(135deg,rgba(212,165,116,.15),rgba(212,165,116,.05));border:1px solid rgba(212,165,116,.4);color:var(--gold);border-radius:100px;font-size:13px;font-weight:500;font-family:inherit;cursor:pointer;transition:all .3s cubic-bezier(.16,1,.3,1);backdrop-filter:blur(10px)}
+.save-btn:hover{background:linear-gradient(135deg,rgba(212,165,116,.3),rgba(212,165,116,.12));border-color:var(--gold);transform:translateY(-2px);box-shadow:0 8px 24px rgba(212,165,116,.18)}
+.save-btn:active{transform:translateY(0)}
+.save-btn:disabled{opacity:.5;cursor:wait;transform:none}
+.save-btn svg{flex-shrink:0}
+
+/* capture foot - 仅截图时显示 */
+.capture-foot{display:none;margin-top:32px;padding-top:24px;border-top:1px solid var(--line);text-align:center;font-size:11px;letter-spacing:.18em;color:var(--t3)}
+
+/* 截图状态：隐藏按钮和导航，强制 fade 元素显示 */
+.capturing .save-btn{visibility:hidden}
+.capturing .nav{display:none}
+.capturing .fade{opacity:1!important;transform:none!important}
+.capturing .capture-foot{display:block}
+.capturing.bg-pad{background:var(--bg);padding:40px 0;border-radius:32px}
+
+/* toast */
+.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--card2);border:1px solid var(--line2);color:var(--t1);padding:14px 24px;border-radius:100px;font-size:14px;font-weight:500;z-index:200;opacity:0;transition:all .4s cubic-bezier(.16,1,.3,1);box-shadow:0 12px 40px rgba(0,0,0,.5);display:flex;align-items:center;gap:10px}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.success{border-color:rgba(94,234,212,.4);color:var(--mint)}
+.toast.error{border-color:rgba(255,107,107,.4);color:var(--coral)}
+.toast .spinner{width:14px;height:14px;border:2px solid currentColor;border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 /* day timeline */
 .days{display:flex;flex-direction:column;gap:32px}
@@ -113,6 +138,8 @@ footer .lk a{color:var(--accent);font-size:14px;font-weight:500;margin:0 12px}
   .nav{padding:12px 20px;gap:14px}
   .nav .link{display:none}
   .hero,.compare,.plan-section{padding-left:20px;padding-right:20px}
+  .plan-title{padding-right:0;font-size:34px}
+  .save-btn{position:static;margin-top:16px}
 }
 
 /* fade in on scroll */
@@ -142,7 +169,7 @@ footer .lk a{color:var(--accent);font-size:14px;font-weight:500;margin:0 12px}
   </div>
 </section>
 
-<section class="compare fade"><h2>三套方案对比</h2><div class="desc">按你的需求"4 天 · 多顶级点 · 接受 ≤2 晚船宿"，A 是最佳解。</div><div class="compare-grid">
+<section id="compare" class="compare fade" data-plan-id="compare" data-plan-name="红海4日方案对比"><div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:32px"><div><h2>三套方案对比</h2><div class="desc" style="margin-bottom:0">按你的需求"4 天 · 多顶级点 · 接受 ≤2 晚船宿"，A 是最佳解。</div></div><button class="save-btn" data-target="compare" type="button" style="position:static;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span>保存对比图</span></button></div><div class="compare-grid">
 <div class="compare-card recommend">
   <div class="tagline">RECOMMENDED</div>
   <div class="pname">方案 A · 北段日船 + 南段船宿</div>
@@ -180,11 +207,15 @@ footer .lk a{color:var(--accent);font-size:14px;font-weight:500;margin:0 12px}
   <a class="anchor" href="#planC">查看详细行程</a>
 </div>
 </div></section>
-<section id="planA" class="plan-section">
+<section id="planA" class="plan-section" data-plan-id="A" data-plan-name="红海4日方案A-RECOMMENDED">
   <div class="plan-header fade">
     <div class="plan-id mono">PLAN A · RECOMMENDED</div>
     <h2 class="plan-title">推荐方案 · 北段日船 + 南段船宿</h2>
     <p class="plan-summary">北段沙姆 2 天打满经典沉船+鱼风暴，南段 2 天船宿冲 Elphinstone+Brothers。覆盖 Top10 中的 7 个。</p>
+    <button class="save-btn" data-target="planA" type="button">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <span>保存为图片</span>
+    </button>
   </div>
   <div class="days"><div class="day fade">
   <div class="day-head">
@@ -333,12 +364,17 @@ footer .lk a{color:var(--accent);font-size:14px;font-weight:500;margin:0 12px}
     <div class="log-item"><div class="k mono">BOAT 船型</div><div class="v">Brothers/Elphinstone 联合行程，Hurghada 或 Port Ghalib 登船</div></div>
     <div class="log-item"><div class="k mono">COST 成本</div><div class="v">日船 €80-100/天 ×2 + 船宿 €450-650/2 晚 ≈ €700-1000/人</div></div>
   </div>
+  <div class="capture-foot mono">RED SEA · 4-DAY DIVE ITINERARY · PLAN A</div>
 </section>
-<section id="planB" class="plan-section">
+<section id="planB" class="plan-section" data-plan-id="B" data-plan-name="红海4日方案B-NO LIVEABOARD">
   <div class="plan-header fade">
     <div class="plan-id mono">PLAN B · NO LIVEABOARD</div>
     <h2 class="plan-title">纯陆地方案 · 沙姆 4 日全日船</h2>
     <p class="plan-summary">全程不船宿。住沙姆，4 天日船吃透红海北部，外加一日达哈布岸潜。覆盖 Top10 中的 4 个。</p>
+    <button class="save-btn" data-target="planB" type="button">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <span>保存为图片</span>
+    </button>
   </div>
   <div class="days"><div class="day fade">
   <div class="day-head">
@@ -479,12 +515,17 @@ footer .lk a{color:var(--accent);font-size:14px;font-weight:500;margin:0 12px}
     <div class="log-item"><div class="k mono">BOAT 船型</div><div class="v">全程日船，无船宿</div></div>
     <div class="log-item"><div class="k mono">COST 成本</div><div class="v">日船 €80-100/天 ×4 + 岸潜 €40-60 ≈ €400-500/人，最省钱</div></div>
   </div>
+  <div class="capture-foot mono">RED SEA · 4-DAY DIVE ITINERARY · PLAN B</div>
 </section>
-<section id="planC" class="plan-section">
+<section id="planC" class="plan-section" data-plan-id="C" data-plan-name="红海4日方案C-DEEP SOUTH">
   <div class="plan-header fade">
     <div class="plan-id mono">PLAN C · DEEP SOUTH</div>
     <h2 class="plan-title">硬核方案 · 4 晚 Deep South 船宿</h2>
     <p class="plan-summary">全程船宿冲最南端：St. John's + Rocky + Zabargad + Fury Shoals + Daedalus，覆盖 Top10 中的 5 个远海点。</p>
+    <button class="save-btn" data-target="planC" type="button">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <span>保存为图片</span>
+    </button>
   </div>
   <div class="days"><div class="day fade">
   <div class="day-head">
@@ -625,13 +666,82 @@ footer .lk a{color:var(--accent);font-size:14px;font-weight:500;margin:0 12px}
     <div class="log-item"><div class="k mono">BOAT 船型</div><div class="v">Port Ghalib 或 Hamata 登船，5 晚 6 天行程</div></div>
     <div class="log-item"><div class="k mono">COST 成本</div><div class="v">船宿 €1100-1500/人含全餐，性价比看个人</div></div>
   </div>
+  <div class="capture-foot mono">RED SEA · 4-DAY DIVE ITINERARY · PLAN C</div>
 </section>
 <footer>
-  <div class="ft">RED SEA DIVE · 4-DAY ITINERARY · v1.0</div>
+  <div class="ft">RED SEA DIVE · 4-DAY ITINERARY · v1.1</div>
   <div class="lk"><a href="./index.html">← 返回潜点榜单</a></div>
 </footer>
+<div id="toast" class="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
 const obs=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -80px 0px'});
 document.querySelectorAll('.fade').forEach(el=>obs.observe(el));
+
+// === 保存为图片 ===
+const toast=document.getElementById('toast');
+let toastTimer=null;
+function showToast(msg,type='',withSpinner=false){
+  clearTimeout(toastTimer);
+  toast.className='toast show '+type;
+  toast.innerHTML=(withSpinner?'<span class="spinner"></span>':'')+'<span>'+msg+'</span>';
+  if(!withSpinner)toastTimer=setTimeout(()=>toast.classList.remove('show'),2400);
+}
+function hideToast(){toast.classList.remove('show')}
+
+async function captureSection(targetId){
+  // targetId 可能是 'planA'/'planB'/'planC'/'compare'
+  const section=document.getElementById(targetId);
+  const planId=targetId.replace('plan','').toUpperCase();
+  if(!section){showToast('未找到目标区块','error');return}
+  if(typeof html2canvas==='undefined'){showToast('截图库加载失败，请刷新','error');return}
+
+  const btn=section.querySelector('.save-btn');
+  const originalHTML=btn.innerHTML;
+  btn.disabled=true;
+  btn.innerHTML='<span class="spinner" style="border-color:currentColor;border-top-color:transparent"></span><span>生成中…</span>';
+  showToast('正在生成图片…','',true);
+
+  section.classList.add('capturing','bg-pad');
+  await new Promise(r=>setTimeout(r,250));
+  if(document.fonts&&document.fonts.ready)await document.fonts.ready;
+
+  try{
+    const canvas=await html2canvas(section,{
+      backgroundColor:'#000',
+      scale:Math.min(window.devicePixelRatio||1,2),
+      useCORS:true,
+      allowTaint:false,
+      logging:false,
+      windowWidth:document.documentElement.scrollWidth,
+      onclone:(doc)=>{
+        const cloned=doc.getElementById(targetId);
+        if(cloned){cloned.classList.add('capturing','bg-pad');cloned.querySelectorAll('.fade').forEach(el=>{el.style.opacity='1';el.style.transform='none'})}
+      }
+    });
+
+    const fileName=(targetId==='compare'?'红海4日潜水_方案对比':'红海4日潜水_方案'+planId)+'_'+new Date().toISOString().slice(0,10)+'.png';
+    canvas.toBlob((blob)=>{
+      if(!blob){showToast('生成失败','error');return}
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');
+      a.href=url;a.download=fileName;
+      document.body.appendChild(a);a.click();a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),1000);
+      showToast('✓ 已保存：'+fileName,'success');
+    },'image/png',0.95);
+  }catch(err){
+    console.error(err);
+    showToast('生成失败：'+(err.message||'未知错误'),'error');
+  }finally{
+    section.classList.remove('capturing','bg-pad');
+    btn.disabled=false;
+    btn.innerHTML=originalHTML;
+  }
+}
+
+document.querySelectorAll('.save-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>captureSection(btn.dataset.target));
+});
 </script>
 </body></html>
