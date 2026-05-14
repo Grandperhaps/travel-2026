@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>红海四日潜水行程 · 三套方案</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#000;--bg2:#0a0e14;--card:#0f1419;--card2:#161b22;
+  --line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);
+  --t1:#fff;--t2:#a1a1a6;--t3:#6e6e73;
+  --accent:#0a84ff;--gold:#d4a574;--coral:#ff6b6b;--mint:#5eead4;
+}
+html,body{background:var(--bg);color:var(--t1);font-family:'Inter','SF Pro Display',-apple-system,system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
+a{color:inherit;text-decoration:none}
+.mono{font-family:'JetBrains Mono',SFMono-Regular,Menlo,monospace}
+
+/* nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(0,0,0,.72);border-bottom:1px solid var(--line);padding:14px 32px;display:flex;align-items:center;gap:24px}
+.nav .logo{font-weight:700;letter-spacing:-.02em;font-size:15px}
+.nav a.link{color:var(--t2);font-size:13px;font-weight:500;transition:color .2s}
+.nav a.link:hover{color:var(--t1)}
+.nav .spacer{flex:1}
+.nav .badge{font-size:11px;color:var(--gold);border:1px solid var(--gold);padding:4px 10px;border-radius:100px;letter-spacing:.08em;font-family:'JetBrains Mono',monospace}
+
+/* hero */
+.hero{min-height:80vh;display:flex;flex-direction:column;justify-content:center;padding:120px 32px 80px;max-width:1280px;margin:0 auto;position:relative}
+.hero::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:80%;height:600px;background:radial-gradient(ellipse at center,rgba(10,132,255,.18) 0%,transparent 60%);pointer-events:none;z-index:-1}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;margin-bottom:24px}
+.hero h1{font-size:clamp(48px,8vw,112px);font-weight:800;letter-spacing:-.04em;line-height:1.02;margin-bottom:24px;background:linear-gradient(180deg,#fff 0%,#a1a1a6 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero .sub{font-size:clamp(18px,2vw,24px);color:var(--t2);font-weight:400;max-width:800px;line-height:1.5}
+.hero .meta{display:flex;gap:32px;margin-top:40px;flex-wrap:wrap}
+.hero .meta .item{border-left:2px solid var(--gold);padding:4px 0 4px 16px}
+.hero .meta .k{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t3);letter-spacing:.1em;margin-bottom:4px}
+.hero .meta .v{font-size:18px;font-weight:600}
+
+/* compare bar */
+.compare{max-width:1280px;margin:40px auto 0;padding:0 32px}
+.compare h2{font-size:36px;font-weight:700;letter-spacing:-.025em;margin-bottom:8px}
+.compare .desc{color:var(--t2);font-size:15px;margin-bottom:32px}
+.compare-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.compare-card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:28px;transition:all .4s cubic-bezier(.16,1,.3,1);cursor:pointer;position:relative;overflow:hidden}
+.compare-card:hover{border-color:var(--line2);transform:translateY(-4px);background:var(--card2)}
+.compare-card.recommend{border-color:rgba(212,165,116,.4);background:linear-gradient(135deg,rgba(212,165,116,.08) 0%,var(--card) 60%)}
+.compare-card .tagline{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;color:var(--gold);margin-bottom:12px}
+.compare-card .pname{font-size:22px;font-weight:700;letter-spacing:-.02em;margin-bottom:8px}
+.compare-card .pscore{display:flex;align-items:baseline;gap:6px;margin-bottom:16px}
+.compare-card .pscore .n{font-family:'JetBrains Mono',monospace;font-size:42px;font-weight:700;color:var(--gold);line-height:1}
+.compare-card .pscore .l{font-size:11px;color:var(--t3);font-family:'JetBrains Mono',monospace;letter-spacing:.1em}
+.compare-card .psum{color:var(--t2);font-size:14px;line-height:1.6;margin-bottom:18px;min-height:88px}
+.compare-card ul{list-style:none;padding:0}
+.compare-card ul.pros li::before{content:"+ ";color:var(--mint);font-family:'JetBrains Mono',monospace}
+.compare-card ul.cons li::before{content:"− ";color:var(--coral);font-family:'JetBrains Mono',monospace}
+.compare-card ul li{font-size:13px;color:var(--t2);margin-bottom:6px;padding-left:0}
+.compare-card .label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--t3);margin:14px 0 8px;text-transform:uppercase}
+.compare-card .anchor{margin-top:18px;display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--accent);font-weight:500}
+.compare-card .anchor::after{content:"→";transition:transform .3s}
+.compare-card:hover .anchor::after{transform:translateX(4px)}
+
+/* plan section */
+.plan-section{max-width:1280px;margin:120px auto 0;padding:0 32px;scroll-margin-top:80px}
+.plan-header{margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--line)}
+.plan-id{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);letter-spacing:.15em;margin-bottom:12px}
+.plan-title{font-size:48px;font-weight:700;letter-spacing:-.03em;line-height:1.05;margin-bottom:16px}
+.plan-summary{color:var(--t2);font-size:17px;line-height:1.6;max-width:800px}
+
+/* day timeline */
+.days{display:flex;flex-direction:column;gap:32px}
+.day{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:36px;transition:border-color .3s}
+.day:hover{border-color:var(--line2)}
+.day-head{display:flex;align-items:flex-start;gap:24px;margin-bottom:28px;flex-wrap:wrap}
+.day-num{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);letter-spacing:.12em;padding:6px 14px;border:1px solid var(--gold);border-radius:100px}
+.day-loc{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--t3);letter-spacing:.08em;text-transform:uppercase}
+.day-title{font-size:30px;font-weight:700;letter-spacing:-.025em;margin-bottom:6px;width:100%;flex-basis:100%;margin-top:8px}
+.day-sub{color:var(--t2);font-size:14px}
+
+.dives{display:flex;flex-direction:column;gap:0;border-left:2px solid var(--line2);padding-left:24px;margin-left:8px}
+.dive-item{position:relative;padding:16px 0 16px 16px;border-bottom:1px solid var(--line)}
+.dive-item:last-child{border-bottom:none}
+.dive-item::before{content:"";position:absolute;left:-32px;top:24px;width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(212,165,116,.15)}
+.dive-row{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.dive-time{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--accent);font-weight:500;min-width:70px}
+.dive-name{font-size:18px;font-weight:600;letter-spacing:-.01em}
+.dive-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;padding:3px 9px;border-radius:6px;background:rgba(212,165,116,.12);color:var(--gold);border:1px solid rgba(212,165,116,.25)}
+.dive-depth{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t3);margin-left:auto}
+.dive-detail{color:var(--t2);font-size:14px;line-height:1.6;padding-left:84px}
+
+.day-tip{margin-top:24px;padding:16px 20px;background:rgba(10,132,255,.06);border-left:3px solid var(--accent);border-radius:8px;font-size:14px;color:var(--t2);line-height:1.6}
+.day-tip::before{content:"TIP · ";font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--accent);font-weight:600}
+
+/* logistics */
+.logistics{margin-top:48px;background:var(--card2);border:1px solid var(--line);border-radius:28px;padding:36px;display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.log-item .k{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.12em;margin-bottom:8px}
+.log-item .v{font-size:15px;color:var(--t1);line-height:1.6}
+
+/* coverage chips */
+.coverage{margin:24px 0 8px;display:flex;flex-wrap:wrap;gap:8px}
+.cov-chip{font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 12px;border-radius:8px;background:rgba(94,234,212,.08);color:var(--mint);border:1px solid rgba(94,234,212,.2);letter-spacing:.05em}
+
+/* footer */
+footer{margin-top:160px;padding:60px 32px 80px;border-top:1px solid var(--line);text-align:center}
+footer .ft{color:var(--t3);font-size:12px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em}
+footer .lk{margin-top:18px}
+footer .lk a{color:var(--accent);font-size:14px;font-weight:500;margin:0 12px}
+
+/* responsive */
+@media(max-width:880px){
+  .compare-grid{grid-template-columns:1fr}
+  .logistics{grid-template-columns:1fr}
+  .dive-detail{padding-left:0;margin-top:8px}
+  .nav{padding:12px 20px;gap:14px}
+  .nav .link{display:none}
+  .hero,.compare,.plan-section{padding-left:20px;padding-right:20px}
+}
+
+/* fade in on scroll */
+.fade{opacity:0;transform:translateY(32px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+.fade.in{opacity:1;transform:translateY(0)}
+</style></head><body>
+
+<nav class="nav">
+  <div class="logo">RED SEA · 4 DAYS</div>
+  <a class="link" href="#planA">方案 A</a>
+  <a class="link" href="#planB">方案 B</a>
+  <a class="link" href="#planC">方案 C</a>
+  <div class="spacer"></div>
+  <a class="link" href="./index.html">← 返回潜点榜</a>
+  <span class="badge">v1.0</span>
+</nav>
+
+<section class="hero">
+  <div class="eyebrow">ITINERARY · 2 LIVEABOARD NIGHTS · 4 DIVE DAYS</div>
+  <h1>四天<br>把红海榜单<br>吃到八成。</h1>
+  <p class="sub">三套结构化方案：陆地纯日船、北日船 + 南船宿、全程 Deep South 船宿。<br>按你的"可接受 2 天船宿"约束，A 方案最优——下方三选一对照看。</p>
+  <div class="meta">
+    <div class="item"><div class="k">DURATION</div><div class="v">4 潜水日</div></div>
+    <div class="item"><div class="k">DIVES</div><div class="v">12-13 潜</div></div>
+    <div class="item"><div class="k">LIVEABOARD</div><div class="v">≤ 2 晚</div></div>
+    <div class="item"><div class="k">BEST SEASON</div><div class="v">5-9 月</div></div>
+  </div>
+</section>
+
+<section class="compare fade"><h2>三套方案对比</h2><div class="desc">按你的需求"4 天 · 多顶级点 · 接受 ≤2 晚船宿"，A 是最佳解。</div><div class="compare-grid">
+<div class="compare-card recommend">
+  <div class="tagline">RECOMMENDED</div>
+  <div class="pname">方案 A · 北段日船 + 南段船宿</div>
+  <div class="pscore"><span class="n">95</span><span class="l">/ 100</span></div>
+  <div class="psum">北段沙姆 2 天打满经典沉船+鱼风暴，南段 2 天船宿冲 Elphinstone+Brothers。覆盖 Top10 中的 7 个。</div>
+  <ul class="pros"><li>覆盖最多顶级点位（7/10）</li><li>沉船+墙潜+鲨鱼三大主题全到</li><li>船宿仅 2 晚体力可控</li></ul>
+  <div class="label">权衡</div>
+  <ul class="cons"><li>内陆转场 1 次（沙姆→Hurghada 1.5h 飞机或 6h 车）</li><li>船宿前一晚需登船</li></ul>
+  <div class="label">覆盖 TOP 点位</div>
+  <div class="coverage"><span class="cov-chip">Thistlegorm</span><span class="cov-chip">Ras Mohammed</span><span class="cov-chip">Shark&Yolanda</span><span class="cov-chip">Jackson Reef</span><span class="cov-chip">Elphinstone</span><span class="cov-chip">Big Brother</span><span class="cov-chip">Small Brother</span></div>
+  <a class="anchor" href="#planA">查看详细行程</a>
+</div>
+<div class="compare-card ">
+  <div class="tagline">NO LIVEABOARD</div>
+  <div class="pname">方案 B · 沙姆 4 日全日船</div>
+  <div class="pscore"><span class="n">78</span><span class="l">/ 100</span></div>
+  <div class="psum">全程不船宿。住沙姆，4 天日船吃透红海北部，外加一日达哈布岸潜。覆盖 Top10 中的 4 个。</div>
+  <ul class="pros"><li>每晚回岸住酒店，舒适度最高</li><li>没晕船焦虑，新手友好</li><li>成本最低</li></ul>
+  <div class="label">权衡</div>
+  <ul class="cons"><li>错过 Brothers/Elphinstone/Daedalus 远海大鲨鱼</li><li>Top10 命中率最低</li></ul>
+  <div class="label">覆盖 TOP 点位</div>
+  <div class="coverage"><span class="cov-chip">Thistlegorm</span><span class="cov-chip">Ras Mohammed</span><span class="cov-chip">Shark&Yolanda</span><span class="cov-chip">Jackson Reef</span><span class="cov-chip">Abu Nuhas</span><span class="cov-chip">Blue Hole</span><span class="cov-chip">Canyon</span></div>
+  <a class="anchor" href="#planB">查看详细行程</a>
+</div>
+<div class="compare-card ">
+  <div class="tagline">DEEP SOUTH</div>
+  <div class="pname">方案 C · 4 晚 Deep South 船宿</div>
+  <div class="pscore"><span class="n">88</span><span class="l">/ 100</span></div>
+  <div class="psum">全程船宿冲最南端：St. John's + Rocky + Zabargad + Fury Shoals + Daedalus，覆盖 Top10 中的 5 个远海点。</div>
+  <ul class="pros"><li>拿下 Daedalus 锤头鲨季+St.John's+Rocky 三个船宿独占点</li><li>鱼大流大原始感最强</li><li>无需转场</li></ul>
+  <div class="label">权衡</div>
+  <ul class="cons"><li>错过 Thistlegorm 经典沉船</li><li>连续 4 晚船宿对身体要求高</li><li>5-7 月才有锤头季</li></ul>
+  <div class="label">覆盖 TOP 点位</div>
+  <div class="coverage"><span class="cov-chip">Daedalus</span><span class="cov-chip">St. John's</span><span class="cov-chip">Rocky Island</span><span class="cov-chip">Zabargad</span><span class="cov-chip">Fury Shoals</span></div>
+  <a class="anchor" href="#planC">查看详细行程</a>
+</div>
+</div></section>
+<section id="planA" class="plan-section">
+  <div class="plan-header fade">
+    <div class="plan-id mono">PLAN A · RECOMMENDED</div>
+    <h2 class="plan-title">推荐方案 · 北段日船 + 南段船宿</h2>
+    <p class="plan-summary">北段沙姆 2 天打满经典沉船+鱼风暴，南段 2 天船宿冲 Elphinstone+Brothers。覆盖 Top10 中的 7 个。</p>
+  </div>
+  <div class="days"><div class="day fade">
+  <div class="day-head">
+    <span class="day-num mono">DAY 01</span>
+    <span class="day-loc">Sharm El Sheikh</span>
+    <h3 class="day-title">Day 1 · 沙姆经典北线</h3>
+    <div class="day-sub">日船 · Tiran 海峡 + 沉船热身</div>
+  </div>
+  <div class="dives"><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">08:30</span>
+    <span class="dive-name">Jackson Reef</span>
+    <span class="dive-tag">WALL</span>
+    <span class="dive-depth">↓ 30m</span>
+  </div>
+  <div class="dive-detail">Tiran 海峡四礁北门，墙潜 + Lara 残骸，清晨锤头机会</div>
+</div><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">11:30</span>
+    <span class="dive-name">Woodhouse → Thomas 漂潜</span>
+    <span class="dive-tag">DRIFT</span>
+    <span class="dive-depth">↓ 25m</span>
+  </div>
+  <div class="dive-detail">两礁之间漂流，软珊瑚陡墙</div>
+</div><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">15:00</span>
+    <span class="dive-name">Gordon Reef</span>
+    <span class="dive-tag">REEF</span>
+    <span class="dive-depth">↓ 18m</span>
+  </div>
+  <div class="dive-detail">轻松收尾，沙地+珊瑚头看护士鲨</div>
+</div></div>
+  <div class="day-tip">今天作为适应+检查装备日，强度低，回程 Sharks Bay 码头 17:30 前。</div>
+</div><div class="day fade">
+  <div class="day-head">
+    <span class="day-num mono">DAY 02</span>
+    <span class="day-loc">Sharm El Sheikh</span>
+    <h3 class="day-title">Day 2 · 王牌沉船 + Ras Mohammed</h3>
+    <div class="day-sub">日船 · 全程封神三潜</div>
+  </div>
+  <div class="dives"><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">06:30</span>
+    <span class="dive-name">SS Thistlegorm</span>
+    <span class="dive-tag">WRECK</span>
+    <span class="dive-depth">↓ 30m</span>
+  </div>
+  <div class="dive-detail">早班船抢第一波，避开人潮。前舱摩托车坦克全看到</div>
+</div><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">10:30</span>
+    <span class="dive-name">SS Thistlegorm 第二潜</span>
+    <span class="dive-tag">WRECK</span>
+    <span class="dive-depth">↓ 24m</span>
+  </div>
+  <div class="dive-detail">船尾火车头+船体外侧</div>
+</div><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">14:00</span>
+    <span class="dive-name">Shark & Yolanda Reef</span>
+    <span class="dive-tag">REEF+WRECK</span>
+    <span class="dive-depth">↓ 25m</span>
+  </div>
+  <div class="dive-detail">Ras Mo 王牌：陡墙鱼风暴 + 海底浴缸马桶</div>
+</div></div>
+  <div class="day-tip">6 月起 Ras Mo 鱼风暴最盛，黄昏前抵达概率最高。今晚转场 Hurghada 登船。</div>
+</div><div class="day fade">
+  <div class="day-head">
+    <span class="day-num mono">DAY 03</span>
+    <span class="day-loc">Liveaboard · Brothers</span>
+    <h3 class="day-title">Day 3 · 船宿首日 · 兄弟岛双礁</h3>
+    <div class="day-sub">船宿 · 开放海域第一波</div>
+  </div>
+  <div class="dives"><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">06:00</span>
+    <span class="dive-name">Big Brother 北端</span>
+    <span class="dive-tag">WRECK+WALL</span>
+    <span class="dive-depth">↓ 35m</span>
+  </div>
+  <div class="dive-detail">Numidia 沉船斜插墙壁，软珊瑚烟花</div>
+</div><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">10:30</span>
+    <span class="dive-name">Big Brother 西墙</span>
+    <span class="dive-tag">WRECK</span>
+    <span class="dive-depth">↓ 30m</span>
+  </div>
+  <div class="dive-detail">Aida II 沉船 + 灰礁鲨巡游</div>
+</div><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">14:30</span>
+    <span class="dive-name">Small Brother 东南 plateau</span>
+    <span class="dive-tag">WALL</span>
+    <span class="dive-depth">↓ 30m</span>
+  </div>
+  <div class="dive-detail">清晨/午后锤头观测点，垂直陡墙</div>
+</div><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">夜潜可选</span>
+    <span class="dive-name">Small Brother 北角</span>
+    <span class="dive-tag">NIGHT</span>
+    <span class="dive-depth">↓ 15m</span>
+  </div>
+  <div class="dive-detail">软珊瑚特写 + 西班牙舞者</div>
+</div></div>
+  <div class="day-tip">流大无遮挡，需 SMB+下潜钩。船上 12-15 人编队下水。</div>
+</div><div class="day fade">
+  <div class="day-head">
+    <span class="day-num mono">DAY 04</span>
+    <span class="day-loc">Liveaboard · Elphinstone</span>
+    <h3 class="day-title">Day 4 · Elphinstone 收官</h3>
+    <div class="day-sub">船宿末日 · 远洋鲨鱼</div>
+  </div>
+  <div class="dives"><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">07:00</span>
+    <span class="dive-name">Elphinstone 南 plateau</span>
+    <span class="dive-tag">WALL+DEEP</span>
+    <span class="dive-depth">↓ 40m</span>
+  </div>
+  <div class="dive-detail">传说法老石棺位置，深度 40m</div>
+</div><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">10:30</span>
+    <span class="dive-name">Elphinstone 北 plateau</span>
+    <span class="dive-tag">SHARK</span>
+    <span class="dive-depth">↓ 25m</span>
+  </div>
+  <div class="dive-detail">Oceanic Whitetip 远洋白鳍鲨高发区</div>
+</div><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">14:00</span>
+    <span class="dive-name">Elphinstone 东墙漂潜</span>
+    <span class="dive-tag">DRIFT</span>
+    <span class="dive-depth">↓ 20m</span>
+  </div>
+  <div class="dive-detail">软珊瑚墙顺流走完整圈</div>
+</div></div>
+  <div class="day-tip">今天结束船宿在 Port Ghalib 上岸，需 24h 不飞行→次日下午再走。</div>
+</div></div>
+  <div class="logistics fade">
+    <div class="log-item"><div class="k mono">FLIGHT 航班</div><div class="v">开罗/伊斯坦布尔 → SSH（沙姆机场）入；HRG（Hurghada）→ 开罗出</div></div>
+    <div class="log-item"><div class="k mono">TRANSFER 转场</div><div class="v">Day2 晚沙姆 → Hurghada：飞机 1h（首选）/ 大巴 6h</div></div>
+    <div class="log-item"><div class="k mono">BOAT 船型</div><div class="v">Brothers/Elphinstone 联合行程，Hurghada 或 Port Ghalib 登船</div></div>
+    <div class="log-item"><div class="k mono">COST 成本</div><div class="v">日船 €80-100/天 ×2 + 船宿 €450-650/2 晚 ≈ €700-1000/人</div></div>
+  </div>
+</section>
+<section id="planB" class="plan-section">
+  <div class="plan-header fade">
+    <div class="plan-id mono">PLAN B · NO LIVEABOARD</div>
+    <h2 class="plan-title">纯陆地方案 · 沙姆 4 日全日船</h2>
+    <p class="plan-summary">全程不船宿。住沙姆，4 天日船吃透红海北部，外加一日达哈布岸潜。覆盖 Top10 中的 4 个。</p>
+  </div>
+  <div class="days"><div class="day fade">
+  <div class="day-head">
+    <span class="day-num mono">DAY 01</span>
+    <span class="day-loc">Sharm</span>
+    <h3 class="day-title">Day 1 · Tiran 海峡</h3>
+    <div class="day-sub">日船热身</div>
+  </div>
+  <div class="dives"><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">08:30</span>
+    <span class="dive-name">Jackson Reef</span>
+    <span class="dive-tag">WALL</span>
+    <span class="dive-depth">↓ 30m</span>
+  </div>
+  <div class="dive-detail">墙潜 + Lara 残骸</div>
+</div><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">11:30</span>
+    <span class="dive-name">Thomas Reef</span>
+    <span class="dive-tag">DRIFT</span>
+    <span class="dive-depth">↓ 25m</span>
+  </div>
+  <div class="dive-detail">软珊瑚陡墙漂潜</div>
+</div><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">15:00</span>
+    <span class="dive-name">Gordon Reef</span>
+    <span class="dive-tag">REEF</span>
+    <span class="dive-depth">↓ 18m</span>
+  </div>
+  <div class="dive-detail">护士鲨沙地</div>
+</div></div>
+  <div class="day-tip">Tiran 四礁经典套餐</div>
+</div><div class="day fade">
+  <div class="day-head">
+    <span class="day-num mono">DAY 02</span>
+    <span class="day-loc">Sharm</span>
+    <h3 class="day-title">Day 2 · Thistlegorm + Ras Mo</h3>
+    <div class="day-sub">日船经典双爆</div>
+  </div>
+  <div class="dives"><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">06:30</span>
+    <span class="dive-name">SS Thistlegorm</span>
+    <span class="dive-tag">WRECK</span>
+    <span class="dive-depth">↓ 30m</span>
+  </div>
+  <div class="dive-detail">二战货船早班抢第一波</div>
+</div><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">10:30</span>
+    <span class="dive-name">SS Dunraven</span>
+    <span class="dive-tag">WRECK</span>
+    <span class="dive-depth">↓ 25m</span>
+  </div>
+  <div class="dive-detail">百年蒸汽船，简单的 wreck 体验</div>
+</div><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">14:00</span>
+    <span class="dive-name">Shark & Yolanda</span>
+    <span class="dive-tag">REEF+WRECK</span>
+    <span class="dive-depth">↓ 25m</span>
+  </div>
+  <div class="dive-detail">鱼风暴 + 海底浴缸</div>
+</div></div>
+  <div class="day-tip">红海最经典一日，强度高</div>
+</div><div class="day fade">
+  <div class="day-head">
+    <span class="day-num mono">DAY 03</span>
+    <span class="day-loc">Sharm → Hurghada 日船</span>
+    <h3 class="day-title">Day 3 · Abu Nuhas 沉船墓地</h3>
+    <div class="day-sub">日船 · 一日四沉船串潜</div>
+  </div>
+  <div class="dives"><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">08:30</span>
+    <span class="dive-name">Giannis D</span>
+    <span class="dive-tag">WRECK</span>
+    <span class="dive-depth">↓ 24m</span>
+  </div>
+  <div class="dive-detail">倾斜艺术品般的货船</div>
+</div><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">11:30</span>
+    <span class="dive-name">Carnatic</span>
+    <span class="dive-tag">WRECK</span>
+    <span class="dive-depth">↓ 27m</span>
+  </div>
+  <div class="dive-detail">百年古船长满软珊瑚</div>
+</div><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">14:30</span>
+    <span class="dive-name">Chrisoula K</span>
+    <span class="dive-tag">WRECK</span>
+    <span class="dive-depth">↓ 20m</span>
+  </div>
+  <div class="dive-detail">瓷砖船穿越船舱</div>
+</div></div>
+  <div class="day-tip">Hurghada 出发日船，从沙姆当日往返较累，可前一晚移到 Hurghada</div>
+</div><div class="day fade">
+  <div class="day-head">
+    <span class="day-num mono">DAY 04</span>
+    <span class="day-loc">Dahab</span>
+    <h3 class="day-title">Day 4 · 达哈布岸潜</h3>
+    <div class="day-sub">陆路 1.5h · 自由节奏</div>
+  </div>
+  <div class="dives"><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">09:00</span>
+    <span class="dive-name">Canyon 峡谷</span>
+    <span class="dive-tag">SHORE</span>
+    <span class="dive-depth">↓ 30m</span>
+  </div>
+  <div class="dive-detail">水下裂缝从 18m 降到 30m</div>
+</div><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">12:00</span>
+    <span class="dive-name">Blue Hole 外礁 + Bells</span>
+    <span class="dive-tag">SHORE</span>
+    <span class="dive-depth">↓ 30m</span>
+  </div>
+  <div class="dive-detail">56m Arch 拱门口浅水观礼</div>
+</div><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">15:30</span>
+    <span class="dive-name">Eel Garden</span>
+    <span class="dive-tag">SHORE</span>
+    <span class="dive-depth">↓ 15m</span>
+  </div>
+  <div class="dive-detail">花园鳗群轻松收尾</div>
+</div></div>
+  <div class="day-tip">达哈布免船费，Bedouin 风情小镇住一晚也不错</div>
+</div></div>
+  <div class="logistics fade">
+    <div class="log-item"><div class="k mono">FLIGHT 航班</div><div class="v">SSH 进出，最省事</div></div>
+    <div class="log-item"><div class="k mono">TRANSFER 转场</div><div class="v">Day3 来回 Hurghada 累；Day4 沙姆→达哈布租车 1.5h</div></div>
+    <div class="log-item"><div class="k mono">BOAT 船型</div><div class="v">全程日船，无船宿</div></div>
+    <div class="log-item"><div class="k mono">COST 成本</div><div class="v">日船 €80-100/天 ×4 + 岸潜 €40-60 ≈ €400-500/人，最省钱</div></div>
+  </div>
+</section>
+<section id="planC" class="plan-section">
+  <div class="plan-header fade">
+    <div class="plan-id mono">PLAN C · DEEP SOUTH</div>
+    <h2 class="plan-title">硬核方案 · 4 晚 Deep South 船宿</h2>
+    <p class="plan-summary">全程船宿冲最南端：St. John's + Rocky + Zabargad + Fury Shoals + Daedalus，覆盖 Top10 中的 5 个远海点。</p>
+  </div>
+  <div class="days"><div class="day fade">
+  <div class="day-head">
+    <span class="day-num mono">DAY 01</span>
+    <span class="day-loc">Liveaboard · Daedalus</span>
+    <h3 class="day-title">Day 1 · Daedalus 锤头鲨日</h3>
+    <div class="day-sub">船宿 · 远海第一站</div>
+  </div>
+  <div class="dives"><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">06:00</span>
+    <span class="dive-name">Daedalus 北 plateau</span>
+    <span class="dive-tag">SHARK</span>
+    <span class="dive-depth">↓ 30m</span>
+  </div>
+  <div class="dive-detail">清晨锤头编队 30-50 条</div>
+</div><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">10:30</span>
+    <span class="dive-name">Daedalus 西墙</span>
+    <span class="dive-tag">WALL</span>
+    <span class="dive-depth">↓ 25m</span>
+  </div>
+  <div class="dive-detail">软珊瑚陡墙</div>
+</div><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">14:30</span>
+    <span class="dive-name">Daedalus 南 plateau</span>
+    <span class="dive-tag">REEF</span>
+    <span class="dive-depth">↓ 28m</span>
+  </div>
+  <div class="dive-detail">灰礁鲨 + 大鱼回访</div>
+</div></div>
+  <div class="day-tip">5-7 月锤头季最佳，礁顶有灯塔</div>
+</div><div class="day fade">
+  <div class="day-head">
+    <span class="day-num mono">DAY 02</span>
+    <span class="day-loc">Liveaboard · Rocky/Zabargad</span>
+    <h3 class="day-title">Day 2 · Rocky + Zabargad</h3>
+    <div class="day-sub">船宿 · 最南端</div>
+  </div>
+  <div class="dives"><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">07:00</span>
+    <span class="dive-name">Rocky Island 东墙</span>
+    <span class="dive-tag">WALL</span>
+    <span class="dive-depth">↓ 35m</span>
+  </div>
+  <div class="dive-detail">丝鲨+金枪鱼龙卷风，能见度 40m+</div>
+</div><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">11:00</span>
+    <span class="dive-name">Zabargad 北湾 Khanka 沉船</span>
+    <span class="dive-tag">WRECK</span>
+    <span class="dive-depth">↓ 24m</span>
+  </div>
+  <div class="dive-detail">24m 处倾斜货船</div>
+</div><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">14:30</span>
+    <span class="dive-name">Zabargad 南湾</span>
+    <span class="dive-tag">REEF</span>
+    <span class="dive-depth">↓ 20m</span>
+  </div>
+  <div class="dive-detail">硬珊瑚花园+海龟</div>
+</div></div>
+  <div class="day-tip">下午有时间可上岸看废弃橄榄石矿坑</div>
+</div><div class="day fade">
+  <div class="day-head">
+    <span class="day-num mono">DAY 03</span>
+    <span class="day-loc">Liveaboard · St. John's</span>
+    <h3 class="day-title">Day 3 · St. John's 礁群</h3>
+    <div class="day-sub">船宿 · 接近苏丹边境</div>
+  </div>
+  <div class="dives"><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">07:00</span>
+    <span class="dive-name">Habili Ali</span>
+    <span class="dive-tag">REEF</span>
+    <span class="dive-depth">↓ 30m</span>
+  </div>
+  <div class="dive-detail">灰礁鲨+偶有锤头</div>
+</div><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">10:30</span>
+    <span class="dive-name">Gota Soraya</span>
+    <span class="dive-tag">WALL</span>
+    <span class="dive-depth">↓ 25m</span>
+  </div>
+  <div class="dive-detail">陡墙海豚和海龟</div>
+</div><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">14:30</span>
+    <span class="dive-name">Gota Kebir Cave</span>
+    <span class="dive-tag">CAVE</span>
+    <span class="dive-depth">↓ 20m</span>
+  </div>
+  <div class="dive-detail">洞穴系统阳光投射</div>
+</div></div>
+  <div class="day-tip">埃及最南端，无信号最纯粹</div>
+</div><div class="day fade">
+  <div class="day-head">
+    <span class="day-num mono">DAY 04</span>
+    <span class="day-loc">Liveaboard · Fury Shoals</span>
+    <h3 class="day-title">Day 4 · Fury Shoals 北返</h3>
+    <div class="day-sub">船宿末日 · 海豚收官</div>
+  </div>
+  <div class="dives"><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">07:00</span>
+    <span class="dive-name">Sha'ab Claudio</span>
+    <span class="dive-tag">CAVE</span>
+    <span class="dive-depth">↓ 18m</span>
+  </div>
+  <div class="dive-detail">洞穴隧道阳光投射震撼</div>
+</div><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">10:30</span>
+    <span class="dive-name">Sataya Dolphin Reef</span>
+    <span class="dive-tag">DOLPHIN</span>
+    <span class="dive-depth">↓ 15m</span>
+  </div>
+  <div class="dive-detail">300+ spinner 海豚常驻</div>
+</div><div class="dive-item">
+  <div class="dive-row">
+    <span class="dive-time mono">14:00</span>
+    <span class="dive-name">Abu Galawa Soraya</span>
+    <span class="dive-tag">WRECK</span>
+    <span class="dive-depth">↓ 20m</span>
+  </div>
+  <div class="dive-detail">小货船残骸+硬珊瑚</div>
+</div></div>
+  <div class="day-tip">Hamata 港上岸，需 24h 不飞行</div>
+</div></div>
+  <div class="logistics fade">
+    <div class="log-item"><div class="k mono">FLIGHT 航班</div><div class="v">开罗 → Marsa Alam(RMF) 进出，最直接</div></div>
+    <div class="log-item"><div class="k mono">TRANSFER 转场</div><div class="v">无转场，全程在船</div></div>
+    <div class="log-item"><div class="k mono">BOAT 船型</div><div class="v">Port Ghalib 或 Hamata 登船，5 晚 6 天行程</div></div>
+    <div class="log-item"><div class="k mono">COST 成本</div><div class="v">船宿 €1100-1500/人含全餐，性价比看个人</div></div>
+  </div>
+</section>
+<footer>
+  <div class="ft">RED SEA DIVE · 4-DAY ITINERARY · v1.0</div>
+  <div class="lk"><a href="./index.html">← 返回潜点榜单</a></div>
+</footer>
+<script>
+const obs=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -80px 0px'});
+document.querySelectorAll('.fade').forEach(el=>obs.observe(el));
+</script>
+</body></html>
