@@ -3,356 +3,657 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
-<title>EGYPT TOP 20 — 红海潜点指南</title>
+<title>Egypt · Top 20 Dive Sites</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+SC:wght@200;300;400;500;700&family=Noto+Serif+SC:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
-:root{--abyss:#020a18;--deep:#04162a;--mid:#0a3050;--shallow:#1a6088;--sand:#e8d8b0;--gold:#d4a73a;--coral:#ff7a5a;--aqua:#3ad4d4;--paper:#f0e6d0;--ink:#0a1828}
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{background:var(--abyss);color:var(--paper);overflow-x:hidden;font-family:"Noto Sans SC",-apple-system,sans-serif;line-height:1.7;background-image:radial-gradient(circle at 20% 10%,rgba(58,212,212,.08) 0,transparent 50%),radial-gradient(circle at 80% 90%,rgba(212,167,58,.06) 0,transparent 50%)}
-.hero{position:relative;min-height:clamp(380px,70vh,580px);background:linear-gradient(180deg,#020a18 0%,#04162a 30%,#0a3050 80%,#1a6088 100%);overflow:hidden;border-bottom:1px solid var(--gold);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:clamp(40px,8vw,80px) clamp(20px,5vw,60px);text-align:center}
-.hero-bg{position:absolute;inset:0;opacity:.4;pointer-events:none}
-.hero-bg svg{width:100%;height:100%;display:block}
-.hero-content{position:relative;z-index:2;max-width:900px}
-.hero-eyebrow{font-family:"Bebas Neue",sans-serif;font-size:clamp(11px,1.6vw,14px);letter-spacing:8px;color:var(--gold);margin-bottom:14px}
-.hero-eyebrow::before,.hero-eyebrow::after{content:"—";margin:0 14px;color:var(--gold);opacity:.5}
-.hero-title{font-family:"Bebas Neue",sans-serif;font-size:clamp(48px,11vw,130px);line-height:.95;letter-spacing:6px;text-shadow:0 0 40px rgba(58,212,212,.3);margin-bottom:8px}
-.hero-title .accent{color:var(--gold)}
-.hero-sub{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:clamp(16px,2.6vw,26px);color:var(--aqua);letter-spacing:3px;margin-bottom:24px}
-.hero-meta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:28px}
-.hero-meta span{padding:7px 16px;border:1px solid var(--gold);font-size:11px;letter-spacing:2px;background:rgba(0,0,0,.25);backdrop-filter:blur(8px)}
-.tab-bar{position:sticky;top:0;z-index:100;background:rgba(2,10,24,.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--gold);display:flex;justify-content:center;padding:10px 12px;gap:0;flex-wrap:wrap}
-.tab-btn{padding:9px clamp(12px,3vw,24px);background:transparent;color:var(--paper);border:1px solid var(--gold);border-right:none;cursor:pointer;font-family:"Bebas Neue",sans-serif;font-size:clamp(11px,1.7vw,14px);letter-spacing:3px;transition:all .25s;white-space:nowrap}
-.tab-btn:last-child{border-right:1px solid var(--gold)}
-.tab-btn.active{background:var(--gold);color:var(--ink)}
-.tab-btn:hover:not(.active){background:rgba(212,167,58,.15)}
-.tab-pane{display:none;animation:fadeIn .4s}
+:root{
+  --bg:#000;--bg-2:#0a0a0c;--bg-3:#141418;
+  --fg:#f5f5f7;--fg-2:#a1a1a6;--fg-3:#6e6e73;
+  --line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);
+  --accent:#06c8d4;--accent-2:#3aa8d4;--gold:#e8c870;--coral:#ff6b5a;
+  --blur:saturate(180%) blur(20px);
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);overflow-x:hidden;line-height:1.5;
+  font-family:"Inter","Noto Sans SC",-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;
+  font-weight:400;letter-spacing:-.011em}
+img,svg{display:block;max-width:100%}
+
+/* ===== 顶栏 (Apple style sticky) ===== */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:48px;
+  background:rgba(0,0,0,.72);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+  border-bottom:1px solid var(--line);transition:background .3s,height .3s}
+.nav-inner{max-width:1280px;height:100%;margin:0 auto;padding:0 22px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px}
+.nav-brand{font-family:"Inter",sans-serif;font-weight:600;font-size:15px;letter-spacing:-.02em;color:var(--fg);
+  display:flex;align-items:center;gap:10px}
+.nav-brand .dot{width:8px;height:8px;background:var(--accent);border-radius:50%;box-shadow:0 0 12px var(--accent)}
+.nav-tabs{display:flex;gap:0}
+.nav-tab{background:none;border:none;color:var(--fg-2);cursor:pointer;
+  font-family:inherit;font-size:13px;font-weight:400;letter-spacing:-.01em;
+  padding:8px 16px;transition:color .2s var(--ease);position:relative}
+.nav-tab::after{content:"";position:absolute;left:50%;bottom:0;width:0;height:1px;background:var(--accent);
+  transition:all .3s var(--ease);transform:translateX(-50%)}
+.nav-tab:hover{color:var(--fg)}
+.nav-tab.active{color:var(--fg);font-weight:500}
+.nav-tab.active::after{width:24px}
+
+/* ===== Hero ===== */
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  padding:80px 22px 60px;text-align:center;overflow:hidden;background:#000}
+.hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none}
+.hero-bg::before{content:"";position:absolute;inset:0;
+  background:radial-gradient(ellipse 90% 70% at 50% 100%,rgba(6,200,212,.35) 0,rgba(6,200,212,0) 60%),
+             radial-gradient(ellipse 70% 50% at 30% 50%,rgba(58,168,212,.18) 0,transparent 60%),
+             radial-gradient(ellipse 60% 50% at 80% 20%,rgba(232,200,112,.10) 0,transparent 70%)}
+.hero-bg::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,#000 0%,transparent 30%,transparent 70%,#000 100%)}
+.hero-bg svg{width:100%;height:100%;opacity:.22}
+.hero-content{position:relative;z-index:2;max-width:1100px}
+.hero-eyebrow{font-family:"Inter",sans-serif;font-size:14px;font-weight:500;
+  color:var(--accent);letter-spacing:.04em;margin-bottom:24px;
+  opacity:0;animation:rise 1s var(--ease) .2s forwards}
+.hero-title{font-family:"Inter","Noto Serif SC",sans-serif;font-weight:700;
+  font-size:clamp(56px,12vw,144px);line-height:.95;letter-spacing:-.04em;
+  margin-bottom:22px;
+  background:linear-gradient(180deg,#fff 0%,#fff 50%,#a1a1a6 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  opacity:0;animation:rise 1.1s var(--ease) .35s forwards}
+.hero-title .accent{
+  background:linear-gradient(135deg,#06c8d4 0%,#3aa8d4 50%,#e8c870 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  font-style:italic;font-weight:300;font-family:"Cormorant Garamond",serif}
+.hero-sub{font-size:clamp(18px,2.4vw,26px);color:var(--fg-2);font-weight:300;
+  letter-spacing:-.01em;max-width:680px;margin:0 auto 36px;
+  opacity:0;animation:rise 1.1s var(--ease) .55s forwards}
+.hero-sub b{color:var(--fg);font-weight:500}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:42px;
+  opacity:0;animation:rise 1.1s var(--ease) .75s forwards}
+.hero-meta span{padding:8px 18px;border:1px solid var(--line-2);border-radius:980px;
+  font-size:12px;font-weight:500;color:var(--fg-2);
+  background:rgba(255,255,255,.04);backdrop-filter:blur(10px);transition:all .3s var(--ease)}
+.hero-meta span:hover{color:var(--fg);border-color:var(--accent);background:rgba(6,200,212,.1)}
+.hero-scroll{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);
+  font-size:11px;letter-spacing:.3em;color:var(--fg-3);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  opacity:0;animation:rise 1.4s var(--ease) 1s forwards}
+.hero-scroll::after{content:"";width:1px;height:36px;background:linear-gradient(180deg,var(--fg-3),transparent);
+  animation:scrollDown 2s var(--ease) infinite}
+
+@keyframes rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes scrollDown{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ===== 通用 ===== */
+.tab-pane{display:none}
 .tab-pane.active{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.container{max-width:1200px;margin:0 auto;padding:clamp(20px,4vw,40px) clamp(14px,4vw,32px)}
-.section-title{font-family:"Bebas Neue",sans-serif;font-size:clamp(22px,4vw,36px);letter-spacing:5px;color:var(--gold);margin:28px 0 22px;display:flex;align-items:center;gap:16px}
-.section-title::before{content:"";flex:0 0 auto;width:5px;height:28px;background:var(--gold)}
-.section-title .en{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:13px;color:var(--aqua);letter-spacing:2px;margin-left:auto;text-align:right}
-#map{height:clamp(340px,58vw,540px);width:100%;background:var(--mid);border:1px solid var(--gold);box-shadow:0 0 30px rgba(58,212,212,.18);margin-bottom:14px}
-.map-cap{text-align:center;font-family:"Cormorant Garamond",serif;font-style:italic;font-size:13px;color:var(--aqua);margin-bottom:30px;letter-spacing:1px;opacity:.8}
-.sites-grid{display:grid;grid-template-columns:1fr;gap:22px}
-@media(min-width:760px){.sites-grid{grid-template-columns:1fr 1fr}}
-@media(min-width:1100px){.sites-grid{grid-template-columns:1fr 1fr 1fr}}
-.site-card{background:linear-gradient(180deg,#0a2030 0%,#04162a 100%);border:1px solid rgba(212,167,58,.4);overflow:hidden;transition:transform .3s,border-color .3s,box-shadow .3s;display:flex;flex-direction:column;scroll-margin-top:80px}
-.site-card:hover{transform:translateY(-3px);border-color:var(--gold);box-shadow:0 12px 30px rgba(0,0,0,.5),0 0 24px rgba(58,212,212,.15)}
-.site-card.highlight{border-color:var(--coral);box-shadow:0 0 32px rgba(255,122,90,.5);transform:translateY(-3px)}
-.site-art{position:relative;width:100%;aspect-ratio:5/3;overflow:hidden;background:var(--deep)}
-.site-art svg{width:100%;height:100%;display:block}
-.site-rank{position:absolute;top:12px;left:12px;background:rgba(2,10,24,.85);color:var(--gold);font-family:"Bebas Neue",sans-serif;font-size:18px;letter-spacing:2px;padding:5px 12px;border:1px solid var(--gold)}
-.site-tag{position:absolute;top:12px;right:12px;color:var(--ink);font-family:"Bebas Neue",sans-serif;font-size:10px;letter-spacing:2px;padding:5px 10px;font-weight:700}
-.site-body{padding:18px clamp(14px,3vw,22px);flex:1;display:flex;flex-direction:column;gap:11px}
-.site-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-.site-name{font-family:"Noto Serif SC",serif;font-weight:900;font-size:clamp(15px,2.4vw,19px);letter-spacing:1px;line-height:1.3}
-.site-en{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:11.5px;color:var(--aqua);margin-top:3px;letter-spacing:1px}
-.site-access{font-family:"Bebas Neue",sans-serif;font-size:9.5px;letter-spacing:1.5px;padding:4px 8px;color:var(--ink);font-weight:700;flex-shrink:0;white-space:nowrap;align-self:flex-start}
-.site-meta{display:grid;grid-template-columns:1fr 1fr;gap:5px 10px;font-size:11.5px;padding:9px 11px;background:rgba(2,10,24,.5);border-left:2px solid var(--aqua);color:#bcd}
-.site-meta b{color:var(--gold);margin-right:5px;font-weight:600;font-size:9.5px;letter-spacing:1px;text-transform:uppercase}
-.site-hl{font-size:12.5px;color:#cdd;line-height:1.7;font-weight:300}
-.site-access-block{margin-top:auto;padding-top:11px;border-top:1px dashed rgba(212,167,58,.3)}
-.acc-row{display:flex;gap:8px;font-size:11.5px;margin-bottom:4px;color:#bcd}
-.acc-row b{color:var(--gold);font-weight:600;min-width:30px;font-size:10px;letter-spacing:1px;flex-shrink:0;text-transform:uppercase}
-.acc-how{font-size:11.5px;color:var(--paper);background:rgba(58,212,212,.08);padding:8px 11px;margin-top:7px;border-left:2px solid var(--aqua);line-height:1.7}
-/* Tab 2 */
-.intro-block{background:linear-gradient(135deg,#0a2030,#04162a);border:1px solid var(--gold);padding:22px clamp(18px,3vw,28px);margin-bottom:28px;position:relative}
-.intro-block::before{content:"HOW TO GO";position:absolute;top:-11px;left:18px;background:var(--gold);color:var(--ink);font-family:"Bebas Neue",sans-serif;font-size:11px;letter-spacing:3px;padding:3px 12px}
-.intro-block p{font-size:13px;color:#cdd;line-height:1.85}
-.grp-block{margin:28px 0;background:linear-gradient(180deg,#0a2030,#04162a);border:1px solid rgba(212,167,58,.3);padding:clamp(16px,3vw,26px)}
-.grp-head{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid;padding-bottom:10px;margin-bottom:14px}
-.grp-head h3{font-family:"Bebas Neue",sans-serif;font-size:clamp(18px,2.8vw,24px);letter-spacing:4px}
-.grp-count{font-family:"Bebas Neue",sans-serif;font-size:13px;color:var(--paper);background:rgba(212,167,58,.2);padding:3px 10px;letter-spacing:2px}
-.grp-desc{font-size:12.5px;color:#bcd;margin-bottom:14px;line-height:1.85}
-.grp-list{list-style:none;display:grid;grid-template-columns:1fr;gap:6px}
-@media(min-width:600px){.grp-list{grid-template-columns:1fr 1fr}}
-.grp-list a{display:grid;grid-template-columns:54px 1fr auto;align-items:center;gap:10px;padding:10px 12px;background:rgba(2,10,24,.5);color:var(--paper);text-decoration:none;border-left:3px solid transparent;transition:all .2s;font-size:12.5px}
-.grp-list a:hover{background:rgba(58,212,212,.1);border-left-color:var(--aqua);transform:translateX(2px)}
-.g-rank{font-family:"Bebas Neue",sans-serif;color:var(--gold);font-size:14px;letter-spacing:1px}
-.g-name{font-family:"Noto Serif SC",serif;font-weight:600}
-.g-region{font-size:10.5px;color:var(--aqua);font-style:italic}
-/* Tab 3 */
-.itin-block{margin:28px 0;background:linear-gradient(180deg,#0a2030,#04162a);border:1px solid rgba(212,167,58,.3);padding:clamp(16px,3vw,26px);overflow-x:auto;-webkit-overflow-scrolling:touch}
-.itin-block table{width:100%;border-collapse:collapse;min-width:780px;font-size:12.5px}
-.itin-block th{background:var(--ink);color:var(--gold);padding:10px;font-family:"Bebas Neue",sans-serif;letter-spacing:2px;font-size:12px;text-align:left;border-bottom:2px solid var(--gold)}
-.itin-block td{padding:11px;border-bottom:1px solid rgba(212,167,58,.15);vertical-align:top;color:#cdd;line-height:1.7}
-.itin-block td:first-child{color:var(--paper)}
-.price{color:var(--coral) !important;font-family:"Bebas Neue",sans-serif;letter-spacing:1px;font-size:13px}
-.foot{margin-top:50px;padding:30px 16px;text-align:center;border-top:1px solid rgba(212,167,58,.3);font-family:"Cormorant Garamond",serif;font-style:italic;font-size:13px;color:var(--aqua);letter-spacing:2px}
-.foot-mark{display:inline-block;width:46px;height:46px;line-height:42px;background:var(--gold);color:var(--ink);font-family:"Bebas Neue",sans-serif;font-size:22px;letter-spacing:1px;border-radius:50%;margin-bottom:14px}
-@media(max-width:560px){.tab-btn{padding:7px 12px;font-size:10.5px;letter-spacing:1.5px}.hero-meta span{font-size:10px;padding:5px 11px;letter-spacing:1px}.site-meta{grid-template-columns:1fr}}
-.leaflet-popup-content-wrapper{background:var(--ink);color:var(--paper);border:1px solid var(--gold);border-radius:0;box-shadow:0 4px 16px rgba(0,0,0,.6)}
-.leaflet-popup-tip{background:var(--ink);border:1px solid var(--gold)}
-.leaflet-popup-content{font-family:"Noto Sans SC",sans-serif;margin:10px 14px;font-size:12px}
-.leaflet-popup-content b{color:var(--gold);display:block;margin-bottom:4px;font-family:"Noto Serif SC",serif}
-.leaflet-popup-content a{color:var(--aqua);text-decoration:none;font-size:11px;display:inline-block;margin-top:6px;border-bottom:1px solid var(--aqua)}
+.container{max-width:1280px;margin:0 auto;padding:0 22px}
+
+/* Section title - Apple 巨型黑白渐变标题 */
+.section-eyebrow{font-size:14px;font-weight:500;color:var(--accent);letter-spacing:.05em;margin-bottom:14px;text-align:center}
+.section-title{font-family:"Inter","Noto Serif SC",sans-serif;font-weight:700;
+  font-size:clamp(36px,6vw,76px);line-height:1.05;letter-spacing:-.03em;
+  text-align:center;max-width:900px;margin:0 auto 20px;
+  background:linear-gradient(180deg,#fff 0%,#fff 60%,#6e6e73 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.section-title .it{font-family:"Cormorant Garamond",serif;font-style:italic;font-weight:400;
+  background:linear-gradient(135deg,#06c8d4,#e8c870);-webkit-background-clip:text;background-clip:text;color:transparent}
+.section-sub{font-size:clamp(16px,2vw,20px);color:var(--fg-2);font-weight:300;
+  text-align:center;max-width:680px;margin:0 auto 64px;letter-spacing:-.01em}
+.section-pad{padding:clamp(80px,12vw,160px) 0}
+
+/* Reveal on scroll */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+
+/* ===== 地图 ===== */
+.map-wrap{position:relative;border-radius:18px;overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 0 1px var(--line);
+  background:#0a0a0c}
+#map{height:clamp(420px,62vh,640px);width:100%;background:#0a1828}
+.map-legend{position:absolute;bottom:16px;left:16px;z-index:400;
+  background:rgba(0,0,0,.7);backdrop-filter:var(--blur);
+  padding:12px 16px;border-radius:12px;border:1px solid var(--line);
+  display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--fg-2)}
+.map-legend span{display:flex;align-items:center;gap:6px}
+.map-legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+
+/* ===== 站点卡 - 大卡片 Apple 风 ===== */
+.sites-grid{display:grid;grid-template-columns:1fr;gap:22px;margin-top:60px}
+@media(min-width:760px){.sites-grid{grid-template-columns:1fr 1fr;gap:24px}}
+@media(min-width:1100px){.sites-grid{grid-template-columns:1fr 1fr 1fr;gap:28px}}
+
+.site-card{background:linear-gradient(180deg,#141418 0%,#0a0a0c 100%);
+  border:1px solid var(--line);border-radius:22px;overflow:hidden;
+  display:flex;flex-direction:column;
+  transition:transform .6s var(--ease),border-color .4s var(--ease),box-shadow .6s var(--ease);
+  scroll-margin-top:80px;will-change:transform}
+.site-card:hover{transform:translateY(-6px) scale(1.005);
+  border-color:var(--line-2);
+  box-shadow:0 24px 60px rgba(0,0,0,.6),0 0 60px rgba(6,200,212,.08)}
+.site-card.highlight{border-color:var(--accent);box-shadow:0 0 60px rgba(6,200,212,.4),0 24px 60px rgba(0,0,0,.6);transform:translateY(-6px)}
+
+.site-art{position:relative;aspect-ratio:5/3;overflow:hidden;background:#04162a}
+.site-art svg{width:100%;height:100%;transition:transform 1.2s var(--ease)}
+.site-card:hover .site-art svg{transform:scale(1.06)}
+.site-art::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.4) 100%);pointer-events:none}
+.site-rank{position:absolute;top:14px;left:14px;
+  background:rgba(0,0,0,.6);backdrop-filter:blur(8px);
+  color:var(--fg);font-family:"Inter",sans-serif;font-weight:600;font-size:12px;
+  letter-spacing:.05em;padding:6px 11px;border-radius:980px;border:1px solid rgba(255,255,255,.2);z-index:2}
+.site-tag{position:absolute;top:14px;right:14px;color:#000;
+  font-family:"Inter",sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;
+  padding:5px 10px;border-radius:980px;z-index:2;text-transform:uppercase}
+
+.site-body{padding:24px clamp(18px,3vw,26px) 26px;flex:1;display:flex;flex-direction:column;gap:14px}
+.site-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.site-titlebox{min-width:0}
+.site-name{font-family:"Inter","Noto Serif SC",sans-serif;font-weight:600;
+  font-size:clamp(17px,2.2vw,21px);line-height:1.25;letter-spacing:-.015em;color:var(--fg)}
+.site-en{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:13px;
+  color:var(--fg-3);margin-top:4px;letter-spacing:.01em}
+.site-access{font-family:"Inter",sans-serif;font-size:9.5px;font-weight:700;
+  letter-spacing:.12em;padding:6px 10px;color:#000;
+  border-radius:980px;flex-shrink:0;white-space:nowrap;align-self:flex-start;text-transform:uppercase}
+.site-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;font-size:12px;color:var(--fg-2);
+  padding:14px 16px;background:rgba(255,255,255,.03);border-radius:12px}
+.site-meta b{display:block;color:var(--fg-3);font-weight:500;font-size:10px;
+  letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
+.site-meta span>div{color:var(--fg);font-weight:500}
+.site-hl{font-size:13.5px;color:var(--fg-2);line-height:1.65;font-weight:300}
+.site-access-block{margin-top:auto;padding-top:14px;border-top:1px solid var(--line)}
+.acc-row{display:flex;gap:10px;font-size:12.5px;margin-bottom:4px;color:var(--fg-2)}
+.acc-row b{color:var(--fg-3);font-weight:500;min-width:30px;font-size:10px;
+  letter-spacing:.08em;flex-shrink:0;text-transform:uppercase;padding-top:1px}
+.acc-row span{color:var(--fg);font-weight:500}
+.acc-how{font-size:12.5px;color:var(--fg);background:rgba(6,200,212,.08);
+  padding:11px 14px;margin-top:10px;border-left:2px solid var(--accent);
+  border-radius:0 8px 8px 0;line-height:1.7;font-weight:300}
+
+/* ===== 分组（Tab 2） ===== */
+.intro-card{background:linear-gradient(135deg,#141418,#0a0a0c);
+  border:1px solid var(--line);border-radius:22px;padding:36px clamp(24px,4vw,48px);
+  margin-bottom:48px;text-align:center}
+.intro-card p{font-size:clamp(15px,2vw,18px);color:var(--fg-2);font-weight:300;line-height:1.7;
+  max-width:760px;margin:0 auto}
+.intro-card b{color:var(--fg);font-weight:500}
+
+.grp-block{background:linear-gradient(180deg,#141418,#0a0a0c);border:1px solid var(--line);
+  border-radius:22px;padding:36px clamp(20px,3.5vw,40px);margin-bottom:28px;
+  transition:border-color .4s var(--ease)}
+.grp-block:hover{border-color:var(--line-2)}
+.grp-head{display:flex;justify-content:space-between;align-items:flex-start;
+  border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:24px}
+.grp-title{font-family:"Inter","Noto Serif SC",sans-serif;font-weight:600;
+  font-size:clamp(22px,3vw,30px);letter-spacing:-.02em;color:var(--fg)}
+.grp-en{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:15px;
+  color:var(--fg-3);margin-top:4px}
+.grp-count{font-family:"Inter",sans-serif;font-size:13px;font-weight:600;
+  border:1px solid;padding:6px 14px;border-radius:980px;letter-spacing:.05em}
+.grp-desc{font-size:14px;color:var(--fg-2);font-weight:300;line-height:1.7;margin-bottom:24px;max-width:780px}
+
+.grp-list{list-style:none;display:grid;grid-template-columns:1fr;gap:8px}
+@media(min-width:600px){.grp-list{grid-template-columns:1fr 1fr;gap:10px}}
+.grp-list a{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;
+  padding:14px 18px;background:rgba(255,255,255,.03);color:var(--fg);
+  text-decoration:none;border-radius:12px;border:1px solid transparent;
+  transition:all .3s var(--ease);font-size:13px}
+.grp-list a:hover{background:rgba(6,200,212,.08);border-color:rgba(6,200,212,.3);transform:translateX(2px)}
+.grp-list a:hover .g-arrow{transform:translateX(4px);color:var(--accent)}
+.g-rank{font-family:"Inter",sans-serif;font-weight:600;font-size:13px;color:var(--accent);
+  width:26px;text-align:center;letter-spacing:.02em}
+.g-info{min-width:0;display:flex;flex-direction:column;gap:2px}
+.g-name{font-weight:500;font-size:13.5px;letter-spacing:-.01em;color:var(--fg)}
+.g-region{font-size:11px;color:var(--fg-3)}
+.g-arrow{color:var(--fg-3);font-size:14px;transition:all .3s var(--ease)}
+
+/* ===== 行程 (Tab 3) ===== */
+.itin-grid{display:grid;grid-template-columns:1fr;gap:20px;margin-top:50px}
+@media(min-width:760px){.itin-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:1100px){.itin-grid{grid-template-columns:1fr 1fr 1fr}}
+.itin-card{background:linear-gradient(180deg,#141418,#0a0a0c);border:1px solid var(--line);
+  border-radius:22px;padding:32px 28px;display:flex;flex-direction:column;gap:18px;
+  transition:transform .6s var(--ease),border-color .4s var(--ease),box-shadow .6s var(--ease);
+  position:relative;overflow:hidden}
+.itin-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--accent),var(--gold));opacity:0;transition:opacity .4s var(--ease)}
+.itin-card:hover{transform:translateY(-4px);border-color:var(--line-2);
+  box-shadow:0 24px 50px rgba(0,0,0,.5)}
+.itin-card:hover::before{opacity:1}
+.itin-head h3{font-family:"Inter","Noto Serif SC",sans-serif;font-weight:600;
+  font-size:22px;letter-spacing:-.02em;color:var(--fg)}
+.itin-en{display:block;font-family:"Cormorant Garamond",serif;font-style:italic;
+  font-size:14px;color:var(--fg-3);margin-top:3px}
+.itin-price{font-family:"Inter",sans-serif;font-weight:700;font-size:28px;letter-spacing:-.02em;
+  color:transparent;background:linear-gradient(135deg,var(--accent),var(--gold));
+  -webkit-background-clip:text;background-clip:text;
+  padding-bottom:16px;border-bottom:1px solid var(--line)}
+.itin-dl{display:grid;grid-template-columns:auto 1fr;gap:10px 16px;font-size:13px;line-height:1.6}
+.itin-dl dt{color:var(--fg-3);font-weight:500;font-size:11px;letter-spacing:.08em;
+  text-transform:uppercase;padding-top:2px}
+.itin-dl dd{color:var(--fg-2);font-weight:300}
+
+/* Region cards */
+.region-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:40px}
+@media(min-width:600px){.region-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:900px){.region-grid{grid-template-columns:1fr 1fr 1fr}}
+.region-card{background:rgba(255,255,255,.03);border:1px solid var(--line);
+  border-radius:18px;padding:24px 22px;
+  transition:all .4s var(--ease)}
+.region-card:hover{background:rgba(255,255,255,.06);border-color:var(--line-2);transform:translateY(-2px)}
+.region-code{font-family:"Inter",sans-serif;font-weight:700;font-size:11px;
+  letter-spacing:.15em;border:1px solid;padding:4px 10px;border-radius:980px;
+  display:inline-block;margin-bottom:14px}
+.region-name{font-family:"Inter","Noto Serif SC",sans-serif;font-weight:600;font-size:18px;
+  letter-spacing:-.015em;color:var(--fg)}
+.region-en{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:13px;
+  color:var(--fg-3);margin-top:3px}
+.region-desc{margin-top:14px;font-size:13px;color:var(--fg-2);font-weight:300;line-height:1.65}
+
+/* Footer */
+.foot{padding:80px 22px 60px;border-top:1px solid var(--line);text-align:center;background:#000}
+.foot-mark{display:inline-block;font-family:"Inter",sans-serif;font-weight:700;font-size:13px;
+  letter-spacing:.2em;color:var(--accent);padding:8px 18px;border:1px solid var(--accent);
+  border-radius:980px;margin-bottom:18px}
+.foot p{color:var(--fg-3);font-size:13px;font-weight:300;letter-spacing:.05em}
+.foot p+p{margin-top:6px;font-size:11px}
+
+/* Leaflet popup - dark */
+.leaflet-popup-content-wrapper{background:#141418;color:var(--fg);
+  border:1px solid var(--line-2);border-radius:14px;
+  box-shadow:0 12px 40px rgba(0,0,0,.7);padding:0;overflow:hidden}
+.leaflet-popup-tip{background:#141418;border:1px solid var(--line-2)}
+.leaflet-popup-content{font-family:"Inter","Noto Sans SC",sans-serif;margin:14px 18px;font-size:12.5px}
+.leaflet-popup-content b{color:var(--fg);display:block;margin-bottom:6px;
+  font-family:"Inter","Noto Serif SC",sans-serif;font-size:14px;font-weight:600}
+.leaflet-popup-content .pop-meta{color:var(--fg-3);font-size:11.5px;margin-bottom:8px}
+.leaflet-popup-content a{color:var(--accent);text-decoration:none;font-size:12px;font-weight:500;
+  display:inline-flex;align-items:center;gap:4px;margin-top:6px}
+.leaflet-popup-content a:hover{gap:8px;transition:gap .25s var(--ease)}
+.leaflet-popup-close-button{color:var(--fg-2)!important;font-size:18px!important;padding:6px!important}
+
+@media(max-width:560px){
+  .nav{height:44px}
+  .nav-tab{padding:6px 11px;font-size:12px}
+  .nav-brand{font-size:13px}
+  .hero{min-height:90vh}
+  .hero-meta span{font-size:11px;padding:6px 14px}
+  .site-meta{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
 
-<section class="hero">
-<svg class="hero-bg" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="hbg" cx="0.5" cy="0" r="1"><stop offset="0" stop-color="rgba(180,220,240,0.3)"/><stop offset="1" stop-color="rgba(180,220,240,0)"/></radialGradient></defs><rect width="1200" height="600" fill="url(#hbg)"/><polygon points="200,0 240,0 350,600 280,600" fill="rgba(180,220,240,0.05)"/><polygon points="500,0 540,0 650,600 580,600" fill="rgba(180,220,240,0.04)"/><polygon points="800,0 840,0 950,600 880,600" fill="rgba(180,220,240,0.05)"/><g transform="translate(150,400)" fill="rgba(20,30,40,0.5)"><path d="M-60,0 Q-40,-10 0,-8 Q40,-10 65,-2 Q50,3 40,2 Q-30,10 -60,0 Z"/><path d="M0,-8 L6,-18 L13,-8 Z"/><path d="M63,-2 L78,-12 L73,5 L63,3 Z"/></g><g transform="translate(950,460) scale(0.7)" fill="rgba(20,30,40,0.4)"><path d="M-60,0 Q-40,-10 0,-8 Q40,-10 65,-2 Q50,3 40,2 Q-30,10 -60,0 Z"/><path d="M0,-8 L6,-18 L13,-8 Z"/></g><g transform="translate(600,520) scale(0.5)" fill="rgba(20,30,40,0.3)"><path d="M-60,0 Q-40,-10 0,-8 Q40,-10 65,-2 Q50,3 40,2 Q-30,10 -60,0 Z"/><path d="M0,-8 L6,-18 L13,-8 Z"/></g><g fill="rgba(255,255,255,0.3)"><circle cx="100" cy="500" r="3"/><circle cx="105" cy="480" r="2"/><circle cx="98" cy="460" r="2"/><circle cx="1100" cy="520" r="3"/><circle cx="1095" cy="500" r="2"/></g></svg>
-<div class="hero-content">
-<div class="hero-eyebrow">RED SEA · EGYPT · DIVE GUIDE</div>
-<h1 class="hero-title">EGYPT <span class="accent">TOP 20</span></h1>
-<div class="hero-sub">红海 20 个最值得潜的点 · 实战指南</div>
-<div class="hero-meta"><span>20 SITES</span><span>SHORE / DAY / LIVEABOARD</span><span>5 REGIONS</span><span>4 CLASSIC ROUTES</span></div>
+<nav class="nav">
+<div class="nav-inner">
+<div class="nav-brand"><span class="dot"></span>Egypt Dive Guide</div>
+<div class="nav-tabs">
+<button class="nav-tab active" data-tab="0" onclick="switchTab(0)">潜点</button>
+<button class="nav-tab" data-tab="1" onclick="switchTab(1)">访问</button>
+<button class="nav-tab" data-tab="2" onclick="switchTab(2)">行程</button>
 </div>
+</div>
+</nav>
+
+<section class="hero">
+<div class="hero-bg">
+<svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice"><g transform="translate(150,560)" fill="rgba(255,255,255,0.15)"><path d="M-60,0 Q-40,-10 0,-8 Q40,-10 65,-2 Q50,3 40,2 Q-30,10 -60,0 Z"/><path d="M0,-8 L6,-18 L13,-8 Z"/></g><g transform="translate(950,640) scale(0.7)" fill="rgba(255,255,255,0.1)"><path d="M-60,0 Q-40,-10 0,-8 Q40,-10 65,-2 Q50,3 40,2 Q-30,10 -60,0 Z"/><path d="M0,-8 L6,-18 L13,-8 Z"/></g><g fill="rgba(255,255,255,0.2)"><circle cx="180" cy="700" r="3"/><circle cx="185" cy="680" r="2"/><circle cx="178" cy="660" r="2.5"/><circle cx="1080" cy="720" r="3"/><circle cx="1075" cy="700" r="2"/></g></svg>
+</div>
+<div class="hero-content">
+<div class="hero-eyebrow">— RED SEA · DIVE GUIDE —</div>
+<h1 class="hero-title">Egypt <span class="accent">Top 20</span></h1>
+<p class="hero-sub">从沙姆的<b>沉船</b>到达哈布的<b>蓝洞</b>，从 Brothers 的<b>锤头鲨</b>到 St John's 的<b>软珊瑚墙</b>，红海最值得潜的二十个点位 — 配上你需要的访问方式与行程对比。</p>
+<div class="hero-meta">
+<span>20 Sites</span><span>5 Regions</span><span>Shore · Day · Liveaboard</span><span>4 Classic Routes</span>
+</div>
+</div>
+<div class="hero-scroll">SCROLL</div>
 </section>
 
-<div class="tab-bar">
-<button class="tab-btn active" data-tab="0" onclick="switchTab(0)">SITES · 潜点</button>
-<button class="tab-btn" data-tab="1" onclick="switchTab(1)">ACCESS · 访问方式</button>
-<button class="tab-btn" data-tab="2" onclick="switchTab(2)">ROUTES · 行程对比</button>
+<div class="tab-pane active" id="pane-0">
+<div class="section-pad">
+<div class="container">
+<div class="section-eyebrow">DIVE MAP</div>
+<h2 class="section-title">红海全境<br><span class="it">a deep blue map.</span></h2>
+<p class="section-sub">所有潜点按访问方式上色：绿色岸潜、蓝色日船、金色船宿。点击任一标记跳转详情。</p>
+<div class="map-wrap">
+<div id="map"></div>
+<div class="map-legend">
+<span><i style="background:#3ad4a8"></i>岸潜</span>
+<span><i style="background:#3aa8d4"></i>日船</span>
+<span><i style="background:#d48a3a"></i>日船+船宿</span>
+<span><i style="background:#d4a73a"></i>船宿</span>
+<span><i style="background:#d44a3a"></i>船宿 only</span>
+</div>
+</div>
+</div>
 </div>
 
-<div class="tab-pane active" id="pane-0">
+<div class="section-pad" style="padding-top:0">
 <div class="container">
-<h2 class="section-title">DIVE MAP<span class="en">Locations · 红海全境</span></h2>
-<div id="map"></div>
-<div class="map-cap">— 点击地图标记跳转潜点详情 · 可拖动缩放 —</div>
-<h2 class="section-title">TOP 20 SITES<span class="en">Ranked · 综合排名</span></h2>
-<div class="sites-grid"><article class="site-card" id="site-1" data-rank="1" data-lat="27.8147" data-lng="33.9214" data-name="SS Thistlegorm 沉船">
+<div class="section-eyebrow">RANKED · TOP 20</div>
+<h2 class="section-title">二十个潜点<br><span class="it">ranked.</span></h2>
+<p class="section-sub">按综合景观、稀缺度、访问难度综合排名。每个潜点配独立海报与抵达指引。</p>
+<div class="sites-grid"><article class="site-card reveal" id="site-1" data-rank="1" data-lat="27.8147" data-lng="33.9214" data-name="SS Thistlegorm 沉船">
 <div class="site-art"><svg viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g_wr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a3a5c"/><stop offset="1" stop-color="#0a1828"/></linearGradient><radialGradient id="lr_wr" cx="0.5" cy="0" r="1"><stop offset="0" stop-color="rgba(180,220,240,0.35)"/><stop offset="1" stop-color="rgba(180,220,240,0)"/></radialGradient></defs><rect width="600" height="360" fill="url(#g_wr)"/><rect width="600" height="360" fill="url(#lr_wr)"/><polygon points="100,0 130,0 250,360 200,360" fill="rgba(180,220,240,0.08)"/><polygon points="280,0 310,0 380,360 340,360" fill="rgba(180,220,240,0.06)"/><polygon points="450,0 480,0 510,360 470,360" fill="rgba(180,220,240,0.05)"/><g transform="translate(300,250) rotate(-12)"><path d="M-180,0 L-160,-30 L160,-30 L185,-5 L165,15 L-165,15 Z" fill="rgba(20,30,40,0.9)" stroke="rgba(60,90,110,0.6)" stroke-width="1.5"/><line x1="-160" y1="-15" x2="160" y2="-15" stroke="rgba(60,90,110,0.4)"/><rect x="-30" y="-65" width="40" height="35" fill="rgba(20,30,40,0.9)" stroke="rgba(60,90,110,0.6)"/><line x1="-90" y1="-30" x2="-110" y2="-100" stroke="rgba(60,90,110,0.7)" stroke-width="2"/><line x1="80" y1="-30" x2="100" y2="-110" stroke="rgba(60,90,110,0.7)" stroke-width="2"/><rect x="40" y="-25" width="50" height="20" fill="rgba(0,0,0,0.5)"/><rect x="-100" y="-25" width="40" height="18" fill="rgba(0,0,0,0.5)"/></g><g fill="rgba(220,230,200,0.5)"><ellipse cx="120" cy="120" rx="6" ry="2"/><ellipse cx="135" cy="115" rx="6" ry="2"/><ellipse cx="150" cy="125" rx="6" ry="2"/><ellipse cx="125" cy="135" rx="6" ry="2"/><ellipse cx="450" cy="80" rx="5" ry="1.5"/><ellipse cx="465" cy="85" rx="5" ry="1.5"/><ellipse cx="480" cy="78" rx="5" ry="1.5"/></g><path d="M0,340 Q150,320 300,335 Q450,345 600,330 L600,360 L0,360 Z" fill="rgba(140,120,90,0.3)"/><g fill="rgba(255,255,255,0.4)"><circle cx="100" cy="280" r="3"/><circle cx="105" cy="260" r="2"/><circle cx="510" cy="290" r="3"/></g></svg><div class="site-rank">No.01</div><div class="site-tag" style="background:#d4a73a">WRECK</div></div>
 <div class="site-body">
-<div class="site-head"><div><h3 class="site-name">SS Thistlegorm 沉船</h3><div class="site-en">SS Thistlegorm · 沙姆/沉船线</div></div><div class="site-access" style="background:#d48a3a">DAY/LIVEABOARD</div></div>
+<div class="site-head"><div class="site-titlebox"><h3 class="site-name">SS Thistlegorm 沉船</h3><div class="site-en">SS Thistlegorm · 沙姆/沉船线</div></div><div class="site-access" style="background:#d48a3a">DAY/LIVEABOARD</div></div>
 <div class="site-meta"><span><b>深度</b>16-32m</span><span><b>等级</b>AOW+</span><span><b>能见度</b>15-25m</span><span><b>季节</b>5-9月最佳</span></div>
 <p class="site-hl">二战英国货船，1941年被德军炸沉。船舱里满满当当的摩托车、坦克、卡车、步枪堆积如山，是世界级wreck dive圣殿。</p>
 <div class="site-access-block"><div class="acc-row"><b>方式</b><span>日船/船宿</span></div><div class="acc-row"><b>出发</b><span>沙姆伊尔谢赫码头</span></div><div class="acc-how">沙姆当地多家潜店有Thistlegorm 1日船(出海4-5h)；船宿则是Northern Wrecks & Reefs行程必停。建议船宿，能潜2-3次完整刷</div></div>
 </div></article>
-<article class="site-card" id="site-2" data-rank="2" data-lat="28.5722" data-lng="34.5378" data-name="达哈布蓝洞">
+<article class="site-card reveal" id="site-2" data-rank="2" data-lat="28.5722" data-lng="34.5378" data-name="达哈布蓝洞">
 <div class="site-art"><svg viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="hole" cx="0.5" cy="0.5" r="0.6"><stop offset="0" stop-color="#000814"/><stop offset="0.5" stop-color="#062436"/><stop offset="1" stop-color="#1e5a7a"/></radialGradient></defs><rect width="600" height="360" fill="#1e5a7a"/><g fill="rgba(140,100,70,0.6)" stroke="rgba(80,60,40,0.5)"><path d="M0,0 L600,0 L600,80 Q500,100 400,90 Q300,75 200,95 Q100,110 0,90 Z"/><path d="M0,360 L600,360 L600,280 Q480,260 380,275 Q260,290 140,270 Q60,255 0,270 Z"/><path d="M0,80 L0,360 L60,360 Q40,260 60,180 Q80,120 50,80 Z"/><path d="M600,80 L600,360 L540,360 Q560,260 540,180 Q520,120 550,80 Z"/></g><ellipse cx="300" cy="180" rx="170" ry="115" fill="url(#hole)"/><ellipse cx="300" cy="180" rx="120" ry="80" fill="none" stroke="rgba(100,180,210,0.2)"/><ellipse cx="300" cy="180" rx="80" ry="55" fill="none" stroke="rgba(100,180,210,0.3)"/><ellipse cx="300" cy="180" rx="40" ry="28" fill="none" stroke="rgba(60,140,180,0.4)"/><g transform="translate(300,160)" fill="rgba(20,30,40,0.85)"><ellipse cx="0" cy="0" rx="4" ry="6"/><line x1="0" y1="6" x2="0" y2="14" stroke="rgba(20,30,40,0.85)" stroke-width="2"/><line x1="-3" y1="3" x2="-9" y2="6" stroke="rgba(20,30,40,0.85)" stroke-width="1.5"/><line x1="3" y1="3" x2="9" y2="2" stroke="rgba(20,30,40,0.85)" stroke-width="1.5"/><path d="M-2,14 L-5,20 M2,14 L5,20" stroke="rgba(20,30,40,0.85)" stroke-width="1.5"/><circle cx="-1" cy="-10" r="1.5" fill="rgba(255,255,255,0.7)"/><circle cx="2" cy="-18" r="1" fill="rgba(255,255,255,0.7)"/></g><text x="300" y="280" text-anchor="middle" font-family="serif" font-style="italic" font-size="14" fill="rgba(180,220,240,0.5)" letter-spacing="4">— THE ARCH 56m —</text></svg><div class="site-rank">No.02</div><div class="site-tag" style="background:#3ad4d4">SHORE</div></div>
 <div class="site-body">
-<div class="site-head"><div><h3 class="site-name">达哈布蓝洞</h3><div class="site-en">Blue Hole, Dahab · 达哈布(西奈)</div></div><div class="site-access" style="background:#3ad4a8">SHORE</div></div>
+<div class="site-head"><div class="site-titlebox"><h3 class="site-name">达哈布蓝洞</h3><div class="site-en">Blue Hole, Dahab · 达哈布(西奈)</div></div><div class="site-access" style="background:#3ad4a8">SHORE</div></div>
 <div class="site-meta"><span><b>深度</b>0-130m+</span><span><b>等级</b>OW(浅区)/Tec(深区)</span><span><b>能见度</b>20-30m</span><span><b>季节</b>全年</span></div>
 <p class="site-hl">水下56m深处的'Arch'拱门通向开放大海，是技术潜水朝圣地(也是著名死亡地点)。休闲潜可在外礁/Bells入口。</p>
 <div class="site-access-block"><div class="acc-row"><b>方式</b><span>岸潜</span></div><div class="acc-row"><b>出发</b><span>达哈布镇→北上8km</span></div><div class="acc-how">达哈布任一潜店包车前往，骆驼路5分钟到入水点。Bells切口下水→顺墙漂到蓝洞→浅区30m上浮，是经典玩法。完全不需要船</div></div>
 </div></article>
-<article class="site-card" id="site-3" data-rank="3" data-lat="27.7256" data-lng="34.2542" data-name="Ras Mohammed 国家公园">
+<article class="site-card reveal" id="site-3" data-rank="3" data-lat="27.7256" data-lng="34.2542" data-name="Ras Mohammed 国家公园">
 <div class="site-art"><svg viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g_sh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d4a6b"/><stop offset="1" stop-color="#031624"/></linearGradient></defs><rect width="600" height="360" fill="url(#g_sh)"/><polygon points="200,0 230,0 280,360 240,360" fill="rgba(180,220,240,0.06)"/><polygon points="380,0 410,0 440,360 400,360" fill="rgba(180,220,240,0.05)"/><path d="M0,0 L150,0 L130,80 L160,180 L140,280 L170,360 L0,360 Z" fill="rgba(80,60,50,0.7)"/><g fill="rgba(255,150,100,0.3)"><circle cx="100" cy="100" r="14"/><circle cx="80" cy="160" r="10"/><circle cx="120" cy="220" r="12"/></g><g fill="rgba(180,80,120,0.3)"><circle cx="60" cy="130" r="8"/><circle cx="130" cy="180" r="6"/><circle cx="100" cy="250" r="10"/></g><g transform="translate(380,180)" fill="rgba(20,30,40,0.85)"><path d="M-80,0 Q-60,-15 0,-12 Q60,-15 90,-3 Q70,5 60,3 Q40,15 20,8 Q-20,15 -50,8 Q-70,12 -80,0 Z"/><ellipse cx="-78" cy="-2" rx="14" ry="4"/><path d="M0,-12 L8,-25 L18,-12 Z"/><path d="M88,-3 L105,-15 L100,5 L88,3 Z"/></g><g transform="translate(150,90) scale(0.5)" fill="rgba(20,30,40,0.7)"><path d="M-60,0 Q-40,-10 0,-8 Q40,-10 65,-2 Q50,3 40,2 Q-30,10 -60,0 Z"/><path d="M0,-8 L6,-18 L13,-8 Z"/><path d="M63,-2 L78,-12 L73,5 L63,3 Z"/></g><g fill="rgba(220,230,200,0.5)"><circle cx="200" cy="260" r="2"/><circle cx="208" cy="268" r="2"/><circle cx="216" cy="276" r="2"/><circle cx="224" cy="260" r="2"/><circle cx="232" cy="268" r="2"/><circle cx="240" cy="276" r="2"/><circle cx="248" cy="260" r="2"/><circle cx="256" cy="268" r="2"/><circle cx="264" cy="276" r="2"/><circle cx="272" cy="260" r="2"/><circle cx="280" cy="268" r="2"/><circle cx="288" cy="276" r="2"/><circle cx="296" cy="260" r="2"/><circle cx="304" cy="268" r="2"/><circle cx="312" cy="276" r="2"/><circle cx="320" cy="260" r="2"/><circle cx="328" cy="268" r="2"/><circle cx="336" cy="276" r="2"/><circle cx="344" cy="260" r="2"/><circle cx="352" cy="268" r="2"/></g></svg><div class="site-rank">No.03</div><div class="site-tag" style="background:#3aa8d4">REEF</div></div>
 <div class="site-body">
-<div class="site-head"><div><h3 class="site-name">Ras Mohammed 国家公园</h3><div class="site-en">Ras Mohammed · 沙姆</div></div><div class="site-access" style="background:#3aa8d4">DAY BOAT</div></div>
+<div class="site-head"><div class="site-titlebox"><h3 class="site-name">Ras Mohammed 国家公园</h3><div class="site-en">Ras Mohammed · 沙姆</div></div><div class="site-access" style="background:#3aa8d4">DAY BOAT</div></div>
 <div class="site-meta"><span><b>深度</b>5-40m</span><span><b>等级</b>OW</span><span><b>能见度</b>25-40m</span><span><b>季节</b>6-9月鱼群最盛</span></div>
 <p class="site-hl">红海第一国家公园。Shark Reef + Yolanda Reef双子礁鱼风暴：成千上万条Bigeye trevally、梭鱼龙卷风、Yolanda沉船散落马桶(载货曾是浴室设备)。</p>
 <div class="site-access-block"><div class="acc-row"><b>方式</b><span>日船</span></div><div class="acc-row"><b>出发</b><span>沙姆/Sharks Bay码头</span></div><div class="acc-how">沙姆潜店日日发船，1h船程到点位。一天2-3潜：Shark Reef+Yolanda Reef+Anemone City。不能岸潜，只能日船</div></div>
 </div></article>
-<article class="site-card" id="site-4" data-rank="4" data-lat="25.3122" data-lng="34.8628" data-name="Elphinstone 礁">
+<article class="site-card reveal" id="site-4" data-rank="4" data-lat="25.3122" data-lng="34.8628" data-name="Elphinstone 礁">
 <div class="site-art"><svg viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g_wl" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a3a5a"/><stop offset="1" stop-color="#02141f"/></linearGradient></defs><rect width="600" height="360" fill="url(#g_wl)"/><path d="M0,0 L380,0 L370,60 L390,140 L360,220 L385,300 L370,360 L0,360 Z" fill="rgba(40,30,30,0.85)"/><g><g fill="rgba(255,80,120,0.55)"><circle cx="100" cy="80" r="22"/><circle cx="130" cy="95" r="14"/><circle cx="80" cy="105" r="12"/></g><g fill="rgba(255,150,80,0.5)"><circle cx="200" cy="50" r="18"/><circle cx="225" cy="70" r="12"/></g><g fill="rgba(180,80,200,0.5)"><circle cx="280" cy="120" r="20"/></g><g fill="rgba(255,200,80,0.5)"><circle cx="120" cy="220" r="22"/><circle cx="155" cy="240" r="14"/></g><g fill="rgba(100,200,180,0.5)"><circle cx="240" cy="200" r="16"/></g><g fill="rgba(255,100,150,0.5)"><circle cx="60" cy="290" r="18"/></g></g><g fill="rgba(220,230,200,0.6)"><ellipse cx="450" cy="120" rx="6" ry="2"/><ellipse cx="465" cy="115" rx="6" ry="2"/><ellipse cx="480" cy="125" rx="6" ry="2"/><ellipse cx="500" cy="200" rx="7" ry="2"/><ellipse cx="515" cy="195" rx="7" ry="2"/></g></svg><div class="site-rank">No.04</div><div class="site-tag" style="background:#a83ad4">WALL</div></div>
 <div class="site-body">
-<div class="site-head"><div><h3 class="site-name">Elphinstone 礁</h3><div class="site-en">Elphinstone Reef · 马萨阿拉姆</div></div><div class="site-access" style="background:#d48a3a">DAY/LIVEABOARD</div></div>
+<div class="site-head"><div class="site-titlebox"><h3 class="site-name">Elphinstone 礁</h3><div class="site-en">Elphinstone Reef · 马萨阿拉姆</div></div><div class="site-access" style="background:#d48a3a">DAY/LIVEABOARD</div></div>
 <div class="site-meta"><span><b>深度</b>10-60m+</span><span><b>等级</b>AOW</span><span><b>能见度</b>30-40m</span><span><b>季节</b>10-12月长尾鲨季</span></div>
 <p class="site-hl">红海最美墙潜之一。南北两个plateau，水深25-40m。10-12月几乎天天能看到Oceanic Whitetip(远洋白鳍鲨)和Thresher Shark(长尾鲨)，南端plateau还有传说的法老石棺。</p>
 <div class="site-access-block"><div class="acc-row"><b>方式</b><span>日船/船宿</span></div><div class="acc-row"><b>出发</b><span>马萨阿拉姆Port Ghalib</span></div><div class="acc-how">马萨阿拉姆潜店1.5h日船，但海况差就出不了。船宿是BDE行程(Brothers-Daedalus-Elphinstone)末站，更稳</div></div>
 </div></article>
-<article class="site-card" id="site-5" data-rank="5" data-lat="24.9333" data-lng="35.8667" data-name="Daedalus 礁">
+<article class="site-card reveal" id="site-5" data-rank="5" data-lat="24.9333" data-lng="35.8667" data-name="Daedalus 礁">
 <div class="site-art"><svg viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g_hh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#082d4a"/><stop offset="1" stop-color="#010a14"/></linearGradient></defs><rect width="600" height="360" fill="url(#g_hh)"/><polygon points="0,0 600,0 600,80 0,120" fill="rgba(180,220,240,0.06)"/><g transform="translate(60,80) scale(0.5)" fill="rgba(20,30,40,0.7)"><ellipse cx="0" cy="0" rx="35" ry="6"/><ellipse cx="-32" cy="-2" rx="14" ry="3"/><path d="M0,-6 L4,-14 L9,-6 Z"/><path d="M33,-2 L42,-8 L40,4 L33,3 Z"/></g><g transform="translate(115,140) scale(0.65)" fill="rgba(20,30,40,0.7)"><ellipse cx="0" cy="0" rx="35" ry="6"/><ellipse cx="-32" cy="-2" rx="14" ry="3"/><path d="M0,-6 L4,-14 L9,-6 Z"/><path d="M33,-2 L42,-8 L40,4 L33,3 Z"/></g><g transform="translate(170,200) scale(0.8)" fill="rgba(20,30,40,0.7)"><ellipse cx="0" cy="0" rx="35" ry="6"/><ellipse cx="-32" cy="-2" rx="14" ry="3"/><path d="M0,-6 L4,-14 L9,-6 Z"/><path d="M33,-2 L42,-8 L40,4 L33,3 Z"/></g><g transform="translate(225,260) scale(0.5)" fill="rgba(20,30,40,0.7)"><ellipse cx="0" cy="0" rx="35" ry="6"/><ellipse cx="-32" cy="-2" rx="14" ry="3"/><path d="M0,-6 L4,-14 L9,-6 Z"/><path d="M33,-2 L42,-8 L40,4 L33,3 Z"/></g><g transform="translate(280,80) scale(0.65)" fill="rgba(20,30,40,0.7)"><ellipse cx="0" cy="0" rx="35" ry="6"/><ellipse cx="-32" cy="-2" rx="14" ry="3"/><path d="M0,-6 L4,-14 L9,-6 Z"/><path d="M33,-2 L42,-8 L40,4 L33,3 Z"/></g><g transform="translate(335,140) scale(0.8)" fill="rgba(20,30,40,0.7)"><ellipse cx="0" cy="0" rx="35" ry="6"/><ellipse cx="-32" cy="-2" rx="14" ry="3"/><path d="M0,-6 L4,-14 L9,-6 Z"/><path d="M33,-2 L42,-8 L40,4 L33,3 Z"/></g><g transform="translate(390,200) scale(0.5)" fill="rgba(20,30,40,0.7)"><ellipse cx="0" cy="0" rx="35" ry="6"/><ellipse cx="-32" cy="-2" rx="14" ry="3"/><path d="M0,-6 L4,-14 L9,-6 Z"/><path d="M33,-2 L42,-8 L40,4 L33,3 Z"/></g><g transform="translate(445,260) scale(0.65)" fill="rgba(20,30,40,0.7)"><ellipse cx="0" cy="0" rx="35" ry="6"/><ellipse cx="-32" cy="-2" rx="14" ry="3"/><path d="M0,-6 L4,-14 L9,-6 Z"/><path d="M33,-2 L42,-8 L40,4 L33,3 Z"/></g><g transform="translate(500,80) scale(0.8)" fill="rgba(20,30,40,0.7)"><ellipse cx="0" cy="0" rx="35" ry="6"/><ellipse cx="-32" cy="-2" rx="14" ry="3"/><path d="M0,-6 L4,-14 L9,-6 Z"/><path d="M33,-2 L42,-8 L40,4 L33,3 Z"/></g><g transform="translate(555,140) scale(0.5)" fill="rgba(20,30,40,0.7)"><ellipse cx="0" cy="0" rx="35" ry="6"/><ellipse cx="-32" cy="-2" rx="14" ry="3"/><path d="M0,-6 L4,-14 L9,-6 Z"/><path d="M33,-2 L42,-8 L40,4 L33,3 Z"/></g><g fill="rgba(255,255,255,0.35)"><circle cx="80" cy="320" r="3"/><circle cx="510" cy="330" r="3"/></g></svg><div class="site-rank">No.05</div><div class="site-tag" style="background:#d43a8a">PINNACLE</div></div>
 <div class="site-body">
-<div class="site-head"><div><h3 class="site-name">Daedalus 礁</h3><div class="site-en">Daedalus Reef · 南红海远海</div></div><div class="site-access" style="background:#d44a3a">LIVEABOARD ONLY</div></div>
+<div class="site-head"><div class="site-titlebox"><h3 class="site-name">Daedalus 礁</h3><div class="site-en">Daedalus Reef · 南红海远海</div></div><div class="site-access" style="background:#d44a3a">LIVEABOARD ONLY</div></div>
 <div class="site-meta"><span><b>深度</b>5-60m+</span><span><b>等级</b>AOW</span><span><b>能见度</b>30-50m</span><span><b>季节</b>5-7月锤头鲨季</span></div>
 <p class="site-hl">红海最远海域之一，离最近海岸80km。礁顶有灯塔。北墙是Schooling Hammerhead(成群锤头鲨)天堂，5-7月清晨潜常见30-50条编队。</p>
 <div class="site-access-block"><div class="acc-row"><b>方式</b><span>船宿 ONLY</span></div><div class="acc-row"><b>出发</b><span>无日船可达</span></div><div class="acc-how">必须报BDE/Deep South船宿(Hurghada/Marsa Alam出发，5-7天行程)。一般在第3-4天到达，会停留1.5天潜4-6次</div></div>
 </div></article>
-<article class="site-card" id="site-6" data-rank="6" data-lat="26.3267" data-lng="34.8517" data-name="Big Brother 兄弟岛">
+<article class="site-card reveal" id="site-6" data-rank="6" data-lat="26.3267" data-lng="34.8517" data-name="Big Brother 兄弟岛">
 <div class="site-art"><svg viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g_wr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c2e48"/><stop offset="1" stop-color="#020a14"/></linearGradient><radialGradient id="lr_wr" cx="0.5" cy="0" r="1"><stop offset="0" stop-color="rgba(180,220,240,0.35)"/><stop offset="1" stop-color="rgba(180,220,240,0)"/></radialGradient></defs><rect width="600" height="360" fill="url(#g_wr)"/><rect width="600" height="360" fill="url(#lr_wr)"/><polygon points="100,0 130,0 250,360 200,360" fill="rgba(180,220,240,0.08)"/><polygon points="280,0 310,0 380,360 340,360" fill="rgba(180,220,240,0.06)"/><polygon points="450,0 480,0 510,360 470,360" fill="rgba(180,220,240,0.05)"/><g transform="translate(300,250) rotate(-12)"><path d="M-180,0 L-160,-30 L160,-30 L185,-5 L165,15 L-165,15 Z" fill="rgba(20,30,40,0.9)" stroke="rgba(60,90,110,0.6)" stroke-width="1.5"/><line x1="-160" y1="-15" x2="160" y2="-15" stroke="rgba(60,90,110,0.4)"/><rect x="-30" y="-65" width="40" height="35" fill="rgba(20,30,40,0.9)" stroke="rgba(60,90,110,0.6)"/><line x1="-90" y1="-30" x2="-110" y2="-100" stroke="rgba(60,90,110,0.7)" stroke-width="2"/><line x1="80" y1="-30" x2="100" y2="-110" stroke="rgba(60,90,110,0.7)" stroke-width="2"/><rect x="40" y="-25" width="50" height="20" fill="rgba(0,0,0,0.5)"/><rect x="-100" y="-25" width="40" height="18" fill="rgba(0,0,0,0.5)"/></g><g fill="rgba(220,230,200,0.5)"><ellipse cx="120" cy="120" rx="6" ry="2"/><ellipse cx="135" cy="115" rx="6" ry="2"/><ellipse cx="150" cy="125" rx="6" ry="2"/><ellipse cx="125" cy="135" rx="6" ry="2"/><ellipse cx="450" cy="80" rx="5" ry="1.5"/><ellipse cx="465" cy="85" rx="5" ry="1.5"/><ellipse cx="480" cy="78" rx="5" ry="1.5"/></g><path d="M0,340 Q150,320 300,335 Q450,345 600,330 L600,360 L0,360 Z" fill="rgba(140,120,90,0.3)"/><g fill="rgba(255,255,255,0.4)"><circle cx="100" cy="280" r="3"/><circle cx="105" cy="260" r="2"/><circle cx="510" cy="290" r="3"/></g></svg><div class="site-rank">No.06</div><div class="site-tag" style="background:#c97a3a">WRECK+WALL</div></div>
 <div class="site-body">
-<div class="site-head"><div><h3 class="site-name">Big Brother 兄弟岛</h3><div class="site-en">Big Brother Island · 中红海远海</div></div><div class="site-access" style="background:#d44a3a">LIVEABOARD ONLY</div></div>
+<div class="site-head"><div class="site-titlebox"><h3 class="site-name">Big Brother 兄弟岛</h3><div class="site-en">Big Brother Island · 中红海远海</div></div><div class="site-access" style="background:#d44a3a">LIVEABOARD ONLY</div></div>
 <div class="site-meta"><span><b>深度</b>5-40m+</span><span><b>等级</b>AOW</span><span><b>能见度</b>30-40m</span><span><b>季节</b>5-9月</span></div>
 <p class="site-hl">两座兄弟岛之一(较大那个)。岛旁有Numidia和Aida II两艘沉船斜插在墙壁上，深度25-50m，墙上软珊瑚像彩色烟花。常见灰礁鲨+长尾鲨。</p>
 <div class="site-access-block"><div class="acc-row"><b>方式</b><span>船宿 ONLY</span></div><div class="acc-row"><b>出发</b><span>无日船</span></div><div class="acc-how">BDE船宿/Brothers-only行程必停。出海3-4h，海况要求严格，国家公园规定每船每天潜次有限</div></div>
 </div></article>
-<article class="site-card" id="site-7" data-rank="7" data-lat="26.3194" data-lng="34.8633" data-name="Small Brother 兄弟岛">
+<article class="site-card reveal" id="site-7" data-rank="7" data-lat="26.3194" data-lng="34.8633" data-name="Small Brother 兄弟岛">
 <div class="site-art"><svg viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g_sh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a3450"/><stop offset="1" stop-color="#02101c"/></linearGradient></defs><rect width="600" height="360" fill="url(#g_sh)"/><polygon points="200,0 230,0 280,360 240,360" fill="rgba(180,220,240,0.06)"/><polygon points="380,0 410,0 440,360 400,360" fill="rgba(180,220,240,0.05)"/><path d="M0,0 L150,0 L130,80 L160,180 L140,280 L170,360 L0,360 Z" fill="rgba(80,60,50,0.7)"/><g fill="rgba(255,150,100,0.3)"><circle cx="100" cy="100" r="14"/><circle cx="80" cy="160" r="10"/><circle cx="120" cy="220" r="12"/></g><g fill="rgba(180,80,120,0.3)"><circle cx="60" cy="130" r="8"/><circle cx="130" cy="180" r="6"/><circle cx="100" cy="250" r="10"/></g><g transform="translate(380,180)" fill="rgba(20,30,40,0.85)"><path d="M-80,0 Q-60,-15 0,-12 Q60,-15 90,-3 Q70,5 60,3 Q40,15 20,8 Q-20,15 -50,8 Q-70,12 -80,0 Z"/><ellipse cx="-78" cy="-2" rx="14" ry="4"/><path d="M0,-12 L8,-25 L18,-12 Z"/><path d="M88,-3 L105,-15 L100,5 L88,3 Z"/></g><g transform="translate(150,90) scale(0.5)" fill="rgba(20,30,40,0.7)"><path d="M-60,0 Q-40,-10 0,-8 Q40,-10 65,-2 Q50,3 40,2 Q-30,10 -60,0 Z"/><path d="M0,-8 L6,-18 L13,-8 Z"/><path d="M63,-2 L78,-12 L73,5 L63,3 Z"/></g><g fill="rgba(220,230,200,0.5)"><circle cx="200" cy="260" r="2"/><circle cx="208" cy="268" r="2"/><circle cx="216" cy="276" r="2"/><circle cx="224" cy="260" r="2"/><circle cx="232" cy="268" r="2"/><circle cx="240" cy="276" r="2"/><circle cx="248" cy="260" r="2"/><circle cx="256" cy="268" r="2"/><circle cx="264" cy="276" r="2"/><circle cx="272" cy="260" r="2"/><circle cx="280" cy="268" r="2"/><circle cx="288" cy="276" r="2"/><circle cx="296" cy="260" r="2"/><circle cx="304" cy="268" r="2"/><circle cx="312" cy="276" r="2"/><circle cx="320" cy="260" r="2"/><circle cx="328" cy="268" r="2"/><circle cx="336" cy="276" r="2"/><circle cx="344" cy="260" r="2"/><circle cx="352" cy="268" r="2"/></g></svg><div class="site-rank">No.07</div><div class="site-tag" style="background:#a83ad4">WALL</div></div>
 <div class="site-body">
-<div class="site-head"><div><h3 class="site-name">Small Brother 兄弟岛</h3><div class="site-en">Small Brother · 中红海远海</div></div><div class="site-access" style="background:#d44a3a">LIVEABOARD ONLY</div></div>
+<div class="site-head"><div class="site-titlebox"><h3 class="site-name">Small Brother 兄弟岛</h3><div class="site-en">Small Brother · 中红海远海</div></div><div class="site-access" style="background:#d44a3a">LIVEABOARD ONLY</div></div>
 <div class="site-meta"><span><b>深度</b>5-50m+</span><span><b>等级</b>AOW</span><span><b>能见度</b>30-50m</span><span><b>季节</b>5-9月</span></div>
 <p class="site-hl">小兄弟岛全是垂直陡墙，软珊瑚密集到没有缝隙。东南角的plateau是清晨锤头鲨观测点，灰礁鲨更常驻。流大无遮挡。</p>
 <div class="site-access-block"><div class="acc-row"><b>方式</b><span>船宿 ONLY</span></div><div class="acc-row"><b>出发</b><span>无日船</span></div><div class="acc-how">同Big Brother，BDE船宿；通常两兄弟连刷1-2天4-6潜</div></div>
 </div></article>
-<article class="site-card" id="site-8" data-rank="8" data-lat="27.5833" data-lng="33.9217" data-name="Abu Nuhas 沉船墓地">
+<article class="site-card reveal" id="site-8" data-rank="8" data-lat="27.5833" data-lng="33.9217" data-name="Abu Nuhas 沉船墓地">
 <div class="site-art"><svg viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g_wr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#143a55"/><stop offset="1" stop-color="#031420"/></linearGradient><radialGradient id="lr_wr" cx="0.5" cy="0" r="1"><stop offset="0" stop-color="rgba(180,220,240,0.35)"/><stop offset="1" stop-color="rgba(180,220,240,0)"/></radialGradient></defs><rect width="600" height="360" fill="url(#g_wr)"/><rect width="600" height="360" fill="url(#lr_wr)"/><polygon points="100,0 130,0 250,360 200,360" fill="rgba(180,220,240,0.08)"/><polygon points="280,0 310,0 380,360 340,360" fill="rgba(180,220,240,0.06)"/><polygon points="450,0 480,0 510,360 470,360" fill="rgba(180,220,240,0.05)"/><g transform="translate(300,250) rotate(-12)"><path d="M-180,0 L-160,-30 L160,-30 L185,-5 L165,15 L-165,15 Z" fill="rgba(20,30,40,0.9)" stroke="rgba(60,90,110,0.6)" stroke-width="1.5"/><line x1="-160" y1="-15" x2="160" y2="-15" stroke="rgba(60,90,110,0.4)"/><rect x="-30" y="-65" width="40" height="35" fill="rgba(20,30,40,0.9)" stroke="rgba(60,90,110,0.6)"/><line x1="-90" y1="-30" x2="-110" y2="-100" stroke="rgba(60,90,110,0.7)" stroke-width="2"/><line x1="80" y1="-30" x2="100" y2="-110" stroke="rgba(60,90,110,0.7)" stroke-width="2"/><rect x="40" y="-25" width="50" height="20" fill="rgba(0,0,0,0.5)"/><rect x="-100" y="-25" width="40" height="18" fill="rgba(0,0,0,0.5)"/></g><g fill="rgba(220,230,200,0.5)"><ellipse cx="120" cy="120" rx="6" ry="2"/><ellipse cx="135" cy="115" rx="6" ry="2"/><ellipse cx="150" cy="125" rx="6" ry="2"/><ellipse cx="125" cy="135" rx="6" ry="2"/><ellipse cx="450" cy="80" rx="5" ry="1.5"/><ellipse cx="465" cy="85" rx="5" ry="1.5"/><ellipse cx="480" cy="78" rx="5" ry="1.5"/></g><path d="M0,340 Q150,320 300,335 Q450,345 600,330 L600,360 L0,360 Z" fill="rgba(140,120,90,0.3)"/><g fill="rgba(255,255,255,0.4)"><circle cx="100" cy="280" r="3"/><circle cx="105" cy="260" r="2"/><circle cx="510" cy="290" r="3"/></g></svg><div class="site-rank">No.08</div><div class="site-tag" style="background:#d4a73a">WRECK</div></div>
 <div class="site-body">
-<div class="site-head"><div><h3 class="site-name">Abu Nuhas 沉船墓地</h3><div class="site-en">Abu Nuhas · 沙姆/沉船线</div></div><div class="site-access" style="background:#d48a3a">DAY/LIVEABOARD</div></div>
+<div class="site-head"><div class="site-titlebox"><h3 class="site-name">Abu Nuhas 沉船墓地</h3><div class="site-en">Abu Nuhas · 沙姆/沉船线</div></div><div class="site-access" style="background:#d48a3a">DAY/LIVEABOARD</div></div>
 <div class="site-meta"><span><b>深度</b>5-30m</span><span><b>等级</b>OW-AOW</span><span><b>能见度</b>15-25m</span><span><b>季节</b>全年</span></div>
 <p class="site-hl">礁石北缘有4艘可潜沉船：Giannis D(货船，倾斜得像艺术品)、Carnatic(百年古船，长满软珊瑚)、Chrisoula K(瓷砖船)、Kimon M(小扁豆船)。串潜爽到爆。</p>
 <div class="site-access-block"><div class="acc-row"><b>方式</b><span>日船/船宿</span></div><div class="acc-row"><b>出发</b><span>Hurghada/沙姆都可</span></div><div class="acc-how">Hurghada出发2h船程，1天2-3潜。Northern Wrecks船宿必停1-2天，能把4艘船全部潜完</div></div>
 </div></article>
-<article class="site-card" id="site-9" data-rank="9" data-lat="23.55" data-lng="36.0167" data-name="St. John's 礁群">
+<article class="site-card reveal" id="site-9" data-rank="9" data-lat="23.55" data-lng="36.0167" data-name="St. John's 礁群">
 <div class="site-art"><svg viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g_co" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0e4060"/><stop offset="1" stop-color="#03141e"/></linearGradient></defs><rect width="600" height="360" fill="url(#g_co)"/><path d="M0,260 Q150,240 300,255 Q450,265 600,250 L600,360 L0,360 Z" fill="rgba(180,150,100,0.3)"/><g><g transform="translate(120,280)" fill="rgba(255,160,120,0.6)"><path d="M-30,0 Q-30,-40 -10,-50 Q0,-60 10,-50 Q30,-40 30,0 L20,0 L20,-30 L10,-40 L10,-25 L0,-30 L0,-20 L-10,-30 L-10,-10 L-20,0 Z"/></g><g transform="translate(450,280)" fill="rgba(180,80,120,0.6)"><path d="M-30,0 Q-30,-40 -10,-50 Q0,-60 10,-50 Q30,-40 30,0 L20,0 L20,-30 L10,-40 L10,-25 L0,-30 L0,-20 L-10,-30 L-10,-10 L-20,0 Z"/></g><g transform="translate(280,275)"><path d="M-25,0 L-30,-50 Q-30,-60 0,-60 Q30,-60 30,-50 L25,0 Z" fill="rgba(160,80,180,0.55)"/><ellipse cx="0" cy="-58" rx="28" ry="6" fill="rgba(60,30,80,0.7)"/></g><g fill="rgba(255,200,100,0.55)"><circle cx="60" cy="285" r="14"/><circle cx="200" cy="295" r="10"/><circle cx="380" cy="290" r="12"/><circle cx="540" cy="295" r="10"/></g></g><g><ellipse cx="100" cy="120" rx="10" ry="5" fill="rgba(255,200,80,0.85)"/><path d="M90,120 L82,116 L82,124 Z" fill="rgba(255,200,80,0.85)"/><ellipse cx="220" cy="160" rx="12" ry="6" fill="rgba(80,180,255,0.75)"/><ellipse cx="380" cy="100" rx="8" ry="4" fill="rgba(255,120,100,0.85)"/><ellipse cx="450" cy="180" rx="10" ry="5" fill="rgba(255,200,80,0.85)"/><ellipse cx="500" cy="120" rx="9" ry="4" fill="rgba(180,255,200,0.75)"/></g></svg><div class="site-rank">No.09</div><div class="site-tag" style="background:#3aa8d4">REEF</div></div>
 <div class="site-body">
-<div class="site-head"><div><h3 class="site-name">St. John's 礁群</h3><div class="site-en">St. John's Reef · 埃及最南端</div></div><div class="site-access" style="background:#d44a3a">LIVEABOARD ONLY</div></div>
+<div class="site-head"><div class="site-titlebox"><h3 class="site-name">St. John's 礁群</h3><div class="site-en">St. John's Reef · 埃及最南端</div></div><div class="site-access" style="background:#d44a3a">LIVEABOARD ONLY</div></div>
 <div class="site-meta"><span><b>深度</b>5-40m</span><span><b>等级</b>OW-AOW</span><span><b>能见度</b>30-40m</span><span><b>季节</b>3-6月/9-11月</span></div>
 <p class="site-hl">埃及最南端礁群(接近苏丹边境)，由几十个reef组成(Gota Kebir/Gota Soraya/Habili Ali)。可见海豚、海龟、灰礁鲨、偶有锤头。Cave系统好玩。</p>
 <div class="site-access-block"><div class="acc-row"><b>方式</b><span>船宿 ONLY</span></div><div class="acc-row"><b>出发</b><span>Marsa Alam Port Ghalib</span></div><div class="acc-how">Deep South船宿(7-10天)，从Marsa Alam出发往南开1-2天才到。最远最贵但鱼最多</div></div>
 </div></article>
-<article class="site-card" id="site-10" data-rank="10" data-lat="24.1167" data-lng="35.55" data-name="Fury Shoals 礁群">
+<article class="site-card reveal" id="site-10" data-rank="10" data-lat="24.1167" data-lng="35.55" data-name="Fury Shoals 礁群">
 <div class="site-art"><svg viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g_do" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#155270"/><stop offset="1" stop-color="#04182a"/></linearGradient></defs><rect width="600" height="360" fill="url(#g_do)"/><polygon points="0,0 600,0 600,40 0,60" fill="rgba(180,220,240,0.18)"/><g transform="translate(150,100) rotate(15)" fill="rgba(60,80,100,0.85)"><path d="M-50,0 Q-30,-12 0,-10 Q40,-12 60,-2 Q70,5 60,8 Q40,18 0,15 Q-30,18 -50,8 Z"/><ellipse cx="-50" cy="2" rx="6" ry="3"/><path d="M0,-10 L4,-22 L11,-10 Z"/><path d="M58,-2 L70,-12 L66,8 L58,5 Z"/><circle cx="-46" cy="-1" r="1" fill="white"/></g><g transform="translate(380,170) rotate(-8)" fill="rgba(60,80,100,0.85)"><path d="M-50,0 Q-30,-12 0,-10 Q40,-12 60,-2 Q70,5 60,8 Q40,18 0,15 Q-30,18 -50,8 Z"/><ellipse cx="-50" cy="2" rx="6" ry="3"/><path d="M0,-10 L4,-22 L11,-10 Z"/><path d="M58,-2 L70,-12 L66,8 L58,5 Z"/><circle cx="-46" cy="-1" r="1" fill="white"/></g><g transform="translate(80,240) scale(0.6)" fill="rgba(60,80,100,0.7)"><path d="M-50,0 Q-30,-12 0,-10 Q40,-12 60,-2 Q70,5 60,8 Q40,18 0,15 Q-30,18 -50,8 Z"/><ellipse cx="-50" cy="2" rx="6" ry="3"/><path d="M0,-10 L4,-22 L11,-10 Z"/><path d="M58,-2 L70,-12 L66,8 L58,5 Z"/></g><g transform="translate(500,260) scale(0.55)" fill="rgba(60,80,100,0.65)"><path d="M-50,0 Q-30,-12 0,-10 Q40,-12 60,-2 Q70,5 60,8 Q40,18 0,15 Q-30,18 -50,8 Z"/><ellipse cx="-50" cy="2" rx="6" ry="3"/><path d="M0,-10 L4,-22 L11,-10 Z"/><path d="M58,-2 L70,-12 L66,8 L58,5 Z"/></g><g transform="translate(280,290) scale(0.5)" fill="rgba(60,80,100,0.6)"><path d="M-50,0 Q-30,-12 0,-10 Q40,-12 60,-2 Q70,5 60,8 Q40,18 0,15 Q-30,18 -50,8 Z"/><ellipse cx="-50" cy="2" rx="6" ry="3"/><path d="M0,-10 L4,-22 L11,-10 Z"/><path d="M58,-2 L70,-12 L66,8 L58,5 Z"/></g></svg><div class="site-rank">No.10</div><div class="site-tag" style="background:#3ad4a8">REEF+CAVE</div></div>
 <div class="site-body">
-<div class="site-head"><div><h3 class="site-name">Fury Shoals 礁群</h3><div class="site-en">Fury Shoals · 南红海</div></div><div class="site-access" style="background:#d48a3a">DAY/LIVEABOARD</div></div>
+<div class="site-head"><div class="site-titlebox"><h3 class="site-name">Fury Shoals 礁群</h3><div class="site-en">Fury Shoals · 南红海</div></div><div class="site-access" style="background:#d48a3a">DAY/LIVEABOARD</div></div>
 <div class="site-meta"><span><b>深度</b>5-30m</span><span><b>等级</b>OW</span><span><b>能见度</b>25-40m</span><span><b>季节</b>3-11月</span></div>
 <p class="site-hl">由20+个patch reef组成。Sha'ab Claudio有令人惊叹的洞穴/隧道阳光投射；Sataya(Dolphin Reef)是常驻spinner dolphin群(300+只)。浮潜也极爽。</p>
 <div class="site-access-block"><div class="acc-row"><b>方式</b><span>日船/船宿</span></div><div class="acc-row"><b>出发</b><span>Marsa Alam/Hamata</span></div><div class="acc-how">Hamata港日船1.5h可达浅区；Sha'ab Claudio在更远，要船宿South行程或Hamata长日船</div></div>
 </div></article>
-<article class="site-card" id="site-11" data-rank="11" data-lat="24.075" data-lng="36.2167" data-name="Rocky Island">
+<article class="site-card reveal" id="site-11" data-rank="11" data-lat="24.075" data-lng="36.2167" data-name="Rocky Island">
 <div class="site-art"><svg viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g_sh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a3850"/><stop offset="1" stop-color="#020e18"/></linearGradient></defs><rect width="600" height="360" fill="url(#g_sh)"/><polygon points="200,0 230,0 280,360 240,360" fill="rgba(180,220,240,0.06)"/><polygon points="380,0 410,0 440,360 400,360" fill="rgba(180,220,240,0.05)"/><path d="M0,0 L150,0 L130,80 L160,180 L140,280 L170,360 L0,360 Z" fill="rgba(80,60,50,0.7)"/><g fill="rgba(255,150,100,0.3)"><circle cx="100" cy="100" r="14"/><circle cx="80" cy="160" r="10"/><circle cx="120" cy="220" r="12"/></g><g fill="rgba(180,80,120,0.3)"><circle cx="60" cy="130" r="8"/><circle cx="130" cy="180" r="6"/><circle cx="100" cy="250" r="10"/></g><g transform="translate(380,180)" fill="rgba(20,30,40,0.85)"><path d="M-80,0 Q-60,-15 0,-12 Q60,-15 90,-3 Q70,5 60,3 Q40,15 20,8 Q-20,15 -50,8 Q-70,12 -80,0 Z"/><ellipse cx="-78" cy="-2" rx="14" ry="4"/><path d="M0,-12 L8,-25 L18,-12 Z"/><path d="M88,-3 L105,-15 L100,5 L88,3 Z"/></g><g transform="translate(150,90) scale(0.5)" fill="rgba(20,30,40,0.7)"><path d="M-60,0 Q-40,-10 0,-8 Q40,-10 65,-2 Q50,3 40,2 Q-30,10 -60,0 Z"/><path d="M0,-8 L6,-18 L13,-8 Z"/><path d="M63,-2 L78,-12 L73,5 L63,3 Z"/></g><g fill="rgba(220,230,200,0.5)"><circle cx="200" cy="260" r="2"/><circle cx="208" cy="268" r="2"/><circle cx="216" cy="276" r="2"/><circle cx="224" cy="260" r="2"/><circle cx="232" cy="268" r="2"/><circle cx="240" cy="276" r="2"/><circle cx="248" cy="260" r="2"/><circle cx="256" cy="268" r="2"/><circle cx="264" cy="276" r="2"/><circle cx="272" cy="260" r="2"/><circle cx="280" cy="268" r="2"/><circle cx="288" cy="276" r="2"/><circle cx="296" cy="260" r="2"/><circle cx="304" cy="268" r="2"/><circle cx="312" cy="276" r="2"/><circle cx="320" cy="260" r="2"/><circle cx="328" cy="268" r="2"/><circle cx="336" cy="276" r="2"/><circle cx="344" cy="260" r="2"/><circle cx="352" cy="268" r="2"/></g></svg><div class="site-rank">No.11</div><div class="site-tag" style="background:#a83ad4">WALL</div></div>
 <div class="site-body">
-<div class="site-head"><div><h3 class="site-name">Rocky Island</h3><div class="site-en">Rocky Island · 埃及最南端</div></div><div class="site-access" style="background:#d44a3a">LIVEABOARD ONLY</div></div>
+<div class="site-head"><div class="site-titlebox"><h3 class="site-name">Rocky Island</h3><div class="site-en">Rocky Island · 埃及最南端</div></div><div class="site-access" style="background:#d44a3a">LIVEABOARD ONLY</div></div>
 <div class="site-meta"><span><b>深度</b>5-50m+</span><span><b>等级</b>AOW</span><span><b>能见度</b>40m+</span><span><b>季节</b>5-9月</span></div>
 <p class="site-hl">小石头岛，独立陡墙。流大鱼大：丝鲨、锤头鲨、灰礁鲨、金枪鱼龙卷风。能见度常40m+。</p>
 <div class="site-access-block"><div class="acc-row"><b>方式</b><span>船宿 ONLY</span></div><div class="acc-row"><b>出发</b><span>Deep South行程</span></div><div class="acc-how">Deep South/St Johns船宿在第4-5天会停，需要良好海况才能下水</div></div>
 </div></article>
-<article class="site-card" id="site-12" data-rank="12" data-lat="23.6167" data-lng="36.2" data-name="Zabargad 翡翠岛">
+<article class="site-card reveal" id="site-12" data-rank="12" data-lat="23.6167" data-lng="36.2" data-name="Zabargad 翡翠岛">
 <div class="site-art"><svg viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g_wr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#125264"/><stop offset="1" stop-color="#031822"/></linearGradient><radialGradient id="lr_wr" cx="0.5" cy="0" r="1"><stop offset="0" stop-color="rgba(180,220,240,0.35)"/><stop offset="1" stop-color="rgba(180,220,240,0)"/></radialGradient></defs><rect width="600" height="360" fill="url(#g_wr)"/><rect width="600" height="360" fill="url(#lr_wr)"/><polygon points="100,0 130,0 250,360 200,360" fill="rgba(180,220,240,0.08)"/><polygon points="280,0 310,0 380,360 340,360" fill="rgba(180,220,240,0.06)"/><polygon points="450,0 480,0 510,360 470,360" fill="rgba(180,220,240,0.05)"/><g transform="translate(300,250) rotate(-12)"><path d="M-180,0 L-160,-30 L160,-30 L185,-5 L165,15 L-165,15 Z" fill="rgba(20,30,40,0.9)" stroke="rgba(60,90,110,0.6)" stroke-width="1.5"/><line x1="-160" y1="-15" x2="160" y2="-15" stroke="rgba(60,90,110,0.4)"/><rect x="-30" y="-65" width="40" height="35" fill="rgba(20,30,40,0.9)" stroke="rgba(60,90,110,0.6)"/><line x1="-90" y1="-30" x2="-110" y2="-100" stroke="rgba(60,90,110,0.7)" stroke-width="2"/><line x1="80" y1="-30" x2="100" y2="-110" stroke="rgba(60,90,110,0.7)" stroke-width="2"/><rect x="40" y="-25" width="50" height="20" fill="rgba(0,0,0,0.5)"/><rect x="-100" y="-25" width="40" height="18" fill="rgba(0,0,0,0.5)"/></g><g fill="rgba(220,230,200,0.5)"><ellipse cx="120" cy="120" rx="6" ry="2"/><ellipse cx="135" cy="115" rx="6" ry="2"/><ellipse cx="150" cy="125" rx="6" ry="2"/><ellipse cx="125" cy="135" rx="6" ry="2"/><ellipse cx="450" cy="80" rx="5" ry="1.5"/><ellipse cx="465" cy="85" rx="5" ry="1.5"/><ellipse cx="480" cy="78" rx="5" ry="1.5"/></g><path d="M0,340 Q150,320 300,335 Q450,345 600,330 L600,360 L0,360 Z" fill="rgba(140,120,90,0.3)"/><g fill="rgba(255,255,255,0.4)"><circle cx="100" cy="280" r="3"/><circle cx="105" cy="260" r="2"/><circle cx="510" cy="290" r="3"/></g></svg><div class="site-rank">No.12</div><div class="site-tag" style="background:#7ad43a">WRECK+REEF</div></div>
 <div class="site-body">
-<div class="site-head"><div><h3 class="site-name">Zabargad 翡翠岛</h3><div class="site-en">Zabargad Island · 南红海</div></div><div class="site-access" style="background:#d44a3a">LIVEABOARD ONLY</div></div>
+<div class="site-head"><div class="site-titlebox"><h3 class="site-name">Zabargad 翡翠岛</h3><div class="site-en">Zabargad Island · 南红海</div></div><div class="site-access" style="background:#d44a3a">LIVEABOARD ONLY</div></div>
 <div class="site-meta"><span><b>深度</b>5-30m</span><span><b>等级</b>OW-AOW</span><span><b>能见度</b>25-35m</span><span><b>季节</b>3-11月</span></div>
 <p class="site-hl">古希腊翡翠岛得名于岛上橄榄石矿。北湾沉船Khanka倒在24m处；南湾礁石长满硬珊瑚。岛上还能上岸看废弃矿坑。</p>
 <div class="site-access-block"><div class="acc-row"><b>方式</b><span>船宿 ONLY</span></div><div class="acc-row"><b>出发</b><span>Deep South行程</span></div><div class="acc-how">Deep South必停点，通常在St Johns行程往返路上</div></div>
 </div></article>
-<article class="site-card" id="site-13" data-rank="13" data-lat="28.5167" data-lng="34.5167" data-name="达哈布峡谷 Canyon">
+<article class="site-card reveal" id="site-13" data-rank="13" data-lat="28.5167" data-lng="34.5167" data-name="达哈布峡谷 Canyon">
 <div class="site-art"><svg viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g_ca" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a4a68"/><stop offset="1" stop-color="#04162a"/></linearGradient><radialGradient id="dark" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#000814"/><stop offset="1" stop-color="rgba(0,8,20,0)"/></radialGradient></defs><rect width="600" height="360" fill="url(#g_ca)"/><path d="M0,0 L240,0 L260,60 L220,120 L240,180 L210,240 L235,300 L210,360 L0,360 Z" fill="rgba(40,30,25,0.92)"/><path d="M600,0 L360,0 L340,60 L380,120 L360,180 L390,240 L365,300 L390,360 L600,360 Z" fill="rgba(40,30,25,0.92)"/><path d="M240,0 L360,0 L340,60 L380,120 L360,180 L390,240 L365,300 L390,360 L210,360 L235,300 L210,240 L240,180 L220,120 L260,60 Z" fill="url(#dark)"/><polygon points="280,0 320,0 350,180 250,180" fill="rgba(180,220,240,0.18)"/><polygon points="290,0 310,0 320,360 280,360" fill="rgba(180,220,240,0.08)"/><g transform="translate(300,200)" fill="rgba(20,30,40,0.85)"><ellipse cx="0" cy="0" rx="5" ry="7"/><line x1="0" y1="7" x2="0" y2="18" stroke="rgba(20,30,40,0.85)" stroke-width="2.5"/><line x1="-4" y1="3" x2="-12" y2="6" stroke="rgba(20,30,40,0.85)" stroke-width="2"/><line x1="4" y1="3" x2="12" y2="2" stroke="rgba(20,30,40,0.85)" stroke-width="2"/><path d="M-3,18 L-7,28 M3,18 L7,28" stroke="rgba(20,30,40,0.85)" stroke-width="2"/><circle cx="-1" cy="-12" r="1.5" fill="rgba(255,255,255,0.7)"/><circle cx="2" cy="-22" r="1" fill="rgba(255,255,255,0.7)"/></g></svg><div class="site-rank">No.13</div><div class="site-tag" style="background:#3ad4d4">SHORE</div></div>
 <div class="site-body">
-<div class="site-head"><div><h3 class="site-name">达哈布峡谷 Canyon</h3><div class="site-en">Dahab Canyon · 达哈布</div></div><div class="site-access" style="background:#3ad4a8">SHORE</div></div>
+<div class="site-head"><div class="site-titlebox"><h3 class="site-name">达哈布峡谷 Canyon</h3><div class="site-en">Dahab Canyon · 达哈布</div></div><div class="site-access" style="background:#3ad4a8">SHORE</div></div>
 <div class="site-meta"><span><b>深度</b>15-30m</span><span><b>等级</b>AOW</span><span><b>能见度</b>20-30m</span><span><b>季节</b>全年</span></div>
 <p class="site-hl">水下裂缝峡谷潜入，从18m入口降到30m出口，狭长漆黑充满悬念。出洞后是软珊瑚花园。</p>
 <div class="site-access-block"><div class="acc-row"><b>方式</b><span>岸潜</span></div><div class="acc-row"><b>出发</b><span>达哈布镇南5km</span></div><div class="acc-how">达哈布任一潜店包面包车，5分钟到岸边，背气瓶走50m入水。下午光线最戏剧</div></div>
 </div></article>
-<article class="site-card" id="site-14" data-rank="14" data-lat="24.5667" data-lng="35.4167" data-name="Shaab Rumi (Cousteau)">
+<article class="site-card reveal" id="site-14" data-rank="14" data-lat="24.5667" data-lng="35.4167" data-name="Shaab Rumi (Cousteau)">
 <div class="site-art"><svg viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g_hh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d3e5a"/><stop offset="1" stop-color="#02101c"/></linearGradient></defs><rect width="600" height="360" fill="url(#g_hh)"/><polygon points="0,0 600,0 600,80 0,120" fill="rgba(180,220,240,0.06)"/><g transform="translate(60,80) scale(0.5)" fill="rgba(20,30,40,0.7)"><ellipse cx="0" cy="0" rx="35" ry="6"/><ellipse cx="-32" cy="-2" rx="14" ry="3"/><path d="M0,-6 L4,-14 L9,-6 Z"/><path d="M33,-2 L42,-8 L40,4 L33,3 Z"/></g><g transform="translate(115,140) scale(0.65)" fill="rgba(20,30,40,0.7)"><ellipse cx="0" cy="0" rx="35" ry="6"/><ellipse cx="-32" cy="-2" rx="14" ry="3"/><path d="M0,-6 L4,-14 L9,-6 Z"/><path d="M33,-2 L42,-8 L40,4 L33,3 Z"/></g><g transform="translate(170,200) scale(0.8)" fill="rgba(20,30,40,0.7)"><ellipse cx="0" cy="0" rx="35" ry="6"/><ellipse cx="-32" cy="-2" rx="14" ry="3"/><path d="M0,-6 L4,-14 L9,-6 Z"/><path d="M33,-2 L42,-8 L40,4 L33,3 Z"/></g><g transform="translate(225,260) scale(0.5)" fill="rgba(20,30,40,0.7)"><ellipse cx="0" cy="0" rx="35" ry="6"/><ellipse cx="-32" cy="-2" rx="14" ry="3"/><path d="M0,-6 L4,-14 L9,-6 Z"/><path d="M33,-2 L42,-8 L40,4 L33,3 Z"/></g><g transform="translate(280,80) scale(0.65)" fill="rgba(20,30,40,0.7)"><ellipse cx="0" cy="0" rx="35" ry="6"/><ellipse cx="-32" cy="-2" rx="14" ry="3"/><path d="M0,-6 L4,-14 L9,-6 Z"/><path d="M33,-2 L42,-8 L40,4 L33,3 Z"/></g><g transform="translate(335,140) scale(0.8)" fill="rgba(20,30,40,0.7)"><ellipse cx="0" cy="0" rx="35" ry="6"/><ellipse cx="-32" cy="-2" rx="14" ry="3"/><path d="M0,-6 L4,-14 L9,-6 Z"/><path d="M33,-2 L42,-8 L40,4 L33,3 Z"/></g><g transform="translate(390,200) scale(0.5)" fill="rgba(20,30,40,0.7)"><ellipse cx="0" cy="0" rx="35" ry="6"/><ellipse cx="-32" cy="-2" rx="14" ry="3"/><path d="M0,-6 L4,-14 L9,-6 Z"/><path d="M33,-2 L42,-8 L40,4 L33,3 Z"/></g><g transform="translate(445,260) scale(0.65)" fill="rgba(20,30,40,0.7)"><ellipse cx="0" cy="0" rx="35" ry="6"/><ellipse cx="-32" cy="-2" rx="14" ry="3"/><path d="M0,-6 L4,-14 L9,-6 Z"/><path d="M33,-2 L42,-8 L40,4 L33,3 Z"/></g><g transform="translate(500,80) scale(0.8)" fill="rgba(20,30,40,0.7)"><ellipse cx="0" cy="0" rx="35" ry="6"/><ellipse cx="-32" cy="-2" rx="14" ry="3"/><path d="M0,-6 L4,-14 L9,-6 Z"/><path d="M33,-2 L42,-8 L40,4 L33,3 Z"/></g><g transform="translate(555,140) scale(0.5)" fill="rgba(20,30,40,0.7)"><ellipse cx="0" cy="0" rx="35" ry="6"/><ellipse cx="-32" cy="-2" rx="14" ry="3"/><path d="M0,-6 L4,-14 L9,-6 Z"/><path d="M33,-2 L42,-8 L40,4 L33,3 Z"/></g><g fill="rgba(255,255,255,0.35)"><circle cx="80" cy="320" r="3"/><circle cx="510" cy="330" r="3"/></g></svg><div class="site-rank">No.14</div><div class="site-tag" style="background:#3aa8d4">REEF</div></div>
 <div class="site-body">
-<div class="site-head"><div><h3 class="site-name">Shaab Rumi (Cousteau)</h3><div class="site-en">Sha'ab Rumi · 南红海远海</div></div><div class="site-access" style="background:#d44a3a">LIVEABOARD ONLY</div></div>
+<div class="site-head"><div class="site-titlebox"><h3 class="site-name">Shaab Rumi (Cousteau)</h3><div class="site-en">Sha'ab Rumi · 南红海远海</div></div><div class="site-access" style="background:#d44a3a">LIVEABOARD ONLY</div></div>
 <div class="site-meta"><span><b>深度</b>5-40m</span><span><b>等级</b>AOW</span><span><b>能见度</b>30-40m</span><span><b>季节</b>3-11月</span></div>
 <p class="site-hl">Cousteau 1963年Conshelf II海底实验基地遗址(残骸和工具仍在海底)。南plateau是著名锤头鲨观测点。</p>
 <div class="site-access-block"><div class="acc-row"><b>方式</b><span>船宿 ONLY</span></div><div class="acc-row"><b>出发</b><span>Sudan边境附近</span></div><div class="acc-how">严格说在苏丹一侧，但部分Deep South船宿会跨境。需要长行程+多签证</div></div>
 </div></article>
-<article class="site-card" id="site-15" data-rank="15" data-lat="28.0333" data-lng="34.4833" data-name="Jackson Reef (Tiran)">
+<article class="site-card reveal" id="site-15" data-rank="15" data-lat="28.0333" data-lng="34.4833" data-name="Jackson Reef (Tiran)">
 <div class="site-art"><svg viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g_sh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0e4868"/><stop offset="1" stop-color="#03141f"/></linearGradient></defs><rect width="600" height="360" fill="url(#g_sh)"/><polygon points="200,0 230,0 280,360 240,360" fill="rgba(180,220,240,0.06)"/><polygon points="380,0 410,0 440,360 400,360" fill="rgba(180,220,240,0.05)"/><path d="M0,0 L150,0 L130,80 L160,180 L140,280 L170,360 L0,360 Z" fill="rgba(80,60,50,0.7)"/><g fill="rgba(255,150,100,0.3)"><circle cx="100" cy="100" r="14"/><circle cx="80" cy="160" r="10"/><circle cx="120" cy="220" r="12"/></g><g fill="rgba(180,80,120,0.3)"><circle cx="60" cy="130" r="8"/><circle cx="130" cy="180" r="6"/><circle cx="100" cy="250" r="10"/></g><g transform="translate(380,180)" fill="rgba(20,30,40,0.85)"><path d="M-80,0 Q-60,-15 0,-12 Q60,-15 90,-3 Q70,5 60,3 Q40,15 20,8 Q-20,15 -50,8 Q-70,12 -80,0 Z"/><ellipse cx="-78" cy="-2" rx="14" ry="4"/><path d="M0,-12 L8,-25 L18,-12 Z"/><path d="M88,-3 L105,-15 L100,5 L88,3 Z"/></g><g transform="translate(150,90) scale(0.5)" fill="rgba(20,30,40,0.7)"><path d="M-60,0 Q-40,-10 0,-8 Q40,-10 65,-2 Q50,3 40,2 Q-30,10 -60,0 Z"/><path d="M0,-8 L6,-18 L13,-8 Z"/><path d="M63,-2 L78,-12 L73,5 L63,3 Z"/></g><g fill="rgba(220,230,200,0.5)"><circle cx="200" cy="260" r="2"/><circle cx="208" cy="268" r="2"/><circle cx="216" cy="276" r="2"/><circle cx="224" cy="260" r="2"/><circle cx="232" cy="268" r="2"/><circle cx="240" cy="276" r="2"/><circle cx="248" cy="260" r="2"/><circle cx="256" cy="268" r="2"/><circle cx="264" cy="276" r="2"/><circle cx="272" cy="260" r="2"/><circle cx="280" cy="268" r="2"/><circle cx="288" cy="276" r="2"/><circle cx="296" cy="260" r="2"/><circle cx="304" cy="268" r="2"/><circle cx="312" cy="276" r="2"/><circle cx="320" cy="260" r="2"/><circle cx="328" cy="268" r="2"/><circle cx="336" cy="276" r="2"/><circle cx="344" cy="260" r="2"/><circle cx="352" cy="268" r="2"/></g></svg><div class="site-rank">No.15</div><div class="site-tag" style="background:#c97a3a">WALL+WRECK</div></div>
 <div class="site-body">
-<div class="site-head"><div><h3 class="site-name">Jackson Reef (Tiran)</h3><div class="site-en">Jackson Reef · 沙姆/Tiran</div></div><div class="site-access" style="background:#3aa8d4">DAY BOAT</div></div>
+<div class="site-head"><div class="site-titlebox"><h3 class="site-name">Jackson Reef (Tiran)</h3><div class="site-en">Jackson Reef · 沙姆/Tiran</div></div><div class="site-access" style="background:#3aa8d4">DAY BOAT</div></div>
 <div class="site-meta"><span><b>深度</b>5-40m+</span><span><b>等级</b>AOW</span><span><b>能见度</b>25-40m</span><span><b>季节</b>5-9月</span></div>
 <p class="site-hl">Tiran海峡四礁之一(Jackson/Woodhouse/Thomas/Gordon)。北侧有Lara货船残骸卡在礁顶，墙下是锤头鲨清晨观测点。流大需漂潜。</p>
 <div class="site-access-block"><div class="acc-row"><b>方式</b><span>日船</span></div><div class="acc-row"><b>出发</b><span>沙姆/Sharks Bay</span></div><div class="acc-how">沙姆Tiran日船是经典基础线路，1h船程，一天2-3潜走完四礁</div></div>
 </div></article>
-<article class="site-card" id="site-16" data-rank="16" data-lat="25.0667" data-lng="34.8833" data-name="Marsa Alam House Reef群">
+<article class="site-card reveal" id="site-16" data-rank="16" data-lat="25.0667" data-lng="34.8833" data-name="Marsa Alam House Reef群">
 <div class="site-art"><svg viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g_tu" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#13567a"/><stop offset="1" stop-color="#04182a"/></linearGradient></defs><rect width="600" height="360" fill="url(#g_tu)"/><polygon points="0,0 600,0 600,30 0,50" fill="rgba(180,220,240,0.15)"/><g stroke="rgba(80,140,80,0.6)" stroke-width="2" fill="none" stroke-linecap="round"><path d="M20,340 Q18,310 22,280"/><path d="M35,340 Q33,295 37,260"/><path d="M50,340 Q48,280 52,240"/><path d="M65,340 Q63,265 67,220"/><path d="M80,340 Q78,310 82,280"/><path d="M95,340 Q93,295 97,260"/><path d="M110,340 Q108,280 112,240"/><path d="M125,340 Q123,265 127,220"/><path d="M140,340 Q138,310 142,280"/><path d="M155,340 Q153,295 157,260"/><path d="M170,340 Q168,280 172,240"/><path d="M185,340 Q183,265 187,220"/><path d="M200,340 Q198,310 202,280"/><path d="M215,340 Q213,295 217,260"/><path d="M230,340 Q228,280 232,240"/><path d="M245,340 Q243,265 247,220"/><path d="M260,340 Q258,310 262,280"/><path d="M275,340 Q273,295 277,260"/><path d="M290,340 Q288,280 292,240"/><path d="M305,340 Q303,265 307,220"/><path d="M320,340 Q318,310 322,280"/><path d="M335,340 Q333,295 337,260"/><path d="M350,340 Q348,280 352,240"/><path d="M365,340 Q363,265 367,220"/><path d="M380,340 Q378,310 382,280"/><path d="M395,340 Q393,295 397,260"/><path d="M410,340 Q408,280 412,240"/><path d="M425,340 Q423,265 427,220"/><path d="M440,340 Q438,310 442,280"/><path d="M455,340 Q453,295 457,260"/><path d="M470,340 Q468,280 472,240"/><path d="M485,340 Q483,265 487,220"/><path d="M500,340 Q498,310 502,280"/><path d="M515,340 Q513,295 517,260"/><path d="M530,340 Q528,280 532,240"/><path d="M545,340 Q543,265 547,220"/><path d="M560,340 Q558,310 562,280"/><path d="M575,340 Q573,295 577,260"/><path d="M590,340 Q588,280 592,240"/><path d="M605,340 Q603,265 607,220"/></g><g transform="translate(300,180) rotate(-5)"><ellipse cx="0" cy="0" rx="55" ry="40" fill="rgba(80,100,60,0.85)" stroke="rgba(40,60,30,0.6)" stroke-width="2"/><g fill="rgba(140,160,100,0.4)" stroke="rgba(40,60,30,0.4)"><polygon points="-30,-15 -15,-25 0,-15 -10,0 -25,0"/><polygon points="0,-15 15,-25 30,-15 25,0 10,0"/><polygon points="-25,5 -10,10 0,15 -10,25 -22,20"/><polygon points="25,5 10,10 0,15 10,25 22,20"/></g><ellipse cx="-55" cy="-5" rx="14" ry="10" fill="rgba(80,100,60,0.85)"/><circle cx="-62" cy="-6" r="2" fill="black"/><path d="M-30,-30 Q-50,-50 -70,-45 Q-55,-35 -45,-25 Z" fill="rgba(80,100,60,0.85)"/><path d="M30,-30 Q50,-45 70,-35 Q55,-25 45,-20 Z" fill="rgba(80,100,60,0.85)"/><path d="M-25,30 Q-40,45 -55,42 Q-45,32 -38,25 Z" fill="rgba(80,100,60,0.85)"/><path d="M25,30 Q40,45 55,42 Q45,32 38,25 Z" fill="rgba(80,100,60,0.85)"/></g><g fill="rgba(255,200,80,0.7)"><ellipse cx="120" cy="100" rx="6" ry="2"/><ellipse cx="135" cy="95" rx="6" ry="2"/><ellipse cx="450" cy="80" rx="6" ry="2"/></g></svg><div class="site-rank">No.16</div><div class="site-tag" style="background:#3ad4d4">SHORE</div></div>
 <div class="site-body">
-<div class="site-head"><div><h3 class="site-name">Marsa Alam House Reef群</h3><div class="site-en">Marsa Alam Reefs · 马萨阿拉姆</div></div><div class="site-access" style="background:#3ad4a8">SHORE</div></div>
+<div class="site-head"><div class="site-titlebox"><h3 class="site-name">Marsa Alam House Reef群</h3><div class="site-en">Marsa Alam Reefs · 马萨阿拉姆</div></div><div class="site-access" style="background:#3ad4a8">SHORE</div></div>
 <div class="site-meta"><span><b>深度</b>5-30m</span><span><b>等级</b>OW</span><span><b>能见度</b>20-30m</span><span><b>季节</b>全年</span></div>
 <p class="site-hl">Abu Dabbab：常驻儒艮(Dugong)和绿海龟；Marsa Mubarak：海龟+海豚+儒艮；Marsa Shouna：壮观软珊瑚。完全岸潜，骑骆驼或步行入水。</p>
 <div class="site-access-block"><div class="acc-row"><b>方式</b><span>岸潜</span></div><div class="acc-row"><b>出发</b><span>Marsa Alam各house reef</span></div><div class="acc-how">住在Marsa Alam任一dive resort(如Marsa Shagra/Equinox)就可步行下水，无限次自助潜</div></div>
 </div></article>
-<article class="site-card" id="site-17" data-rank="17" data-lat="27.7" data-lng="34.0667" data-name="SS Dunraven 沉船">
+<article class="site-card reveal" id="site-17" data-rank="17" data-lat="27.7" data-lng="34.0667" data-name="SS Dunraven 沉船">
 <div class="site-art"><svg viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g_wr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a4060"/><stop offset="1" stop-color="#03101c"/></linearGradient><radialGradient id="lr_wr" cx="0.5" cy="0" r="1"><stop offset="0" stop-color="rgba(180,220,240,0.35)"/><stop offset="1" stop-color="rgba(180,220,240,0)"/></radialGradient></defs><rect width="600" height="360" fill="url(#g_wr)"/><rect width="600" height="360" fill="url(#lr_wr)"/><polygon points="100,0 130,0 250,360 200,360" fill="rgba(180,220,240,0.08)"/><polygon points="280,0 310,0 380,360 340,360" fill="rgba(180,220,240,0.06)"/><polygon points="450,0 480,0 510,360 470,360" fill="rgba(180,220,240,0.05)"/><g transform="translate(300,250) rotate(-12)"><path d="M-180,0 L-160,-30 L160,-30 L185,-5 L165,15 L-165,15 Z" fill="rgba(20,30,40,0.9)" stroke="rgba(60,90,110,0.6)" stroke-width="1.5"/><line x1="-160" y1="-15" x2="160" y2="-15" stroke="rgba(60,90,110,0.4)"/><rect x="-30" y="-65" width="40" height="35" fill="rgba(20,30,40,0.9)" stroke="rgba(60,90,110,0.6)"/><line x1="-90" y1="-30" x2="-110" y2="-100" stroke="rgba(60,90,110,0.7)" stroke-width="2"/><line x1="80" y1="-30" x2="100" y2="-110" stroke="rgba(60,90,110,0.7)" stroke-width="2"/><rect x="40" y="-25" width="50" height="20" fill="rgba(0,0,0,0.5)"/><rect x="-100" y="-25" width="40" height="18" fill="rgba(0,0,0,0.5)"/></g><g fill="rgba(220,230,200,0.5)"><ellipse cx="120" cy="120" rx="6" ry="2"/><ellipse cx="135" cy="115" rx="6" ry="2"/><ellipse cx="150" cy="125" rx="6" ry="2"/><ellipse cx="125" cy="135" rx="6" ry="2"/><ellipse cx="450" cy="80" rx="5" ry="1.5"/><ellipse cx="465" cy="85" rx="5" ry="1.5"/><ellipse cx="480" cy="78" rx="5" ry="1.5"/></g><path d="M0,340 Q150,320 300,335 Q450,345 600,330 L600,360 L0,360 Z" fill="rgba(140,120,90,0.3)"/><g fill="rgba(255,255,255,0.4)"><circle cx="100" cy="280" r="3"/><circle cx="105" cy="260" r="2"/><circle cx="510" cy="290" r="3"/></g></svg><div class="site-rank">No.17</div><div class="site-tag" style="background:#d4a73a">WRECK</div></div>
 <div class="site-body">
-<div class="site-head"><div><h3 class="site-name">SS Dunraven 沉船</h3><div class="site-en">SS Dunraven · 沙姆</div></div><div class="site-access" style="background:#3aa8d4">DAY BOAT</div></div>
+<div class="site-head"><div class="site-titlebox"><h3 class="site-name">SS Dunraven 沉船</h3><div class="site-en">SS Dunraven · 沙姆</div></div><div class="site-access" style="background:#3aa8d4">DAY BOAT</div></div>
 <div class="site-meta"><span><b>深度</b>15-30m</span><span><b>等级</b>OW-AOW</span><span><b>能见度</b>20-30m</span><span><b>季节</b>全年</span></div>
 <p class="site-hl">1876年沉没的英国蒸汽船，颠倒躺在Beacon Rock旁。船体长满软珊瑚和狮子鱼，可穿越船舱看锅炉。比Thistlegorm容易很多。</p>
 <div class="site-access-block"><div class="acc-row"><b>方式</b><span>日船</span></div><div class="acc-row"><b>出发</b><span>沙姆</span></div><div class="acc-how">沙姆日船常和Ras Mohammed一日打包，半天即可</div></div>
 </div></article>
-<article class="site-card" id="site-18" data-rank="18" data-lat="27.65" data-lng="33.7833" data-name="SS Rosalie Möller 沉船">
+<article class="site-card reveal" id="site-18" data-rank="18" data-lat="27.65" data-lng="33.7833" data-name="SS Rosalie Möller 沉船">
 <div class="site-art"><svg viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g_wr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a2a40"/><stop offset="1" stop-color="#01080f"/></linearGradient><radialGradient id="lr_wr" cx="0.5" cy="0" r="1"><stop offset="0" stop-color="rgba(180,220,240,0.35)"/><stop offset="1" stop-color="rgba(180,220,240,0)"/></radialGradient></defs><rect width="600" height="360" fill="url(#g_wr)"/><rect width="600" height="360" fill="url(#lr_wr)"/><polygon points="100,0 130,0 250,360 200,360" fill="rgba(180,220,240,0.08)"/><polygon points="280,0 310,0 380,360 340,360" fill="rgba(180,220,240,0.06)"/><polygon points="450,0 480,0 510,360 470,360" fill="rgba(180,220,240,0.05)"/><g transform="translate(300,250) rotate(-12)"><path d="M-180,0 L-160,-30 L160,-30 L185,-5 L165,15 L-165,15 Z" fill="rgba(20,30,40,0.9)" stroke="rgba(60,90,110,0.6)" stroke-width="1.5"/><line x1="-160" y1="-15" x2="160" y2="-15" stroke="rgba(60,90,110,0.4)"/><rect x="-30" y="-65" width="40" height="35" fill="rgba(20,30,40,0.9)" stroke="rgba(60,90,110,0.6)"/><line x1="-90" y1="-30" x2="-110" y2="-100" stroke="rgba(60,90,110,0.7)" stroke-width="2"/><line x1="80" y1="-30" x2="100" y2="-110" stroke="rgba(60,90,110,0.7)" stroke-width="2"/><rect x="40" y="-25" width="50" height="20" fill="rgba(0,0,0,0.5)"/><rect x="-100" y="-25" width="40" height="18" fill="rgba(0,0,0,0.5)"/></g><g fill="rgba(220,230,200,0.5)"><ellipse cx="120" cy="120" rx="6" ry="2"/><ellipse cx="135" cy="115" rx="6" ry="2"/><ellipse cx="150" cy="125" rx="6" ry="2"/><ellipse cx="125" cy="135" rx="6" ry="2"/><ellipse cx="450" cy="80" rx="5" ry="1.5"/><ellipse cx="465" cy="85" rx="5" ry="1.5"/><ellipse cx="480" cy="78" rx="5" ry="1.5"/></g><path d="M0,340 Q150,320 300,335 Q450,345 600,330 L600,360 L0,360 Z" fill="rgba(140,120,90,0.3)"/><g fill="rgba(255,255,255,0.4)"><circle cx="100" cy="280" r="3"/><circle cx="105" cy="260" r="2"/><circle cx="510" cy="290" r="3"/></g></svg><div class="site-rank">No.18</div><div class="site-tag" style="background:#d4a73a">WRECK</div></div>
 <div class="site-body">
-<div class="site-head"><div><h3 class="site-name">SS Rosalie Möller 沉船</h3><div class="site-en">SS Rosalie Möller · 沉船线</div></div><div class="site-access" style="background:#d44a3a">LIVEABOARD ONLY</div></div>
+<div class="site-head"><div class="site-titlebox"><h3 class="site-name">SS Rosalie Möller 沉船</h3><div class="site-en">SS Rosalie Möller · 沉船线</div></div><div class="site-access" style="background:#d44a3a">LIVEABOARD ONLY</div></div>
 <div class="site-meta"><span><b>深度</b>30-50m</span><span><b>等级</b>Deep/Tec</span><span><b>能见度</b>15-25m</span><span><b>季节</b>全年</span></div>
 <p class="site-hl">Thistlegorm的姊妹船，被同次空袭击沉。完整保留在50m海底，深度大、流大、能见度比Thistlegorm差，但船体完整度更高，专家级wreck。</p>
 <div class="site-access-block"><div class="acc-row"><b>方式</b><span>船宿 ONLY</span></div><div class="acc-row"><b>出发</b><span>Northern Wrecks行程</span></div><div class="acc-how">Northern Wrecks & Reefs船宿专属点，需Deep Diver或Tec资质，会和Thistlegorm连刷</div></div>
 </div></article>
-<article class="site-card" id="site-19" data-rank="19" data-lat="26.65" data-lng="34.0667" data-name="Salem Express 沉船">
+<article class="site-card reveal" id="site-19" data-rank="19" data-lat="26.65" data-lng="34.0667" data-name="Salem Express 沉船">
 <div class="site-art"><svg viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g_wr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#162e44"/><stop offset="1" stop-color="#020c14"/></linearGradient><radialGradient id="lr_wr" cx="0.5" cy="0" r="1"><stop offset="0" stop-color="rgba(180,220,240,0.35)"/><stop offset="1" stop-color="rgba(180,220,240,0)"/></radialGradient></defs><rect width="600" height="360" fill="url(#g_wr)"/><rect width="600" height="360" fill="url(#lr_wr)"/><polygon points="100,0 130,0 250,360 200,360" fill="rgba(180,220,240,0.08)"/><polygon points="280,0 310,0 380,360 340,360" fill="rgba(180,220,240,0.06)"/><polygon points="450,0 480,0 510,360 470,360" fill="rgba(180,220,240,0.05)"/><g transform="translate(300,250) rotate(-12)"><path d="M-180,0 L-160,-30 L160,-30 L185,-5 L165,15 L-165,15 Z" fill="rgba(20,30,40,0.9)" stroke="rgba(60,90,110,0.6)" stroke-width="1.5"/><line x1="-160" y1="-15" x2="160" y2="-15" stroke="rgba(60,90,110,0.4)"/><rect x="-30" y="-65" width="40" height="35" fill="rgba(20,30,40,0.9)" stroke="rgba(60,90,110,0.6)"/><line x1="-90" y1="-30" x2="-110" y2="-100" stroke="rgba(60,90,110,0.7)" stroke-width="2"/><line x1="80" y1="-30" x2="100" y2="-110" stroke="rgba(60,90,110,0.7)" stroke-width="2"/><rect x="40" y="-25" width="50" height="20" fill="rgba(0,0,0,0.5)"/><rect x="-100" y="-25" width="40" height="18" fill="rgba(0,0,0,0.5)"/></g><g fill="rgba(220,230,200,0.5)"><ellipse cx="120" cy="120" rx="6" ry="2"/><ellipse cx="135" cy="115" rx="6" ry="2"/><ellipse cx="150" cy="125" rx="6" ry="2"/><ellipse cx="125" cy="135" rx="6" ry="2"/><ellipse cx="450" cy="80" rx="5" ry="1.5"/><ellipse cx="465" cy="85" rx="5" ry="1.5"/><ellipse cx="480" cy="78" rx="5" ry="1.5"/></g><path d="M0,340 Q150,320 300,335 Q450,345 600,330 L600,360 L0,360 Z" fill="rgba(140,120,90,0.3)"/><g fill="rgba(255,255,255,0.4)"><circle cx="100" cy="280" r="3"/><circle cx="105" cy="260" r="2"/><circle cx="510" cy="290" r="3"/></g></svg><div class="site-rank">No.19</div><div class="site-tag" style="background:#d4a73a">WRECK</div></div>
 <div class="site-body">
-<div class="site-head"><div><h3 class="site-name">Salem Express 沉船</h3><div class="site-en">Salem Express · 萨法加</div></div><div class="site-access" style="background:#3aa8d4">DAY BOAT</div></div>
+<div class="site-head"><div class="site-titlebox"><h3 class="site-name">Salem Express 沉船</h3><div class="site-en">Salem Express · 萨法加</div></div><div class="site-access" style="background:#3aa8d4">DAY BOAT</div></div>
 <div class="site-meta"><span><b>深度</b>12-30m</span><span><b>等级</b>AOW</span><span><b>能见度</b>15-25m</span><span><b>季节</b>全年</span></div>
 <p class="site-hl">1991年沉没的渡轮，470+人罹难(含麦加朝觐者)，潜水社区视为'水下墓地'，大多数潜店外部环潜不进船舱以示尊重。</p>
 <div class="site-access-block"><div class="acc-row"><b>方式</b><span>日船</span></div><div class="acc-row"><b>出发</b><span>萨法加(Safaga)</span></div><div class="acc-how">Safaga当地潜店日船30min即到。Hurghada也可日船但更远。建议先了解伦理再前往</div></div>
 </div></article>
-<article class="site-card" id="site-20" data-rank="20" data-lat="27.7233" data-lng="34.2522" data-name="Shark & Yolanda Reef">
+<article class="site-card reveal" id="site-20" data-rank="20" data-lat="27.7233" data-lng="34.2522" data-name="Shark & Yolanda Reef">
 <div class="site-art"><svg viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g_sh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c4868"/><stop offset="1" stop-color="#021420"/></linearGradient></defs><rect width="600" height="360" fill="url(#g_sh)"/><polygon points="200,0 230,0 280,360 240,360" fill="rgba(180,220,240,0.06)"/><polygon points="380,0 410,0 440,360 400,360" fill="rgba(180,220,240,0.05)"/><path d="M0,0 L150,0 L130,80 L160,180 L140,280 L170,360 L0,360 Z" fill="rgba(80,60,50,0.7)"/><g fill="rgba(255,150,100,0.3)"><circle cx="100" cy="100" r="14"/><circle cx="80" cy="160" r="10"/><circle cx="120" cy="220" r="12"/></g><g fill="rgba(180,80,120,0.3)"><circle cx="60" cy="130" r="8"/><circle cx="130" cy="180" r="6"/><circle cx="100" cy="250" r="10"/></g><g transform="translate(380,180)" fill="rgba(20,30,40,0.85)"><path d="M-80,0 Q-60,-15 0,-12 Q60,-15 90,-3 Q70,5 60,3 Q40,15 20,8 Q-20,15 -50,8 Q-70,12 -80,0 Z"/><ellipse cx="-78" cy="-2" rx="14" ry="4"/><path d="M0,-12 L8,-25 L18,-12 Z"/><path d="M88,-3 L105,-15 L100,5 L88,3 Z"/></g><g transform="translate(150,90) scale(0.5)" fill="rgba(20,30,40,0.7)"><path d="M-60,0 Q-40,-10 0,-8 Q40,-10 65,-2 Q50,3 40,2 Q-30,10 -60,0 Z"/><path d="M0,-8 L6,-18 L13,-8 Z"/><path d="M63,-2 L78,-12 L73,5 L63,3 Z"/></g><g fill="rgba(220,230,200,0.5)"><circle cx="200" cy="260" r="2"/><circle cx="208" cy="268" r="2"/><circle cx="216" cy="276" r="2"/><circle cx="224" cy="260" r="2"/><circle cx="232" cy="268" r="2"/><circle cx="240" cy="276" r="2"/><circle cx="248" cy="260" r="2"/><circle cx="256" cy="268" r="2"/><circle cx="264" cy="276" r="2"/><circle cx="272" cy="260" r="2"/><circle cx="280" cy="268" r="2"/><circle cx="288" cy="276" r="2"/><circle cx="296" cy="260" r="2"/><circle cx="304" cy="268" r="2"/><circle cx="312" cy="276" r="2"/><circle cx="320" cy="260" r="2"/><circle cx="328" cy="268" r="2"/><circle cx="336" cy="276" r="2"/><circle cx="344" cy="260" r="2"/><circle cx="352" cy="268" r="2"/></g></svg><div class="site-rank">No.20</div><div class="site-tag" style="background:#7ad43a">REEF+WRECK</div></div>
 <div class="site-body">
-<div class="site-head"><div><h3 class="site-name">Shark & Yolanda Reef</h3><div class="site-en">Shark & Yolanda Reef · 沙姆(Ras Mohammed内)</div></div><div class="site-access" style="background:#3aa8d4">DAY BOAT</div></div>
+<div class="site-head"><div class="site-titlebox"><h3 class="site-name">Shark & Yolanda Reef</h3><div class="site-en">Shark & Yolanda Reef · 沙姆(Ras Mohammed内)</div></div><div class="site-access" style="background:#3aa8d4">DAY BOAT</div></div>
 <div class="site-meta"><span><b>深度</b>5-30m</span><span><b>等级</b>OW</span><span><b>能见度</b>30-40m</span><span><b>季节</b>6-9月鱼风暴</span></div>
 <p class="site-hl">Ras Mohammed内的双子礁王牌点。Shark Reef 90°陡墙鱼风暴；漂到Yolanda Reef看散落的1980年沉船Yolanda的浴室设备(马桶/浴缸海底奇景)。</p>
 <div class="site-access-block"><div class="acc-row"><b>方式</b><span>日船</span></div><div class="acc-row"><b>出发</b><span>沙姆</span></div><div class="acc-how">沙姆潜店Ras Mohammed行程的核心点，几乎所有Sharm 1日船都包含。流大需会漂潜</div></div>
 </div></article></div>
 </div>
 </div>
+</div>
 
 <div class="tab-pane" id="pane-1">
+<div class="section-pad">
 <div class="container">
-<div class="intro-block">
-<p><b style="color:var(--gold)">埃及红海三种潜法</b>，决定了你订什么机票、住哪里、要不要带朝阳备降的护照。岸潜便宜自由（达哈布/马萨阿拉姆），日船省心（沙姆/Hurghada），船宿覆盖最多远海点位但贵且有团排期。同一个潜点常有多种访问方式，下方按方式归类。</p>
+<div class="section-eyebrow">HOW TO GO</div>
+<h2 class="section-title">三种潜法<br><span class="it">three ways down.</span></h2>
+<p class="section-sub">岸潜便宜自由 · 日船省心灵活 · 船宿覆盖远海。同一个潜点常有多种访问方式，下方按方式归类。</p>
+<div class="intro-card reveal">
+<p>选择决定了你订什么<b>机票</b>、住<b>哪里</b>、要不要带<b>朝阳备降的护照</b>。Brothers / Daedalus / St Johns 远海点位仅船宿可达；Blue Hole / Canyon 在达哈布岸潜可玩；Ras Mohammed / Tiran 用沙姆日船。</p>
 </div>
-<div class="grp-block"><div class="grp-head" style="border-color:#3ad4a8"><h3 style="color:#3ad4a8">岸潜 · SHORE DIVE</h3><span class="grp-count">3 个</span></div><p class="grp-desc">在码头/酒店 House Reef 直接背气瓶下水，无需船。最便宜最自由，适合 Day off 自助潜或刚到目的地。</p><ul class="grp-list"><li><a href="#site-2" onclick="switchTab(0,2)"><span class="g-rank">No.02</span><span class="g-name">达哈布蓝洞</span><span class="g-region">达哈布(西奈)</span></a></li><li><a href="#site-13" onclick="switchTab(0,13)"><span class="g-rank">No.13</span><span class="g-name">达哈布峡谷 Canyon</span><span class="g-region">达哈布</span></a></li><li><a href="#site-16" onclick="switchTab(0,16)"><span class="g-rank">No.16</span><span class="g-name">Marsa Alam House Reef群</span><span class="g-region">马萨阿拉姆</span></a></li></ul></div><div class="grp-block"><div class="grp-head" style="border-color:#3aa8d4"><h3 style="color:#3aa8d4">日船 · DAY BOAT</h3><span class="grp-count">9 个</span></div><p class="grp-desc">当地潜店 1-2 小时船程到达，一天 2-3 潜返港。住酒店即可，预算和时间最灵活。</p><ul class="grp-list"><li><a href="#site-1" onclick="switchTab(0,1)"><span class="g-rank">No.01</span><span class="g-name">SS Thistlegorm 沉船</span><span class="g-region">沙姆/沉船线</span></a></li><li><a href="#site-3" onclick="switchTab(0,3)"><span class="g-rank">No.03</span><span class="g-name">Ras Mohammed 国家公园</span><span class="g-region">沙姆</span></a></li><li><a href="#site-4" onclick="switchTab(0,4)"><span class="g-rank">No.04</span><span class="g-name">Elphinstone 礁</span><span class="g-region">马萨阿拉姆</span></a></li><li><a href="#site-8" onclick="switchTab(0,8)"><span class="g-rank">No.08</span><span class="g-name">Abu Nuhas 沉船墓地</span><span class="g-region">沙姆/沉船线</span></a></li><li><a href="#site-10" onclick="switchTab(0,10)"><span class="g-rank">No.10</span><span class="g-name">Fury Shoals 礁群</span><span class="g-region">南红海</span></a></li><li><a href="#site-15" onclick="switchTab(0,15)"><span class="g-rank">No.15</span><span class="g-name">Jackson Reef (Tiran)</span><span class="g-region">沙姆/Tiran</span></a></li><li><a href="#site-17" onclick="switchTab(0,17)"><span class="g-rank">No.17</span><span class="g-name">SS Dunraven 沉船</span><span class="g-region">沙姆</span></a></li><li><a href="#site-19" onclick="switchTab(0,19)"><span class="g-rank">No.19</span><span class="g-name">Salem Express 沉船</span><span class="g-region">萨法加</span></a></li><li><a href="#site-20" onclick="switchTab(0,20)"><span class="g-rank">No.20</span><span class="g-name">Shark & Yolanda Reef</span><span class="g-region">沙姆(Ras Mohammed内)</span></a></li></ul></div><div class="grp-block"><div class="grp-head" style="border-color:#d4a73a"><h3 style="color:#d4a73a">船宿 · LIVEABOARD</h3><span class="grp-count">12 个</span></div><p class="grp-desc">5-10 天住在潜水船上，每天 3-4 潜，不上岸。是 Brothers / Daedalus / St Johns 等远海点的唯一访问方式。</p><ul class="grp-list"><li><a href="#site-1" onclick="switchTab(0,1)"><span class="g-rank">No.01</span><span class="g-name">SS Thistlegorm 沉船</span><span class="g-region">沙姆/沉船线</span></a></li><li><a href="#site-4" onclick="switchTab(0,4)"><span class="g-rank">No.04</span><span class="g-name">Elphinstone 礁</span><span class="g-region">马萨阿拉姆</span></a></li><li><a href="#site-5" onclick="switchTab(0,5)"><span class="g-rank">No.05</span><span class="g-name">Daedalus 礁</span><span class="g-region">南红海远海</span></a></li><li><a href="#site-6" onclick="switchTab(0,6)"><span class="g-rank">No.06</span><span class="g-name">Big Brother 兄弟岛</span><span class="g-region">中红海远海</span></a></li><li><a href="#site-7" onclick="switchTab(0,7)"><span class="g-rank">No.07</span><span class="g-name">Small Brother 兄弟岛</span><span class="g-region">中红海远海</span></a></li><li><a href="#site-8" onclick="switchTab(0,8)"><span class="g-rank">No.08</span><span class="g-name">Abu Nuhas 沉船墓地</span><span class="g-region">沙姆/沉船线</span></a></li><li><a href="#site-9" onclick="switchTab(0,9)"><span class="g-rank">No.09</span><span class="g-name">St. John's 礁群</span><span class="g-region">埃及最南端</span></a></li><li><a href="#site-10" onclick="switchTab(0,10)"><span class="g-rank">No.10</span><span class="g-name">Fury Shoals 礁群</span><span class="g-region">南红海</span></a></li><li><a href="#site-11" onclick="switchTab(0,11)"><span class="g-rank">No.11</span><span class="g-name">Rocky Island</span><span class="g-region">埃及最南端</span></a></li><li><a href="#site-12" onclick="switchTab(0,12)"><span class="g-rank">No.12</span><span class="g-name">Zabargad 翡翠岛</span><span class="g-region">南红海</span></a></li><li><a href="#site-14" onclick="switchTab(0,14)"><span class="g-rank">No.14</span><span class="g-name">Shaab Rumi (Cousteau)</span><span class="g-region">南红海远海</span></a></li><li><a href="#site-18" onclick="switchTab(0,18)"><span class="g-rank">No.18</span><span class="g-name">SS Rosalie Möller 沉船</span><span class="g-region">沉船线</span></a></li></ul></div>
+<section class="grp-block reveal"><header class="grp-head"><div><h3 class="grp-title">岸潜</h3><div class="grp-en">Shore Dive</div></div><span class="grp-count" style="border-color:#3ad4a8;color:#3ad4a8">3</span></header><p class="grp-desc">在码头或酒店 House Reef 直接背气瓶下水，无需上船。最便宜最自由，适合 Day off 自助潜或刚到目的地的暖身。</p><ul class="grp-list"><li><a href="#site-2" onclick="switchTab(0,2);return false;"><span class="g-rank">02</span><span class="g-info"><span class="g-name">达哈布蓝洞</span><span class="g-region">达哈布(西奈)</span></span><span class="g-arrow">→</span></a></li><li><a href="#site-13" onclick="switchTab(0,13);return false;"><span class="g-rank">13</span><span class="g-info"><span class="g-name">达哈布峡谷 Canyon</span><span class="g-region">达哈布</span></span><span class="g-arrow">→</span></a></li><li><a href="#site-16" onclick="switchTab(0,16);return false;"><span class="g-rank">16</span><span class="g-info"><span class="g-name">Marsa Alam House Reef群</span><span class="g-region">马萨阿拉姆</span></span><span class="g-arrow">→</span></a></li></ul></section><section class="grp-block reveal"><header class="grp-head"><div><h3 class="grp-title">日船</h3><div class="grp-en">Day Boat</div></div><span class="grp-count" style="border-color:#3aa8d4;color:#3aa8d4">9</span></header><p class="grp-desc">当地潜店组织 1-2 小时船程到达，一天 2-3 潜返港。住酒店即可，预算和时间最灵活。</p><ul class="grp-list"><li><a href="#site-1" onclick="switchTab(0,1);return false;"><span class="g-rank">01</span><span class="g-info"><span class="g-name">SS Thistlegorm 沉船</span><span class="g-region">沙姆/沉船线</span></span><span class="g-arrow">→</span></a></li><li><a href="#site-3" onclick="switchTab(0,3);return false;"><span class="g-rank">03</span><span class="g-info"><span class="g-name">Ras Mohammed 国家公园</span><span class="g-region">沙姆</span></span><span class="g-arrow">→</span></a></li><li><a href="#site-4" onclick="switchTab(0,4);return false;"><span class="g-rank">04</span><span class="g-info"><span class="g-name">Elphinstone 礁</span><span class="g-region">马萨阿拉姆</span></span><span class="g-arrow">→</span></a></li><li><a href="#site-8" onclick="switchTab(0,8);return false;"><span class="g-rank">08</span><span class="g-info"><span class="g-name">Abu Nuhas 沉船墓地</span><span class="g-region">沙姆/沉船线</span></span><span class="g-arrow">→</span></a></li><li><a href="#site-10" onclick="switchTab(0,10);return false;"><span class="g-rank">10</span><span class="g-info"><span class="g-name">Fury Shoals 礁群</span><span class="g-region">南红海</span></span><span class="g-arrow">→</span></a></li><li><a href="#site-15" onclick="switchTab(0,15);return false;"><span class="g-rank">15</span><span class="g-info"><span class="g-name">Jackson Reef (Tiran)</span><span class="g-region">沙姆/Tiran</span></span><span class="g-arrow">→</span></a></li><li><a href="#site-17" onclick="switchTab(0,17);return false;"><span class="g-rank">17</span><span class="g-info"><span class="g-name">SS Dunraven 沉船</span><span class="g-region">沙姆</span></span><span class="g-arrow">→</span></a></li><li><a href="#site-19" onclick="switchTab(0,19);return false;"><span class="g-rank">19</span><span class="g-info"><span class="g-name">Salem Express 沉船</span><span class="g-region">萨法加</span></span><span class="g-arrow">→</span></a></li><li><a href="#site-20" onclick="switchTab(0,20);return false;"><span class="g-rank">20</span><span class="g-info"><span class="g-name">Shark & Yolanda Reef</span><span class="g-region">沙姆(Ras Mohammed内)</span></span><span class="g-arrow">→</span></a></li></ul></section><section class="grp-block reveal"><header class="grp-head"><div><h3 class="grp-title">船宿</h3><div class="grp-en">Liveaboard</div></div><span class="grp-count" style="border-color:#d4a73a;color:#d4a73a">12</span></header><p class="grp-desc">5-10 天住在潜水船上，每天 3-4 潜，不上岸。Brothers / Daedalus / St Johns 等远海点位的唯一访问方式。</p><ul class="grp-list"><li><a href="#site-1" onclick="switchTab(0,1);return false;"><span class="g-rank">01</span><span class="g-info"><span class="g-name">SS Thistlegorm 沉船</span><span class="g-region">沙姆/沉船线</span></span><span class="g-arrow">→</span></a></li><li><a href="#site-4" onclick="switchTab(0,4);return false;"><span class="g-rank">04</span><span class="g-info"><span class="g-name">Elphinstone 礁</span><span class="g-region">马萨阿拉姆</span></span><span class="g-arrow">→</span></a></li><li><a href="#site-5" onclick="switchTab(0,5);return false;"><span class="g-rank">05</span><span class="g-info"><span class="g-name">Daedalus 礁</span><span class="g-region">南红海远海</span></span><span class="g-arrow">→</span></a></li><li><a href="#site-6" onclick="switchTab(0,6);return false;"><span class="g-rank">06</span><span class="g-info"><span class="g-name">Big Brother 兄弟岛</span><span class="g-region">中红海远海</span></span><span class="g-arrow">→</span></a></li><li><a href="#site-7" onclick="switchTab(0,7);return false;"><span class="g-rank">07</span><span class="g-info"><span class="g-name">Small Brother 兄弟岛</span><span class="g-region">中红海远海</span></span><span class="g-arrow">→</span></a></li><li><a href="#site-8" onclick="switchTab(0,8);return false;"><span class="g-rank">08</span><span class="g-info"><span class="g-name">Abu Nuhas 沉船墓地</span><span class="g-region">沙姆/沉船线</span></span><span class="g-arrow">→</span></a></li><li><a href="#site-9" onclick="switchTab(0,9);return false;"><span class="g-rank">09</span><span class="g-info"><span class="g-name">St. John's 礁群</span><span class="g-region">埃及最南端</span></span><span class="g-arrow">→</span></a></li><li><a href="#site-10" onclick="switchTab(0,10);return false;"><span class="g-rank">10</span><span class="g-info"><span class="g-name">Fury Shoals 礁群</span><span class="g-region">南红海</span></span><span class="g-arrow">→</span></a></li><li><a href="#site-11" onclick="switchTab(0,11);return false;"><span class="g-rank">11</span><span class="g-info"><span class="g-name">Rocky Island</span><span class="g-region">埃及最南端</span></span><span class="g-arrow">→</span></a></li><li><a href="#site-12" onclick="switchTab(0,12);return false;"><span class="g-rank">12</span><span class="g-info"><span class="g-name">Zabargad 翡翠岛</span><span class="g-region">南红海</span></span><span class="g-arrow">→</span></a></li><li><a href="#site-14" onclick="switchTab(0,14);return false;"><span class="g-rank">14</span><span class="g-info"><span class="g-name">Shaab Rumi (Cousteau)</span><span class="g-region">南红海远海</span></span><span class="g-arrow">→</span></a></li><li><a href="#site-18" onclick="switchTab(0,18);return false;"><span class="g-rank">18</span><span class="g-info"><span class="g-name">SS Rosalie Möller 沉船</span><span class="g-region">沉船线</span></span><span class="g-arrow">→</span></a></li></ul></section>
+</div>
 </div>
 </div>
 
 <div class="tab-pane" id="pane-2">
+<div class="section-pad">
 <div class="container">
-<div class="intro-block">
-<p><b style="color:var(--gold)">五条经典行程对比</b>。船宿（Liveaboard）按线路报名（Northern Wrecks / BDE / Deep South 三大主线），日船按目的地酒店选（沙姆/Hurghada/达哈布/马萨阿拉姆），自由度递增。预算和潜次按船宿>日船>岸潜递减。</p>
+<div class="section-eyebrow">ROUTES & ITINERARIES</div>
+<h2 class="section-title">五条经典路线<br><span class="it">choose your trip.</span></h2>
+<p class="section-sub">船宿按主线选（北线 / BDE / 深南），日船按基地酒店选。预算与潜次按船宿 &gt; 日船 &gt; 岸潜递减。</p>
+<div class="itin-grid"><article class="itin-card reveal">
+<div class="itin-head"><h3>Northern Wrecks & Reefs</h3><span class="itin-en">沉船北线</span></div>
+<div class="itin-price">€900-1400</div>
+<dl class="itin-dl">
+<dt>天数</dt><dd>5-7 天</dd>
+<dt>出发</dt><dd>Hurghada</dd>
+<dt>覆盖</dt><dd>Thistlegorm · Rosalie Möller · Abu Nuhas 四沉船 · Ras Mohammed</dd>
+<dt>适合</dt><dd>沉船狂热者 / 初次红海船宿</dd>
+<dt>等级</dt><dd>AOW</dd>
+</dl>
+</article><article class="itin-card reveal">
+<div class="itin-head"><h3>BDE</h3><span class="itin-en">鲨鱼三巨头</span></div>
+<div class="itin-price">€1200-1800</div>
+<dl class="itin-dl">
+<dt>天数</dt><dd>7 天</dd>
+<dt>出发</dt><dd>Hurghada / Marsa Alam</dd>
+<dt>覆盖</dt><dd>Brothers · Daedalus · Elphinstone</dd>
+<dt>适合</dt><dd>鲨鱼控 / 红海老炮（必看锤头/灰礁/长尾）</dd>
+<dt>等级</dt><dd>AOW · 50+ dives</dd>
+</dl>
+</article><article class="itin-card reveal">
+<div class="itin-head"><h3>Deep South / St Johns</h3><span class="itin-en">深南线</span></div>
+<div class="itin-price">€1300-2000</div>
+<dl class="itin-dl">
+<dt>天数</dt><dd>7-10 天</dd>
+<dt>出发</dt><dd>Marsa Alam Port Ghalib</dd>
+<dt>覆盖</dt><dd>St John's · Rocky Island · Zabargad · Fury Shoals</dd>
+<dt>适合</dt><dd>远离人群 / 鱼最多最纯</dd>
+<dt>等级</dt><dd>AOW</dd>
+</dl>
+</article><article class="itin-card reveal">
+<div class="itin-head"><h3>Sharm Day Boat</h3><span class="itin-en">沙姆日船套餐</span></div>
+<div class="itin-price">€60-100/天</div>
+<dl class="itin-dl">
+<dt>天数</dt><dd>3-5 天</dd>
+<dt>出发</dt><dd>沙姆酒店</dd>
+<dt>覆盖</dt><dd>Ras Mohammed · Tiran · Thistlegorm · Dunraven</dd>
+<dt>适合</dt><dd>短假期 / 不耐船宿 / 带不潜伴侣</dd>
+<dt>等级</dt><dd>OW-AOW</dd>
+</dl>
+</article><article class="itin-card reveal">
+<div class="itin-head"><h3>Dahab Freelance</h3><span class="itin-en">达哈布自由行</span></div>
+<div class="itin-price">€30-60/潜</div>
+<dl class="itin-dl">
+<dt>天数</dt><dd>4-7 天</dd>
+<dt>出发</dt><dd>达哈布镇</dd>
+<dt>覆盖</dt><dd>Blue Hole · Canyon · Bells · Eel Garden</dd>
+<dt>适合</dt><dd>自由行 / 穷玩家 / 想跳过船</dd>
+<dt>等级</dt><dd>OW</dd>
+</dl>
+</article></div>
 </div>
-<div class="itin-block"><table>
-<thead><tr><th>行程</th><th>天数</th><th>出发地</th><th>价位</th><th>覆盖潜点</th><th>适合谁</th><th>等级</th></tr></thead>
-<tbody><tr><td><b>Northern Wrecks & Reefs</b></td><td>5-7 天</td><td>Hurghada</td><td class="price">€900-1400</td><td>Thistlegorm + Rosalie Möller + Abu Nuhas (4 wrecks) + Ras Mohammed</td><td>沉船狂热者，初次红海船宿</td><td>AOW</td></tr>
-<tr><td><b>BDE (Brothers-Daedalus-Elphinstone)</b></td><td>7 天</td><td>Hurghada / Marsa Alam</td><td class="price">€1200-1800</td><td>Big/Small Brother + Daedalus + Elphinstone + 沿途 reef</td><td>鲨鱼控，红海老炮（必看锤头/灰礁/长尾）</td><td>AOW + 50 dives 推荐</td></tr>
-<tr><td><b>Deep South / St Johns</b></td><td>7-10 天</td><td>Marsa Alam Port Ghalib</td><td class="price">€1300-2000</td><td>St John's + Rocky Island + Zabargad + Fury Shoals</td><td>远离人群，鱼最多最大最纯</td><td>AOW</td></tr>
-<tr><td><b>Sharm 经典 Day Boat 套餐</b></td><td>3-5 天</td><td>沙姆酒店</td><td class="price">€60-100/天</td><td>Ras Mohammed + Tiran + Thistlegorm + Dunraven</td><td>短假期/不耐船宿/带不潜伴侣</td><td>OW-AOW</td></tr>
-<tr><td><b>Dahab 自由行</b></td><td>4-7 天</td><td>达哈布镇</td><td class="price">€30-60/潜</td><td>Blue Hole + Canyon + Bells + Eel Garden</td><td>自由行/穷玩家/想跳过船</td><td>OW（蓝洞外礁OK）</td></tr></tbody>
-</table></div>
-<h2 class="section-title">REGION TIPS<span class="en">区域选择速查</span></h2>
-<div class="grp-list" style="grid-template-columns:1fr;gap:8px;list-style:none">
-<a href="#" onclick="return false" style="cursor:default"><span class="g-rank">SHM</span><span class="g-name">沙姆伊尔谢赫 Sharm El Sheikh</span><span class="g-region">Ras Mohammed + Tiran + Thistlegorm 都覆盖；初学者首选</span></a>
-<a href="#" onclick="return false" style="cursor:default"><span class="g-rank">DAH</span><span class="g-name">达哈布 Dahab</span><span class="g-region">蓝洞+Canyon 岸潜天堂；嬉皮放松，住宿便宜</span></a>
-<a href="#" onclick="return false" style="cursor:default"><span class="g-rank">HRG</span><span class="g-name">Hurghada</span><span class="g-region">沉船船宿主港；离 Abu Nuhas 近</span></a>
-<a href="#" onclick="return false" style="cursor:default"><span class="g-rank">MAR</span><span class="g-name">马萨阿拉姆 Marsa Alam</span><span class="g-region">Elphinstone + Dugong House Reef + Deep South 船宿出发地</span></a>
-<a href="#" onclick="return false" style="cursor:default"><span class="g-rank">SAF</span><span class="g-name">萨法加 Safaga</span><span class="g-region">Salem Express 沉船 + 安静度假；潜店少</span></a>
+</div>
+
+<div class="section-pad" style="padding-top:0">
+<div class="container">
+<div class="section-eyebrow">REGIONS</div>
+<h2 class="section-title">五个潜水基地<br><span class="it">where to base.</span></h2>
+<p class="section-sub">从北到南，每个基地的特色与覆盖潜点。</p>
+<div class="region-grid"><article class="region-card reveal"><div class="region-code" style="color:#3aa8d4;border-color:#3aa8d4">SHM</div><h4 class="region-name">沙姆伊尔谢赫</h4><div class="region-en">Sharm El Sheikh</div><p class="region-desc">Ras Mohammed + Tiran + Thistlegorm 全覆盖；初学者首选基地</p></article><article class="region-card reveal"><div class="region-code" style="color:#3ad4a8;border-color:#3ad4a8">DAH</div><h4 class="region-name">达哈布</h4><div class="region-en">Dahab</div><p class="region-desc">蓝洞 + Canyon 岸潜天堂；嬉皮放松，住宿便宜</p></article><article class="region-card reveal"><div class="region-code" style="color:#d4a73a;border-color:#d4a73a">HRG</div><h4 class="region-name">赫尔格达</h4><div class="region-en">Hurghada</div><p class="region-desc">沉船船宿主港；离 Abu Nuhas 最近</p></article><article class="region-card reveal"><div class="region-code" style="color:#a83ad4;border-color:#a83ad4">MAR</div><h4 class="region-name">马萨阿拉姆</h4><div class="region-en">Marsa Alam</div><p class="region-desc">Elphinstone + Dugong House Reef + Deep South 船宿出发地</p></article><article class="region-card reveal"><div class="region-code" style="color:#d43a8a;border-color:#d43a8a">SAF</div><h4 class="region-name">萨法加</h4><div class="region-en">Safaga</div><p class="region-desc">Salem Express 沉船 + 安静度假；潜店少</p></article></div>
 </div>
 </div>
 </div>
 
-<div class="foot">
-<div class="foot-mark">RS</div>
-<div>—— RED SEA · 20 SITES · ALL ACCESS ——</div>
-<div style="margin-top:6px;font-size:11px;font-family:'Noto Sans SC';letter-spacing:3px;font-style:normal">v1 · TOP 20 红海潜水指南</div>
-</div>
+<footer class="foot">
+<div class="foot-mark">RED SEA · 20</div>
+<p>Diving guide for Egypt — curated, ranked, mapped.</p>
+<p style="margin-top:14px">v2 · Apple-style refined</p>
+</footer>
 
 <script>
-var SITES = [{"r": 1, "n": "SS Thistlegorm 沉船", "lat": 27.8147, "lng": 33.9214, "a": "日船/船宿", "t": "WRECK"}, {"r": 2, "n": "达哈布蓝洞", "lat": 28.5722, "lng": 34.5378, "a": "岸潜", "t": "SHORE"}, {"r": 3, "n": "Ras Mohammed 国家公园", "lat": 27.7256, "lng": 34.2542, "a": "日船", "t": "REEF"}, {"r": 4, "n": "Elphinstone 礁", "lat": 25.3122, "lng": 34.8628, "a": "日船/船宿", "t": "WALL"}, {"r": 5, "n": "Daedalus 礁", "lat": 24.9333, "lng": 35.8667, "a": "船宿 ONLY", "t": "PINNACLE"}, {"r": 6, "n": "Big Brother 兄弟岛", "lat": 26.3267, "lng": 34.8517, "a": "船宿 ONLY", "t": "WRECK+WALL"}, {"r": 7, "n": "Small Brother 兄弟岛", "lat": 26.3194, "lng": 34.8633, "a": "船宿 ONLY", "t": "WALL"}, {"r": 8, "n": "Abu Nuhas 沉船墓地", "lat": 27.5833, "lng": 33.9217, "a": "日船/船宿", "t": "WRECK"}, {"r": 9, "n": "St. John's 礁群", "lat": 23.55, "lng": 36.0167, "a": "船宿 ONLY", "t": "REEF"}, {"r": 10, "n": "Fury Shoals 礁群", "lat": 24.1167, "lng": 35.55, "a": "日船/船宿", "t": "REEF+CAVE"}, {"r": 11, "n": "Rocky Island", "lat": 24.075, "lng": 36.2167, "a": "船宿 ONLY", "t": "WALL"}, {"r": 12, "n": "Zabargad 翡翠岛", "lat": 23.6167, "lng": 36.2, "a": "船宿 ONLY", "t": "WRECK+REEF"}, {"r": 13, "n": "达哈布峡谷 Canyon", "lat": 28.5167, "lng": 34.5167, "a": "岸潜", "t": "SHORE"}, {"r": 14, "n": "Shaab Rumi (Cousteau)", "lat": 24.5667, "lng": 35.4167, "a": "船宿 ONLY", "t": "REEF"}, {"r": 15, "n": "Jackson Reef (Tiran)", "lat": 28.0333, "lng": 34.4833, "a": "日船", "t": "WALL+WRECK"}, {"r": 16, "n": "Marsa Alam House Reef群", "lat": 25.0667, "lng": 34.8833, "a": "岸潜", "t": "SHORE"}, {"r": 17, "n": "SS Dunraven 沉船", "lat": 27.7, "lng": 34.0667, "a": "日船", "t": "WRECK"}, {"r": 18, "n": "SS Rosalie Möller 沉船", "lat": 27.65, "lng": 33.7833, "a": "船宿 ONLY", "t": "WRECK"}, {"r": 19, "n": "Salem Express 沉船", "lat": 26.65, "lng": 34.0667, "a": "日船", "t": "WRECK"}, {"r": 20, "n": "Shark & Yolanda Reef", "lat": 27.7233, "lng": 34.2522, "a": "日船", "t": "REEF+WRECK"}];
+var SITES = [{"r": 1, "n": "SS Thistlegorm 沉船", "lat": 27.8147, "lng": 33.9214, "a": "日船/船宿", "t": "WRECK", "d": "16-32m"}, {"r": 2, "n": "达哈布蓝洞", "lat": 28.5722, "lng": 34.5378, "a": "岸潜", "t": "SHORE", "d": "0-130m+"}, {"r": 3, "n": "Ras Mohammed 国家公园", "lat": 27.7256, "lng": 34.2542, "a": "日船", "t": "REEF", "d": "5-40m"}, {"r": 4, "n": "Elphinstone 礁", "lat": 25.3122, "lng": 34.8628, "a": "日船/船宿", "t": "WALL", "d": "10-60m+"}, {"r": 5, "n": "Daedalus 礁", "lat": 24.9333, "lng": 35.8667, "a": "船宿 ONLY", "t": "PINNACLE", "d": "5-60m+"}, {"r": 6, "n": "Big Brother 兄弟岛", "lat": 26.3267, "lng": 34.8517, "a": "船宿 ONLY", "t": "WRECK+WALL", "d": "5-40m+"}, {"r": 7, "n": "Small Brother 兄弟岛", "lat": 26.3194, "lng": 34.8633, "a": "船宿 ONLY", "t": "WALL", "d": "5-50m+"}, {"r": 8, "n": "Abu Nuhas 沉船墓地", "lat": 27.5833, "lng": 33.9217, "a": "日船/船宿", "t": "WRECK", "d": "5-30m"}, {"r": 9, "n": "St. John's 礁群", "lat": 23.55, "lng": 36.0167, "a": "船宿 ONLY", "t": "REEF", "d": "5-40m"}, {"r": 10, "n": "Fury Shoals 礁群", "lat": 24.1167, "lng": 35.55, "a": "日船/船宿", "t": "REEF+CAVE", "d": "5-30m"}, {"r": 11, "n": "Rocky Island", "lat": 24.075, "lng": 36.2167, "a": "船宿 ONLY", "t": "WALL", "d": "5-50m+"}, {"r": 12, "n": "Zabargad 翡翠岛", "lat": 23.6167, "lng": 36.2, "a": "船宿 ONLY", "t": "WRECK+REEF", "d": "5-30m"}, {"r": 13, "n": "达哈布峡谷 Canyon", "lat": 28.5167, "lng": 34.5167, "a": "岸潜", "t": "SHORE", "d": "15-30m"}, {"r": 14, "n": "Shaab Rumi (Cousteau)", "lat": 24.5667, "lng": 35.4167, "a": "船宿 ONLY", "t": "REEF", "d": "5-40m"}, {"r": 15, "n": "Jackson Reef (Tiran)", "lat": 28.0333, "lng": 34.4833, "a": "日船", "t": "WALL+WRECK", "d": "5-40m+"}, {"r": 16, "n": "Marsa Alam House Reef群", "lat": 25.0667, "lng": 34.8833, "a": "岸潜", "t": "SHORE", "d": "5-30m"}, {"r": 17, "n": "SS Dunraven 沉船", "lat": 27.7, "lng": 34.0667, "a": "日船", "t": "WRECK", "d": "15-30m"}, {"r": 18, "n": "SS Rosalie Möller 沉船", "lat": 27.65, "lng": 33.7833, "a": "船宿 ONLY", "t": "WRECK", "d": "30-50m"}, {"r": 19, "n": "Salem Express 沉船", "lat": 26.65, "lng": 34.0667, "a": "日船", "t": "WRECK", "d": "12-30m"}, {"r": 20, "n": "Shark & Yolanda Reef", "lat": 27.7233, "lng": 34.2522, "a": "日船", "t": "REEF+WRECK", "d": "5-30m"}];
 
+// 滚动浮现
+var io = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      // 轻微 stagger
+      var idx = Array.prototype.indexOf.call(e.target.parentNode.children, e.target);
+      e.target.style.transitionDelay = (Math.min(idx,5)*60) + 'ms';
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  });
+},{threshold:.12,rootMargin:'0px 0px -60px 0px'});
+
+function observeReveals(){
+  document.querySelectorAll('.reveal:not(.in)').forEach(function(el){io.observe(el);});
+}
+
+// nav 滚动加深
+var nav = document.querySelector('.nav');
+window.addEventListener('scroll', function(){
+  if(window.scrollY > 40){
+    nav.style.background = 'rgba(0,0,0,.85)';
+  } else {
+    nav.style.background = 'rgba(0,0,0,.72)';
+  }
+}, {passive:true});
+
+// 地图
 var mapInstance = null;
 function initMap(){
   if(mapInstance){ mapInstance.invalidateSize(); return; }
   var el = document.getElementById('map');
   if(!el) return;
   try{
-    mapInstance = L.map('map',{zoomControl:true,scrollWheelZoom:false,attributionControl:false}).setView([26.5,34.5],6);
-    var tiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}',{maxZoom:13,attribution:'© Esri Ocean'});
+    mapInstance = L.map('map',{zoomControl:true,scrollWheelZoom:false,attributionControl:false,zoomSnap:.5}).setView([26.5,34.5],6);
+    var tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
+      maxZoom:19,subdomains:'abcd',attribution:'© CARTO'});
     tiles.addTo(mapInstance);
-    tiles.on('tileerror',function(){
-      mapInstance.removeLayer(tiles);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18}).addTo(mapInstance);
-    });
     var ACC_COLOR = {'岸潜':'#3ad4a8','日船':'#3aa8d4','船宿':'#d4a73a','日船/船宿':'#d48a3a','船宿 ONLY':'#d44a3a'};
     SITES.forEach(function(s){
       var c = ACC_COLOR[s.a] || '#3aa8d4';
       var icon = L.divIcon({
         className:'',
-        html:'<div style="background:'+c+';color:#0a1828;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:Bebas Neue,sans-serif;font-weight:700;font-size:13px;border:2px solid #f0e6d0;box-shadow:0 2px 8px rgba(0,0,0,.6)">'+s.r+'</div>',
-        iconSize:[28,28],iconAnchor:[14,14]
+        html:'<div style="background:'+c+';color:#000;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:Inter,sans-serif;font-weight:700;font-size:12px;border:2px solid rgba(255,255,255,.85);box-shadow:0 4px 12px rgba(0,0,0,.6),0 0 0 4px rgba(0,0,0,.3)">'+s.r+'</div>',
+        iconSize:[30,30],iconAnchor:[15,15]
       });
       L.marker([s.lat,s.lng],{icon:icon}).addTo(mapInstance)
-        .bindPopup('<b>No.'+s.r+' '+s.n+'</b>'+s.t+' · '+s.a+'<br><a href="javascript:void(0)" onclick="switchTab(0,'+s.r+')">查看详情 →</a>');
+        .bindPopup('<b>No.'+s.r+' '+s.n+'</b><div class="pop-meta">'+s.t+' · '+s.a+' · '+s.d+'</div><a href="javascript:void(0)" onclick="switchTab(0,'+s.r+')">查看详情 →</a>');
     });
-    mapInstance.fitBounds(SITES.map(function(s){return[s.lat,s.lng]}),{padding:[40,40]});
+    mapInstance.fitBounds(SITES.map(function(s){return[s.lat,s.lng]}),{padding:[50,50]});
     setTimeout(function(){mapInstance.invalidateSize();},200);
   }catch(e){console.error(e)}
 }
 
 function switchTab(i, scrollTo){
-  document.querySelectorAll('.tab-btn').forEach(function(b,j){b.classList.toggle('active',i===j)});
+  document.querySelectorAll('.nav-tab').forEach(function(b,j){b.classList.toggle('active',i===j)});
   document.querySelectorAll('.tab-pane').forEach(function(p,j){p.classList.toggle('active',i===j)});
   if(i===0) setTimeout(initMap, 100);
+  setTimeout(observeReveals, 50);
   if(scrollTo){
     setTimeout(function(){
       var el = document.getElementById('site-'+scrollTo);
@@ -360,7 +661,7 @@ function switchTab(i, scrollTo){
         document.querySelectorAll('.site-card.highlight').forEach(function(c){c.classList.remove('highlight')});
         el.classList.add('highlight');
         el.scrollIntoView({behavior:'smooth',block:'center'});
-        setTimeout(function(){el.classList.remove('highlight')}, 3000);
+        setTimeout(function(){el.classList.remove('highlight')}, 3500);
       }
     }, 200);
   } else {
@@ -368,6 +669,9 @@ function switchTab(i, scrollTo){
   }
 }
 
-window.addEventListener('load', function(){ setTimeout(initMap, 200); });
+window.addEventListener('load', function(){
+  setTimeout(initMap, 200);
+  observeReveals();
+});
 </script>
 </body></html>
